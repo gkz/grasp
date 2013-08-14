@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+var path = require('path'),
+    grasp = require(path.join(__dirname, '..', 'lib'));
+grasp({
+  args: process.argv,
+  exit: process.exit,
+  stdin: process.stdin,
+  fs: require('fs'),
+  callback: console.log,
+  error: console.error
+});
