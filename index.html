@@ -1,0 +1,70 @@
+---
+layout: bare
+demo: true
+base_url: .
+---
+
+<div class="grasp-home-header">
+  <div class="container">
+    <div class="clearfix">
+      <h1>grasp</h1>
+      <div class="grasp-install">
+        <a href="./docs/install">install</a>
+        <code>npm install -g grasp</code>
+      </div>
+    </div>
+    <p>Search and replace your JavaScript code based on its structure rather than its text
+  </div>
+</div>
+
+<a href="#demo" class="grasp-demo-link">Skip to Demo</a>
+
+<div class="container content-home">
+  <div class="row">
+    <p class="grasp-description col-md-12">grasp is a command line utility that allows you to search and replace your JavaScript code - but unlike programs such as "grep" or "sed", it searches the structure behind your code (the abstract syntax), rather than simply the text you've written - this allows for much more powerful searches.
+  </div>
+
+  <div class="row features">
+    <div class="col-md-4">
+      <a href="./docs/squery">Search using CSS style selectors</a>
+<pre class="term">
+<span class="yellow">$</span> grasp 'if.test [op=&amp;&amp;]' a.js
+<span class="green">2</span><span class="cyan">:</span>    if (<span class="red bold">x &amp;&amp; f(x)</span>) { return x; }
+<span class="green">9</span><span class="cyan">:</span>  if (<span class="red bold">xs.length &amp;&amp; ys.length</span>) {
+<span class="green">14</span><span class="cyan">:</span>  if (<span class="red bold">x &lt; 2 &amp;&amp; list[x]</span>) {
+</pre>
+    </div>
+    <div class="col-md-4">
+      <a href="{{ base.base_url }}/docs/equery/">Search using JS code w/ wildcards</a>
+<pre class="term">
+<span class="yellow">$</span> grasp -e 'return __ + __' b.js
+<span class="green">3</span><span class="cyan">:</span>  if (x &lt; 2) { <span class="red bold">return x + 2;</span> }
+<span class="green">19</span><span class="cyan">:</span>    <span class="red bold">return '&gt;&gt;' + str.slice(2);</span>
+<span class="green">21</span><span class="cyan">:</span>  <span class="red bold">return f(z) + x;</span>
+</pre>
+    </div>
+    <div class="col-md-4">
+      <a href="{{ page.page_url }}/docs/replace/">Make complex replacements</a>
+<pre class="term">
+<span class="yellow">$</span> cat c.js
+f(x &lt; y, x == z);
+<span class="yellow">$</span> {% raw %}grasp bi --replace '{{.r}}+{{.l}}' c.js{% endraw %}
+f(y+x, z+x);
+</pre>
+    </div>
+  </div>
+
+  <div class="follow-for-updates clearfix">
+    <a href="https://twitter.com/gkzahariev" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="large">Follow @gkzahariev</a>
+    <span>for updates on grasp.</span>
+  </div>
+
+  <h2 class="grasp-demo-header" id="demo">Demo!</h2>
+
+  <p>Available commands: <code>grasp</code>, <code>ls</code>, <code>cd</code>, <code>cat</code>, <code>edit</code>, <code>clear</code>, <code>pwd</code>, <code>touch</code>, <code>echo</code>, <code>cp</code>, <code>mv</code>, <code>rm</code>, <code>mkdir</code>, <code>rmdir</code>. Use <code>grasp --help</code> for grasp help.
+
+  <div id="demo-container">
+    <div id="demo-terminal" class="term">
+    </div>
+  </div>
+</div>

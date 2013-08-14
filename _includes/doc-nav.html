@@ -1,0 +1,35 @@
+<li class="{% if page.url contains '/docs/' and page.base_url == '..' %}current{% endif %}">
+  <a href="{{ page.base_url }}/docs/">Overview</a>
+</li>
+
+<li class="{% if page.url contains '/docs/install/' %}current{% endif %}">
+  <a href="{{ page.base_url }}/docs/install/">Installation</a>
+</li>
+
+<li class="{% if page.url contains '/docs/concepts/' %}current{% endif %}">
+  <a href="{{ page.base_url }}/docs/concepts/">Concepts</a>
+</li>
+
+<li class="{% if page.url contains '/docs/options/' %}current{% endif %}">
+  <a href="{{ page.base_url }}/docs/options/">Options</a>
+</li>
+
+<li class="{% if page.url contains '/docs/syntax-js/' %}current{% endif %}">
+  <a href="{{ page.base_url }}/docs/syntax-js/">JavaScript Syntax</a>
+</li>
+
+<li class="{% if page.url contains '/docs/equery/' %}current{% endif %}">
+  <a href="{{ page.base_url }}/docs/equery/">Equery</a>
+</li>
+
+<li class="{% if page.url contains '/docs/squery/' %}current{% endif %}">
+  <a href="{{ page.base_url }}/docs/squery/">Squery</a>
+</li>
+
+<li class="{% if page.url contains '/docs/replace/' %}current{% endif %}">
+  <a href="{{ page.base_url }}/docs/replace/">Replacement</a>
+</li>
+
+<li class="{% if page.url contains '/docs/lib/' %}current{% endif %}">
+  <a href="{{ page.base_url }}/docs/lib/">Using as a Library</a>
+</li>

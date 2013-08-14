@@ -1,0 +1,418 @@
+---
+layout: doc-page
+title: Options
+permalink: /options/
+base_url: ../..
+---
+
+<p>This information is available in shortened form with <code>grasp --help</code>, or in full verbose form with <code>grasp --help verbose</code>. You can see an individual option's verbose help with <code>grasp --option-name</code>.
+
+
+<h2>Miscellaneous</h2>
+
+<h3 id='help' class='grasp-option-header'><code>-h, --help</code></h3>
+
+{% capture description %}`--help` displays help for options
+
+`-h` may be used at any time in place of `--help`
+
+`--help more` displays this help
+
+`--help --option-name` displays further help for that option
+
+for example: `--help --help` would display this information
+
+`--help verbose` displays the same help as `--help --option-name`, but for all options
+
+`--help syntax` displays information about JavaScript's syntax
+
+`--help node-name` displays further information about a JavaScript node
+
+for example: `--help if` displays more information about an if statement
+
+`--help categories` displays information about node type categories
+
+`--help category-name` displays further information about a node type category
+
+`--help advanced` displays help for all options, including those hidden by default Everything after this option is considered a positional argument, even if it looks like an option.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>examples:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--help</code>
+
+<li><code>--help --replace</code>
+
+<li><code>--help -R</code>
+
+<li><code>--help syntax</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='version' class='grasp-option-header'><code>-v, --version</code></h3>
+
+{% capture description %}Print version information and exit.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='debug' class='grasp-option-header'><code>-d, --debug</code></h3>
+
+{% capture description %}Output debug information.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='extensions' class='grasp-option-header'><code>-x, --extensions [String]</code></h3>
+
+{% capture description %}A comma separated list of acceptable file extensions. Use a dot `.` for any extension.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>default:</dt><dd><code>js</code></dd>
+
+<dt>examples:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--extensions js,json</code>
+
+<li><code>--extensions .</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='recursive' class='grasp-option-header'><code>-r, --recursive</code></h3>
+
+{% capture description %}Recursively search directories. If files or paths are left out, then `.` is assumed.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='parser' class='grasp-option-header'><code>-p, --parser (path::String, options::Maybe Object)</code></h3>
+
+{% capture description %}Sets the parser and options for the parser. Argument value is a tuple, with the first item being the require path, and the second an optional object with options for the parser when calling its parse function.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>default:</dt><dd><code>(acorn, {locations: true})</code></dd>
+
+<dt>example:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--parser "(./path/to/esprima, {loc: true})"</code>
+
+</ul></dd>
+
+</dl>
+
+<h2>Replacement</h2>
+
+<h3 id='replace' class='grasp-option-header'><code>-R, --replace replacement::String</code></h3>
+
+{% capture description %}Each node that is matched will be replaced with the text that you input. There are a couple of special cases:
+
+The text &#x20;<code>{% raw %}{{}}{% endraw %}</code> will be replaced with the source of the matched node.
+
+&#x20;<code>{% raw %}{{selector}}{% endraw %}</code> will be replaced with the first result of querying the matched node with the selector. If you used equery to get the results, then the replacement selector will be parsed as equery.
+
+Since positional arguments may appear anywhere, you can place the `--replace replacement` after the selector if you wish, eg. `selector --replace replacement file.js`.
+
+By default, the result of using `--replace` will be to print out the results - if you wish to create new file(s) you can check out the `--to` option, or if you wish to edit the input file(s) in place, take a look at the `--in-place` option.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>examples:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--replace foo</code>
+
+<li><code>--replace 'f({{}})'</code>
+
+<li><code>--replace 'while ({{.test}}) {\n{{.then call}};\n}'</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='replace-file' class='grasp-option-header'><code>-F, --replace-file file::String</code></h3>
+
+{% capture description %}Replace each match with contents of file.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>example:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--replace-file path/to/file</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='to' class='grasp-option-header'><code>-t, --to Object | String</code></h3>
+
+{% capture description %}If an object, the keys are the paths to the input files, and the values are the corresponding output paths.
+
+If a string, then the output is written to the path specified. The special character `%` is expanded to the current input file's filename.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>examples:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--to "{input.js: output.js, path/to/input2.js: path/to/output2.js}"</code>
+
+<li><code>--to "output/%.js"</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='in-place' class='grasp-option-header'><code>-i, --in-place</code></h3>
+
+{% capture description %}Overwrite input files with replaced output.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h2>Selector interpretation</h2>
+
+<h3 id='engine' class='grasp-option-header'><code>-g, --engine path::String</code></h3>
+
+{% capture description %}The require path for the query engine. The query engine must have `parse(selector) -> parsedSelector`, `queryParsed(parsedSelector, ast) -> results`, and `query(selector, ast) -> results` functions exposed.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>example:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--engine path/to/engine</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='squery' class='grasp-option-header'><code>-s, --squery</code></h3>
+
+{% capture description %}Use squery - selector query - css style selectors.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='equery' class='grasp-option-header'><code>-e, --equery</code></h3>
+
+{% capture description %}Use equery - example query - instead of the default squery. Use by typing in an example of the code you want (formatting is irrelevant), with optional wildcards. It is less powerful, but may be easier to use for simpler tasks, than squery. For more information, use `--help equery`.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='file' class='grasp-option-header'><code>-f, --file file::String</code></h3>
+
+{% capture description %}Obtain selector from file.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>example:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--file path/to/selector-file</code>
+
+</ul></dd>
+
+</dl>
+
+<h2>Output control</h2>
+
+<h3 id='max-count' class='grasp-option-header'><code>-m, --max-count n::Int</code></h3>
+
+{% capture description %}Stop after n matches.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>example:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--max-count 2</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='line-number' class='grasp-option-header'><code>-n, --line-number</code></h3>
+
+{% capture description %}Print line number with output lines.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>default:</dt><dd><code>true</code></dd>
+
+</dl>
+
+<h3 id='col-number' class='grasp-option-header'><code>-b, --col-number</code></h3>
+
+{% capture description %}Print column number with output lines.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='filename' class='grasp-option-header'><code>-H, --filename</code></h3>
+
+{% capture description %}Print the file name for each match (opposite: `--no-filename`).{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='only-matching' class='grasp-option-header'><code>-o, --only-matching</code></h3>
+
+{% capture description %}Show only the matching part of the line(s).{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='quiet' class='grasp-option-header'><code>-q, --quiet, --silent</code></h3>
+
+{% capture description %}Suppress all normal output.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='files-without-match' class='grasp-option-header'><code>-W, --files-without-match</code></h3>
+
+{% capture description %}Print only names of files containing no match.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='files-with-matches' class='grasp-option-header'><code>-w, --files-with-matches</code></h3>
+
+{% capture description %}Print only names of files containing matches.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='count' class='grasp-option-header'><code>-c, --count</code></h3>
+
+{% capture description %}Print only a count of matches per file.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h3 id='color' class='grasp-option-header'><code>-O, --color, --colour</code></h3>
+
+{% capture description %}Use color to highlight matches.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>default:</dt><dd><code>true</code></dd>
+
+</dl>
+
+<h3 id='json' class='grasp-option-header'><code>-j, --json</code></h3>
+
+{% capture description %}Prints out JSON for the output instead of formatted results. This will print out the node data as JSON, instead of the formatted text.{% endcapture %}
+
+{{ description | markdownify }}
+
+<h2>Context control</h2>
+
+<h3 id='before-context' class='grasp-option-header'><code>-B, --before-context n::Int</code></h3>
+
+{% capture description %}Print n lines of leading context.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>examples:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--before-context 3</code>
+
+<li><code>-B 3</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='after-context' class='grasp-option-header'><code>-A, --after-context n::Int</code></h3>
+
+{% capture description %}Print n lines of trailing context.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>examples:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--after-context 2</code>
+
+<li><code>-A 2</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='context' class='grasp-option-header'><code>-C, --context n::Int</code></h3>
+
+{% capture description %}Print n lines of output context.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>examples:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>--context 1</code>
+
+<li><code>-C 1</code>
+
+</ul></dd>
+
+</dl>
+
+<h3 id='NUM' class='grasp-option-header'><code>-NUM::Int</code></h3>
+
+{% capture description %}Same as --context NUM.{% endcapture %}
+
+{{ description | markdownify }}
+
+<dl class="grasp-option-info dl-horizontal">
+
+<dt>example:</dt>
+
+<dd><ul class="list-unstyled">
+
+<li><code>-3</code>
+
+</ul></dd>
+
+</dl>
+

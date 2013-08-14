@@ -1,0 +1,21 @@
+<footer>
+  <div class="container">
+    <div class="by clearfix">
+      <span>By <a href="https://twitter.com/gkzahariev">George Zahariev</a>. For updates on grasp follow:</span>
+      <a href="https://twitter.com/gkzahariev" class="twitter-follow-button" data-show-count="true" data-lang="en">Follow @gkzahariev</a>
+      <iframe src="http://ghbtns.com/github-btn.html?user=gkz&type=follow&count=true"
+              allowtransparency="true" frameborder="0" scrolling="0" width="165" height="20"></iframe>
+    </div>
+    <p>Code licensed under the <a href="https://github.com/gkz/grasp/blob/master/LICENSE">MIT License</a>.
+  </div>
+</footer>
+
+<script src="{{ page.base_url }}/assets/js/lib/jquery-2.0.3.js"></script>
+<script src="{{ page.base_url }}/assets/bootstrap/js/bootstrap.js"></script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% include analytics.html %}
+
+{% if page.demo %}
+  <script src="{{ page.base_url }}/assets/js/lib/jquery.terminal-0.7.7.js"></script>
+  <script src="{{ page.base_url }}/assets/js/demo-all.js"></script>
+{% endif %}

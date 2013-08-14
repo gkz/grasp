@@ -1,0 +1,995 @@
+---
+layout: doc-page
+title: JavaScript Syntax
+permalink: /syntax-js/
+base_url: ../..
+---
+
+<p>A node can have three different types of attributes. An attribute containing another node, an attribute containing an array of other nodes, or an attribute containing a primitive value such as a boolean, string, or number.
+
+<p>Use <code>grasp --help syntax</code> for an overview of the syntax, and <code>grasp --help node-type</code> (eg. <code>grasp --help if</code>) for more about information about a node type.
+
+<p>Skip to <a href="#statements">statements</a>, <a href="#expressions">expressions</a>, <a href="#declarations">declarations</a>, <a href="#clauses">clauses</a>, or <a href="#categories">categories of node types</a>.
+
+<p>Based on the <a href="https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API">Mozilla SpiderMonkey AST format</a>.
+
+<h2 id='misc'>Misc</h2>
+
+<h3 id='program'>program (Program)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>body</dd>
+
+</dl>
+
+<h4 class="grasp-syntax-subheading">note:</h4>
+
+<p>The root node of a JavaScript program's AST.
+
+<h3 id='ident'>ident (Identifier)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>primitive attributes:</dt>
+<dd>name</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+x
+{% endhighlight %}
+
+<h3 id='literal'>literal (Literal)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>primitive attributes:</dt>
+<dd>value (val)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>examples:</h4>
+{% highlight javascript %}
+true
+1
+"string"
+{% endhighlight %}
+
+<h3 id='prop'>prop (Property)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>key,&nbsp;&nbsp;value (val)</dd>
+
+<dt>primitive attributes:</dt>
+<dd>kind</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>key</em>: <em>value</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+a: 1
+{% endhighlight %}
+
+<h4 class="grasp-syntax-subheading">note:</h4>
+
+<p>An object expression (obj) has a list of properties, each being a property.
+
+<h2 id='statements'>Statements</h2>
+
+<h3 id='empty'>empty (EmptyStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+;
+{% endhighlight %}
+
+<h3 id='block'>block (BlockStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>body</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>{
+  <em>statement_1</em>
+  <em>statement_2</em>
+  <em>...</em>
+  <em>statement_n</em>
+}</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+{
+  x = 1;
+  f();
+  x++;
+}
+{% endhighlight %}
+
+<h3 id='exp-statement'>exp-statement (ExpressionStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>expression (exp)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>expression</em>;</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+2;
+{% endhighlight %}
+
+<h4 class="grasp-syntax-subheading">note:</h4>
+
+<p>When an expression is used where a statement should be, it is wrapped in an expression statement.
+
+<h3 id='if'>if (IfStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>test,&nbsp;&nbsp;consequent (then),&nbsp;&nbsp;alternate (alt, else)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>if (<em>test</em>)
+  <em>consequent</em>
+[else
+  <em>alternate</em>]</pre>
+
+<h4 class='grasp-syntax-subheading'>examples:</h4>
+{% highlight javascript %}
+if (even(x)) {
+  f(x);
+}
+if (x === 2) {
+  x++;
+} else {
+  f(x);
+}
+{% endhighlight %}
+
+<h3 id='label'>label (LabeledStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>label,&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>label</em>: <em>body</em>;</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+outer:
+for (i = 0; i < xs.length; i++) {
+  for (j = 0; j < ys.length; j++) {
+    if (xs[i] === ys[j]) {
+      break outer;
+    }
+  }
+}
+{% endhighlight %}
+
+<h3 id='break'>break (BreakStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>label</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>break [<em>label</em>];</pre>
+
+<h4 class='grasp-syntax-subheading'>examples:</h4>
+{% highlight javascript %}
+break;
+break outer;
+{% endhighlight %}
+
+<h3 id='continue'>continue (ContinueStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>label</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>continue [<em>label</em>];</pre>
+
+<h4 class='grasp-syntax-subheading'>examples:</h4>
+{% highlight javascript %}
+continue;
+continue outerLoop;
+{% endhighlight %}
+
+<h3 id='with'>with (WithStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>object (obj),&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>with (<em>object</em>)
+  <em>body</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+with ({x: 42}) {
+  f(x);
+}
+{% endhighlight %}
+
+<h3 id='switch'>switch (SwitchStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>discriminant</dd>
+
+<dt>node array attributes:</dt>
+<dd>cases</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>switch (<em>discriminant</em>) {
+  <em>case_1</em>
+  <em>case_2</em>
+  <em>...</em>
+  <em>case_n</em>
+}</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+switch (num) {
+  case 1:
+    f('one');
+    break;
+  case 2:
+    f('two');
+    break;
+  default:
+    f('too many');
+}
+{% endhighlight %}
+
+<h3 id='return'>return (ReturnStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>argument (arg)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>return <em>argument</em>;</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+return f(2);
+{% endhighlight %}
+
+<h3 id='throw'>throw (ThrowStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>argument (arg)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>throw <em>argument</em>;</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+throw new Error("oops");
+{% endhighlight %}
+
+<h3 id='try'>try (TryStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>block,&nbsp;&nbsp;handler,&nbsp;&nbsp;finalizer</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>try
+  <em>block</em>
+[<em>handler</em>]
+[finally
+   <em>finalizer</em>]</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+try {
+  result = parse(input);
+} catch (error) {
+  console.error(error.message);
+  result = '';
+} finally {
+  g(result);
+}
+{% endhighlight %}
+
+<h3 id='while'>while (WhileStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>test,&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>while (<em>test</em>)
+  <em>body</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+while (x < 2) {
+  f(x);
+  x++;
+}
+{% endhighlight %}
+
+<h3 id='do-while'>do-while (DoWhileStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>test,&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>do
+  <em>body</em>
+while (<em>test</em>);</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+do {
+  f(x);
+  x++;
+} while (x < 2);
+{% endhighlight %}
+
+<h3 id='for'>for (ForStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>init,&nbsp;&nbsp;test,&nbsp;&nbsp;update,&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>for ([<em>init</em>]; [<em>test</em>]; [<em>update</em>])
+  <em>body</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+for (var x = 0; x < 2; x++) {
+  f(x);
+}
+{% endhighlight %}
+
+<h3 id='for-in'>for-in (ForInStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>left (l),&nbsp;&nbsp;right (r),&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>for (<em>left</em> in <em>right</em>)
+  <em>body</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+for (prop in object) {
+  f(object[prop]);
+}
+{% endhighlight %}
+
+<h3 id='debugger'>debugger (DebuggerStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>debugger;</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+debugger;
+{% endhighlight %}
+
+<h2 id='declarations'>Declarations</h2>
+
+<h3 id='func-dec'>func-dec (FunctionDeclaration)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>id,&nbsp;&nbsp;body</dd>
+
+<dt>node array attributes:</dt>
+<dd>params</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>function <em>id</em>([<em>param_1</em>], [<em>param_2</em>], [..., <em>param_3</em>])
+  <em>body</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+function f(x, y) {
+  return x * y;
+}
+{% endhighlight %}
+
+<h4 class="grasp-syntax-subheading">note:</h4>
+
+<p>A function declaration contrasts with a function expression (func-exp).
+
+<h3 id='var-decs'>var-decs (VariableDeclaration)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>declarations (decs)</dd>
+
+<dt>primitive attributes:</dt>
+<dd>kind</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>var <em>declaration_1</em>[, <em>declaration_2</em>, ..., <em>declaration_n</em>]</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+var x = 1, y = 2;
+{% endhighlight %}
+
+<h4 class="grasp-syntax-subheading">note:</h4>
+
+<p>Each declaration is a variable declarator (var-dec).
+
+<h3 id='var-dec'>var-dec (VariableDeclarator)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>id,&nbsp;&nbsp;init</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>id</em> = <em>init</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+var x = 2
+{% endhighlight %}
+
+<h2 id='expressions'>Expressions</h2>
+
+<h3 id='this'>this (ThisExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+this
+{% endhighlight %}
+
+<h3 id='arr'>arr (ArrayExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>elements (els)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>[<em>element_0</em>, <em>element_1</em>, <em>...</em>, <em>element_n</em>]</pre>
+
+<h4 class='grasp-syntax-subheading'>examples:</h4>
+{% highlight javascript %}
+[1, 2, 3]
+[]
+{% endhighlight %}
+
+<h3 id='obj'>obj (ObjectExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>properties (props)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>{
+  <em>property_1</em>,
+  <em>property_2</em>,
+  <em>...</em>,
+  <em>property_n</em>
+}</pre>
+
+<h4 class='grasp-syntax-subheading'>examples:</h4>
+{% highlight javascript %}
+{a: 1, b: 2}
+{}
+{% endhighlight %}
+
+<h3 id='func-exp'>func-exp (FunctionExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>id,&nbsp;&nbsp;body</dd>
+
+<dt>node array attributes:</dt>
+<dd>params</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>function [<em>id</em>]([<em>param_1</em>], [<em>param_2</em>], [..., <em>param_3</em>])
+  <em>body</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+var f = function (x, y) {
+  return x * y;
+}
+{% endhighlight %}
+
+<h4 class="grasp-syntax-subheading">note:</h4>
+
+<p>A function expression contrasts with a function declaration (func-dec).
+
+<h3 id='seq'>seq (SequenceExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>expressions (exps)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>expression_1</em>, <em>expression_2</em>, <em>...</em>, <em>expression_n</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+a, b, c
+{% endhighlight %}
+
+<h3 id='unary'>unary (UnaryExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>argument (arg)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>operator</em><em>argument</em></pre>
+
+<h4 class='grasp-syntax-subheading'>examples:</h4>
+{% highlight javascript %}
++x
+typeof x
+{% endhighlight %}
+
+<h3 id='bi'>bi (BinaryExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>left (l),&nbsp;&nbsp;right (r)</dd>
+
+<dt>primitive attributes:</dt>
+<dd>operator (op)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>left</em> <em>operator</em> <em>right</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+x === z
+{% endhighlight %}
+
+<h3 id='assign'>assign (AssignmentExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>left (l),&nbsp;&nbsp;right (r)</dd>
+
+<dt>primitive attributes:</dt>
+<dd>operator (op)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>left</em> <em>operator</em> <em>right</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+(y = 2)
+{% endhighlight %}
+
+<h3 id='update'>update (UpdateExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>argument (arg)</dd>
+
+<dt>primitive attributes:</dt>
+<dd>operator (op),&nbsp;&nbsp;prefix</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>argument</em><em>operator</em>
+
+<em>or, if prefix</em>
+
+<em>operator</em><em>argument</em></pre>
+
+<h4 class='grasp-syntax-subheading'>examples:</h4>
+{% highlight javascript %}
+++x
+x--
+{% endhighlight %}
+
+<h3 id='logic'>logic (LogicalExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>left (l),&nbsp;&nbsp;right (r)</dd>
+
+<dt>primitive attributes:</dt>
+<dd>operator (op)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>left</em> <em>operator</em> <em>right</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+x && y
+{% endhighlight %}
+
+<h3 id='cond'>cond (ConditionalExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>test,&nbsp;&nbsp;consequent (then),&nbsp;&nbsp;alternate (alt, else)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>test</em> ? <em>consequent</em> : <em>alternate</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+x % 2 ? "odd" : "even"
+{% endhighlight %}
+
+<h3 id='new'>new (NewExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>callee</dd>
+
+<dt>node array attributes:</dt>
+<dd>arguments (args)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>new <em>callee</em>(<em>argument_1</em>, <em>argument_2</em>, <em>...</em>, <em>argument_n</em>)</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+new Date(2011, 11, 11)
+{% endhighlight %}
+
+<h3 id='call'>call (CallExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>callee</dd>
+
+<dt>node array attributes:</dt>
+<dd>arguments (args)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>callee</em>(<em>argument_1</em>, <em>argument_2</em>, <em>...</em>, <em>argument_n</em>)</pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+f(1,2,3)
+{% endhighlight %}
+
+<h3 id='member'>member (MemberExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>object (obj),&nbsp;&nbsp;property (prop)</dd>
+
+<dt>primitive attributes:</dt>
+<dd>computed</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre><em>object</em>.<em>property</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+Math.PI
+{% endhighlight %}
+
+<h2 id='clauses'>Clauses</h2>
+
+<h3 id='switch-case'>switch-case (SwitchCase)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>test</dd>
+
+<dt>node array attributes:</dt>
+<dd>consequent (then)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>case <em>test</em> | default :
+  <em>consequent</em></pre>
+
+<h4 class='grasp-syntax-subheading'>examples:</h4>
+{% highlight javascript %}
+case 1:
+  z = 'one';
+  break;
+default:
+  z = 'two'
+{% endhighlight %}
+
+<h3 id='catch'>catch (CatchClause)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>param,&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>catch (<em>param</em>)
+  <em>body</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+catch (e) {
+  console.error(e.message);
+}
+{% endhighlight %}
+
+<h2 id="categories">Categories</h2>
+
+<p>Categories of node types - use <code>grasp --help categories</code> for an overview, and <code>grasp --help category-name</code> for further information about a specific category.
+
+<h3 id='statement'>statement (Statement)</h3>
+
+<ul>
+
+<li>empty</li>
+
+<li>block</li>
+
+<li>exp-statement</li>
+
+<li>if</li>
+
+<li>label</li>
+
+<li>break</li>
+
+<li>continue</li>
+
+<li>with</li>
+
+<li>switch</li>
+
+<li>return</li>
+
+<li>throw</li>
+
+<li>try</li>
+
+<li>while</li>
+
+<li>do-while</li>
+
+<li>for</li>
+
+<li>for-in</li>
+
+<li>debugger</li>
+
+</ul>
+
+<h3 id='dec'>dec (Declaration)</h3>
+
+<ul>
+
+<li>func-dec</li>
+
+<li>var-decs</li>
+
+<li>var-dec</li>
+
+</ul>
+
+<h3 id='exp'>exp (Expression)</h3>
+
+<ul>
+
+<li>this</li>
+
+<li>arr</li>
+
+<li>obj</li>
+
+<li>func-exp</li>
+
+<li>seq</li>
+
+<li>unary</li>
+
+<li>bi</li>
+
+<li>assign</li>
+
+<li>update</li>
+
+<li>logic</li>
+
+<li>cond</li>
+
+<li>new</li>
+
+<li>call</li>
+
+<li>member</li>
+
+</ul>
+
+<h3 id='clause'>clause (Clause)</h3>
+
+<ul>
+
+<li>switch-case</li>
+
+<li>catch</li>
+
+</ul>
+
+<h3 id='biop'>biop (BiOp)</h3>
+
+<ul>
+
+<li>bi</li>
+
+<li>logic</li>
+
+<li>assign</li>
+
+</ul>
+
+<h3 id='func'>func (Function)</h3>
+
+<ul>
+
+<li>func-dec</li>
+
+<li>func-exp</li>
+
+</ul>
+
+<h3 id='for-loop'>for-loop (ForLoop)</h3>
+
+<ul>
+
+<li>for</li>
+
+<li>for-in</li>
+
+</ul>
+
+<h3 id='while-loop'>while-loop (WhileLoop)</h3>
+
+<ul>
+
+<li>do-while</li>
+
+<li>while</li>
+
+</ul>
+
+<h3 id='loop'>loop (Loop)</h3>
+
+<ul>
+
+<li>for</li>
+
+<li>for-in</li>
+
+<li>do-while</li>
+
+<li>while</li>
+
+</ul>
+

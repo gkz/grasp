@@ -1,0 +1,15 @@
+---
+layout: default
+title: Blog
+base_url: ..
+---
+
+<ul class="grasp-post-list">
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+      <div class="grasp-post-date">{{ post.date | date: "%-d %B %Y" }}</div>
+      <p>{{ post.excerpt }}</p>
+    </li>
+  {% endfor %}
+</ul>

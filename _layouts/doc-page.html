@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<div class="row">
+  <div class="col-md-3 visible-xs visible-sm">
+    <ul class="grasp-docs-nav-mobile list-unstyled clearfix">
+      {% include doc-nav.html %}
+    </ul>
+  </div>
+  <div class="col-md-9 grasp-docs-main">
+    {{ content }}
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm">
+    <ul class="grasp-docs-nav list-unstyled">
+      {% include doc-nav.html %}
+    </ul>
+  </div>
+</div>

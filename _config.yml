@@ -1,0 +1,15 @@
+permalink: /blog/:year/:month/:day/:title
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - Makefile
+  - package.json.ls
+  - package.json
+  - README.md
+  - node_modules
+  - scripts
+safe: true
+lsi: false
+pygments: true
+title: 'grasp - JavaScript structural search and replace'
+version: '0.1.0'

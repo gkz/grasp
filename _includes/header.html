@@ -1,0 +1,43 @@
+<header class="navbar navbar-inverse navbar-fixed-top grasp-navbar">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".grasp-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="{{ site.baseurl }}" class="navbar-brand">grasp</a>
+    </div>
+    <nav class="collapse navbar-collapse grasp-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li class="{% if page.url contains '/quick-start/' %}current{% endif %}">
+          <a href="{{ page.base_url }}/quick-start/">Quick Start</a>
+        </li>
+        <li class="dropdown {% if page.url contains '/docs/' %}current{% endif %}">
+          <a data-toggle="dropdown" class="dropdown-toggle">Documentation <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            {% include doc-nav.html %}
+          </ul>
+        </li>
+        <li class="{% if page.url contains '/faq/' %}current{% endif %}">
+          <a href="{{ page.base_url }}/faq/">FAQ</a>
+        </li>
+        <li class="{% if page.url contains '/blog/' %}current{% endif %}">
+          <a href="{{ page.base_url }}/blog/">Blog</a>
+        </li>
+        <li>
+          <a href="https://github.com/gkz/grasp" target="_blank">
+            View on GitHub <span class="glyphicon glyphicon-new-window"></span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="social-buttons">
+        <iframe src="http://ghbtns.com/github-btn.html?user=gkz&repo=grasp&type=watch&count=true&size=large"
+                allowtransparency="true" frameborder="0" scrolling="0" width="150" height="30"></iframe>
+        {% include tweet-button.html size="large" %}
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,476 @@
+$main-color: #2A5C0B
+$main-sec-color: lighten($main-color, 1.5%)
+$main-shadow: darken($main-color, 5%)
+$bg-color: lighten($main-color, 75%)
+$highlight-color: #EA2A15
+$text-color: #042608
+$nav-text-color: #C2FF9C
+$text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15)
+
+$mono: Monaco, Menlo, Consolas, 'Courier New', monospace
+
+body
+  padding-top: 50px
+  background-color: $bg-color
+  color: $text-color
+  font-size: 16px
+
+a, .glyphicon, .caret
+  transition: background-color 0.25s, color .25s
+
+a
+  color: lighten($main-color, 10%)
+  border-bottom: 1px dotted $main-color
+
+  &:hover
+    text-decoration: none
+    color: $main-color
+    border-bottom-style: solid
+
+  code
+    background: none
+    padding: 0
+    color: inherit
+    font-size: 100%
+
+blockquote
+  border-color: lighten($main-color, 20%)
+
+pre
+  border-radius: 0
+  border: none
+  background-color: lighten($bg-color, 5%)
+
+code
+  color: $text-color
+  background-color: darken($bg-color, 10%)
+  border-radius: 0
+  padding: 3px 6px
+
+h2
+  margin-top: 40px
+
+h3
+  margin-top: 30px
+
+h2, h3
+  &:first-child
+    margin-top: 0
+
+h2[id]
+  padding-top: 80px
+  margin-top: -50px
+
+h3[id]
+  padding-top: 70px
+  margin-top: -50px
+
+h2[id], h3[id]
+  &:first-child
+    margin-top: -50px
+    padding-top: 50px
+
+
+h2 + h3[id]
+  padding-top: 50px
+
+p
+  line-height: 1.9
+
+ol, .grasp-docs-main
+  li
+    margin-top: 2px
+    &:first-child
+      margin-top: 0
+
+.grasp-option-header
+  padding-top: 50px
+  margin-top: 0
+
+  code
+    padding: 0
+
+.grasp-option-info
+  margin: 0
+  dt
+    text-align: left
+    width: 80px
+    margin-top: 2px
+  dd
+    margin-left: 90px
+    margin-top: 2px
+
+.grasp-syntax-info
+  margin: 0
+  dt
+    text-align: left
+    width: 165px
+  dd
+    margin-left: 175px
+
+.grasp-syntax-subheading
+  font-size: inherit
+  font-weight: bold
+
+.term
+  background-color: #002b36
+  color: #839496
+
+.bold
+  font-weight: bold
+.red
+  color: #dc322f
+.cyan
+  color: #2aa198
+.green
+  color: #859900
+.yellow
+  color: #b58900
+
+.terminal
+  font-family: $mono
+  font-size: 13px
+  line-height: 18px
+
+  .terminal-output div div, .prompt
+    line-height: 18px
+
+.grasp-navbar
+  background-color: $main-color
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1)
+  text-shadow: $text-shadow
+  border-color: $main-shadow
+  font-size: 14px
+  $current-bg-color: darken($main-color, 2%)
+  $current-color: lighten($nav-text-color, 5%)
+  $active-bg-color: darken($main-color, 1%)
+
+  .navbar-nav
+    & > li
+      & > a
+        color: $nav-text-color
+        border: 1px solid transparent
+        border: 1px solid transparent
+        border-top: none
+        border-bottom: none
+
+        &:hover
+          color: #fff
+
+          .glyphicon
+            color: #fff
+
+          .caret
+            border-top-color: #fff
+            border-bottom-color: #fff
+
+        &:active
+          background-color: $active-bg-color
+
+        .glyphicon
+          color: $nav-text-color
+
+      &.current a
+        background-color: $current-bg-color
+        color: $current-color
+        border-color: rgba(0, 0, 0, 0.15)
+
+    & > .dropdown
+      cursor: pointer
+
+      & > a > .caret
+        border-top-color: $nav-text-color
+        border-bottom-color: $nav-text-color
+
+    .dropdown-menu
+      padding: 0
+      padding-bottom: 3px
+      border-radius: 3px
+      border-top-left-radius: 0
+      margin-top: -1px
+
+      & > li > a
+        border-bottom: none
+
+      & > li:first-child > a
+        border-top-right-radius: 3px
+
+      & > li:last-child > a
+        margin-bottom: 3px
+
+    .open
+      .dropdown-menu
+        background-color: $active-bg-color
+
+        & > li > a
+          background-color: $active-bg-color
+          color: $nav-text-color
+        & > li > a:hover
+          background-color: lighten($active-bg-color, 3%)
+          color: #fff
+
+      .dropdown-toggle, .dropdown-toggle:hover
+        background-color: darken($main-color, 1%)
+        color: #fff
+        border-color: rgba(0, 0, 0, 0.15)
+        z-index: 1001
+
+        & > .caret
+          border-top-color: #fff
+          border-bottom-color: #fff
+
+    .open.current
+      .dropdown-menu
+        background-color: $current-bg-color
+
+        & > li > a
+          background-color: $current-bg-color
+          color: $current-color
+        & > li > a:hover
+          background-color: lighten($current-bg-color, 3%)
+          color: #fff
+
+      .dropdown-toggle, .dropdown-toggle:hover
+        background-color: $current-bg-color
+        color: #fff
+
+  .navbar-brand
+    color: #fff
+    border: none
+
+  .social-buttons
+    float: left
+    margin-top: 10px
+    margin-bottom: 10px
+    margin-left: 20px
+
+    iframe
+      float: left
+
+    .twitter-share-button
+      margin-top: 1px
+      width: 120px !important
+
+  .in, .collapsing
+    .social-buttons
+      margin-top: 0
+      margin-left: 0
+
+@media (min-width: 768px) and (max-width: 991px)
+  .grasp-navbar .social-buttons
+    position: absolute
+    float: none
+    right: 0
+    margin: 0
+
+    iframe
+      float: none
+      margin-right: 5px
+      margin-top: 5px
+      display: block
+
+    .twitter-share-button
+      margin-top: 5px
+
+.content
+  margin-top: 30px
+
+  h1, h2, h3, h4, h5, h6
+    code
+      font-size: 100%
+      background-color: $bg-color
+
+  h2
+    border-bottom: 1px solid lighten($text-color, 30%)
+    padding-bottom: 9px
+    margin-bottom: 20px
+
+.content-home
+  margin-top: 15px
+
+.grasp-page-header
+  background-color: $main-sec-color
+  color: #fff
+  padding: 45px 0
+
+  h1
+    margin: 0
+    text-shadow: $text-shadow
+
+  .date
+    margin-top: 3px
+    color: #bbb
+    font-size: 90%
+
+.grasp-home-header
+  background-color: $main-sec-color
+  color: #fff
+  padding: 45px 0
+
+  h1
+    font-size: 72px
+    text-shadow: $text-shadow
+    float: left
+    margin: 0
+
+  .grasp-install
+    margin-top: 30px
+    font-size: 20px
+    float: right
+
+    a
+      display: block
+      float: left
+      color: #fff
+      border: none
+      background-color: $highlight-color
+      padding: 3px 6px
+      margin-right: 10px
+
+    code
+      display: block
+      float: left
+      font-size: 100%
+
+  p
+    text-shadow: $text-shadow
+    font-size: 28px
+
+.grasp-demo-link
+  display: block
+  margin: auto
+  margin-top: -10px
+  border: none
+  text-align: center
+  background-color: $highlight-color
+  color: #fff
+  width: 150px
+  padding: 3px 6px
+
+  &:hover
+    border: none
+    color: #fff
+
+.grasp-description
+  font-size: 24px
+
+.features
+  margin-top: 20px
+
+  a
+    text-shadow: $text-shadow
+    text-align: center
+    font-size: 22px
+    background-color: $main-sec-color
+    color: #fff
+    padding: 10px 0
+    display: block
+    margin-bottom: 10px
+
+.follow-for-updates
+  width: 330px
+  margin: 0 auto
+  margin-top: 5px
+
+  iframe, span
+    display: block
+    float: left
+
+  span
+    margin-left: 10px
+    margin-top: 3px
+
+.content-home .grasp-demo-header
+  color: $highlight-color
+  font-size: 48px
+  border-bottom: none
+  margin-bottom: 0
+  padding-top: 80px
+  margin-top: -60px
+
+#demo-terminal
+  height: 400px
+  overflow-y: scroll
+
+#demo-container
+  .edit-file
+    height: 440px
+
+    textarea
+      overflow-y: scroll
+      width: 100%
+      height: 400px
+      border: none
+      padding: 10px
+      font-family: $mono
+      font-size: 13px
+
+    .edit-buttons
+      padding: 3px 0
+
+      .btn-primary
+        background-color: $highlight-color
+        border: 1px solid rgba(0, 0, 0, 0.15)
+
+$docs-nav-bg: darken($bg-color, 7.5%)
+.grasp-docs-nav
+  padding: 15px 0
+  background-color: $docs-nav-bg
+  border-radius: 3px
+
+  li.current:before
+    content: ''
+    position: absolute
+    margin-top: 15px
+    border-color: $docs-nav-bg $docs-nav-bg $docs-nav-bg  $bg-color
+    border-width: 10px
+    border-style: solid
+
+  a
+    display: block
+    padding: 10px 20px
+    border: none
+    font-size: 20px
+
+.grasp-docs-nav-mobile
+  background-color: $docs-nav-bg
+  border-radius: 3px
+  margin-bottom: 30px
+
+  li
+    float: left
+
+    a
+      float: left
+      border: none
+      padding: 10px
+
+    &.current a
+      font-weight: bold
+
+.grasp-post-list
+  list-style-type: none
+  padding: 0
+
+  a
+    font-size: 40px
+    border: none
+
+  .grasp-post-date
+    color: #999
+    font-size: 80%
+
+footer
+  margin-top: 80px
+  padding-top: 40px
+  padding-bottom: 30px
+  border-top: 1px solid darken($bg-color, 20%)
+
+  .by
+    margin-bottom: 20px
+
+    iframe, span
+      display: block
+      float: left
+    span
+      margin-right: 10px
