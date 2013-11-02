@@ -28,10 +28,10 @@ base_url: .
     <div class="col-md-4">
       <a href="./docs/squery">Search using CSS style selectors</a>
 <pre class="term">
-<span class="yellow">$</span> grasp 'if.test [op=&amp;&amp;]' a.js
-<span class="green">2</span><span class="cyan">:</span>    if (<span class="red bold">x &amp;&amp; f(x)</span>) { return x; }
-<span class="green">9</span><span class="cyan">:</span>  if (<span class="red bold">xs.length &amp;&amp; ys.length</span>) {
-<span class="green">14</span><span class="cyan">:</span>  if (<span class="red bold">x &lt; 2 &amp;&amp; list[x]</span>) {
+<span class="yellow">$</span> grasp 'if.test[op=&amp;&amp;]' a.js
+<span class="green">2</span><span class="cyan">:</span>  if (<span class="red bold">x &amp;&amp; f(x)</span>) { return x; }
+<span class="green">5</span><span class="cyan">:</span>    if (<span class="red bold">xs.length &amp;&amp; ys.length</span>) {
+<span class="green">10</span><span class="cyan">:</span>  if (<span class="red bold">x == 3 &amp;&amp; list[x]</span>) {
 </pre>
     </div>
     <div class="col-md-4">
@@ -39,8 +39,8 @@ base_url: .
 <pre class="term">
 <span class="yellow">$</span> grasp -e 'return __ + __' b.js
 <span class="green">3</span><span class="cyan">:</span>  if (x &lt; 2) { <span class="red bold">return x + 2;</span> }
-<span class="green">19</span><span class="cyan">:</span>    <span class="red bold">return '&gt;&gt;' + str.slice(2);</span>
-<span class="green">21</span><span class="cyan">:</span>  <span class="red bold">return f(z) + x;</span>
+<span class="green">13</span><span class="cyan">:</span>      <span class="red bold">return '&gt;&gt;' + str.slice(2);</span>
+<span class="green">15</span><span class="cyan">:</span>  <span class="red bold">return f(z) + x;</span>
 </pre>
     </div>
     <div class="col-md-4">
@@ -61,7 +61,9 @@ f(y+x, z+x);
 
   <h2 class="grasp-demo-header" id="demo">Demo!</h2>
 
-  <p>Available commands: <code>grasp</code>, <code>ls</code>, <code>cd</code>, <code>cat</code>, <code>edit</code>, <code>clear</code>, <code>pwd</code>, <code>touch</code>, <code>echo</code>, <code>cp</code>, <code>mv</code>, <code>rm</code>, <code>mkdir</code>, <code>rmdir</code>. Use <code>grasp --help</code> for grasp help.
+  <p>Available commands: <code>grasp</code>, <code>ls</code>, <code>cd</code>, <code>cat</code>, <code>edit</code>, <code>clear</code>, <code>pwd</code>, <code>touch</code>, <code>echo</code>, <code>cp</code>, <code>mv</code>, <code>rm</code>, <code>mkdir</code>, <code>rmdir</code>, <code>|</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&gt;&gt;</code>.
+
+  <p>Try one of the commands in the examples above. <code>grasp --help</code> for help.
 
   <div id="demo-container">
     <div id="demo-terminal" class="term">

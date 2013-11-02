@@ -9,17 +9,40 @@ fs = new FileSystem process
 
 # initial files
 fs.write-file-sync 'a.js', '''
-                           var x = 1;\n
+                           function g(x) {
+                             if (x && f(x)) { return [1, 2]; }
+                             doSomething();
+                             while(x < 2) {
+                               if (xs.length && ys.length) {
+                                 return xs[x] + ys[x];
+                               }
+                               x++;
+                             }
+                             if (x == 3 && list[x]) {
+                               return list;
+                             }
+                           }
                            '''
 fs.write-file-sync 'b.js', '''
-                           if (x < 2) {
-                             f(x);
-                           }\n
+                           function g(x, str) {
+                             if (x == null) { return; }
+                             if (x < 2) { return x + 2; }
+                             switch (n) {
+                               case 1:
+                                 f({x: str});
+                                 try {
+                                   zz(o);
+                                 } catch (e) {
+                                   return e;
+                                 }
+                               case 2:
+                                 return '>>' + str.slice(2);
+                             }
+                             return f(z) + x;
+                           }
                            '''
 fs.write-file-sync 'c.js', '''
-                           while (y) {
-                             y.pop()
-                           }\n
+                           f(x < y, x == z);
                            '''
 
 # solarized colors for terminal output
