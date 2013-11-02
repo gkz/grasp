@@ -159,9 +159,14 @@
       targetPath = target === '-'
         ? process.previousCwd()
         : path.resolve(process.cwd(), target);
-      if (fs.existsSync(targetPath)) {
-        process.chdir(targetPath);
-      } else {
+      try {
+        if (fs.lstatSync(targetPath).isDirectory()) {
+          process.chdir(targetPath);
+        } else {
+          error("cd: " + targetPath + ": Not a directory");
+        }
+      } catch (e$) {
+        e = e$;
         error("cd: " + targetPath + ": No such file or directory");
       }
       break;

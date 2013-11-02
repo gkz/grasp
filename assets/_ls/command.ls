@@ -108,9 +108,12 @@ run-command = ({fs, process, term, callback, error, stdin, exit}, [command, ...a
   | 'cd' =>
     target = args.0 or '/'
     target-path = if target is '-' then process.previous-cwd! else path.resolve process.cwd!, target
-    if fs.exists-sync target-path
-      process.chdir target-path
-    else
+    try
+      if fs.lstat-sync target-path .is-directory!
+        process.chdir target-path
+      else
+        error "cd: #target-path: Not a directory"
+    catch
       error "cd: #target-path: No such file or directory"
   | 'mkdir' =>
     target-path = args.0
