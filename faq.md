@@ -5,6 +5,42 @@ permalink: /faq/
 base_url: ..
 ---
 
+## What are some use cases?
+
+Any time you would use `grep` or `sed` to search or replace your JavaScript code, you can use grasp instead.
+
+The replace function is great for easily refactoring your code.
+
+In general grasp allows you to search in ways you didn't even think were possible. For instance, say you wanted to find a specific function in your codebase, but couldn't remember where it was. All you remember was that it was part of an object literal, and it called the function `isEven` somewhere in the body. ie. this code lies somewhere in your codebase:
+
+    var obj = {
+      toEven: function(x) {
+        if (isEven(x)) {
+          return x;
+        } else {
+          return x + 1;
+        }
+      }
+    };
+
+You could simply search for `isEven` with grep, but that would find all cases of its use, which not what you want. Furthermore, grep won't even limit itself to finding identifiers named `isEven`, it will find the text `isEven` in strings or comments as well.
+
+Or, you can use grasp to find exactly what you want:
+
+<pre><code>
+$ grasp -r 'obj.props func! #isEven' .
+file.js:2-8:(multiline):
+  toEven: <span class="bold red">function(x) {
+    if (isEven(x)) {
+      return x;
+    } else {
+      return x + 1;
+    }
+  }</span>
+</code></pre>
+
+There are many other possibilities - check out the [documentation](../docs).
+
 ## What does the name mean?
 "grasp" could stand for (depending on your mood) Great/Good/Goddamn/Green Replace And Search Program.
 
