@@ -6,4 +6,6 @@ Powerful JavaScript structural search and replace.
 
 Install: `npm install -g grasp`.
 
+`grasp --help` for help.
+
 [MIT license](https://github.com/gkz/grasp/blob/master/LICENSE).
