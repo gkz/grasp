@@ -161,6 +161,9 @@ suite 'replace' ->
         f(zz == zz);
       }''', it
 
+    test 'overlapping' ->
+      eq 'bi --replace "{{.l}}-{{.r}}"', 'f(1 + 2-3);', it, {input: 'f(1 + 2 + 3);'}
+
     test 'no sub result' ->
       eq '--replace "lala({{FAKE}});" "func" test/data/tt.js', '''debugger;
       lala();

@@ -28,8 +28,10 @@ replace = (replacement, input, nodes, query-engine) ->
   col-offset = 0
   line-offset = 0
   last-line = null
+  prev-node = end: 0
 
   for node in nodes
+    continue if node.start < prev-node.end
     {start, end} = node.loc
 
     start-line-num = start.line - 1 + line-offset
@@ -58,6 +60,7 @@ replace = (replacement, input, nodes, query-engine) ->
     line-offset += replace-lines.length - number-of-lines
     col-offset := end-len - end-col
     last-line := end-line-num + line-offset
+    prev-node := node
 
   unlines input-lines .replace /\n$/, ''
 
