@@ -137,8 +137,16 @@ suite 'replace' ->
         }
       }''', it
 
+    test 'operator' ->
+      eq "--replace 'x {{.op}} y' 'bi' test/data/tt.js", '''debugger;
+      function foobar(o) {
+        with (o) {
+          return x + y;
+        }
+      }''', it
+
     test 'more complex' ->
-      replacement = '{\n  if ({{with.object}} == 9) {\n    return 2{{bi.op}}3;\n  }\n}'
+      replacement = '{\n  if ({{with.object}} == 9) {\n    return 2 {{bi.op}} 3;\n  }\n}'
       eq "--replace '#replacement' 'func.body' test/data/tt.js", '''debugger;
       function foobar(o) {
         if (o == 9) {
