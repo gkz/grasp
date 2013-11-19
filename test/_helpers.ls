@@ -88,7 +88,7 @@ embolden = ->
   else
     it
 
-eq = (arg-string, expected, done, {quiet, data, color, callback = true, stdin, fs, dir, final} = {}) !->
+eq = (arg-string, expected, done, {quiet, data, color, callback = true, stdin, fs, input, dir, final} = {}) !->
   process.chdir dir if dir
   expected-formatted = map embolden, [].concat expected
   args = if not arg-string? then null else if color then arg-string else "--no-color #arg-string"
@@ -110,6 +110,7 @@ eq = (arg-string, expected, done, {quiet, data, color, callback = true, stdin, f
     error: test-func 'error', o
     stdin: stdin
     fs: fs
+    input: input
     data: data
     exit: (exit-code, results) ->
       res = [].concat results

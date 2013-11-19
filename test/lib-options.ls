@@ -58,3 +58,16 @@ suite 'lib options' ->
 
     test 'basic' ->
       eq 'return file.js', '2:  ##return x * x;#', it, {fs}
+
+  suite 'input' ->
+    input = '''
+            if (x) {
+              f(2 + x);
+            }
+            '''
+
+    test 'basic' ->
+      eq 'bi', '2:  f(##2 + x#);', it, {input}
+
+    test 'filename' ->
+      eq 'bi --filename', '(input):2:  f(##2 + x#);', it, {input}

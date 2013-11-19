@@ -23,6 +23,7 @@ run = ({
   data = false
   stdin
   fs = require 'fs'
+  input
   console = _console
 } = {}) ->
   unless args?
@@ -287,8 +288,11 @@ run = ({
         console.error e.message
         done!
 
-  async.each-series targets, (search-target '.'), ->
-    end target-paths
+  if input
+    search '(input)', input
+    end ['-'] # as if stdin for replacement
+  else
+    async.each-series targets, (search-target '.'), -> end target-paths
 
 run.VERSION = VERSION
 module.exports = run
