@@ -293,6 +293,14 @@ run = ({
     end ['-'] # as if stdin for replacement
   else
     async.each-series targets, (search-target '.'), -> end target-paths
+    void
 
-run.VERSION = VERSION
+run <<< {
+  VERSION
+  search: (selector, input) -->
+    run {args: {_: [selector]}, input, +data, exit: (, results) -> results}
+  replace: (selector, replacement, input) -->
+    run {args: {_: [selector], replace: replacement}, input, exit: (, results) -> results}
+}
+
 module.exports = run
