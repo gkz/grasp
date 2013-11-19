@@ -1,6 +1,7 @@
 {lines, unlines} = require 'prelude-ls'
 
 get-raw = (input, node) ->
+  return that if node.raw
   {start:{line:start-line, column:start-col}, end:{line:end-line, column:end-col}} = node.loc
   area = input.slice start-line - 1, end-line
   area.0 = area.0.slice start-col
