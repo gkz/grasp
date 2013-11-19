@@ -178,7 +178,7 @@ suite 'replace' ->
       }''', it
 
     test 'equery with {} in replacement' ->
-      eq '--equery --replace "f({{__ && {} }})" "__ && __" test/data/dir/tttt.js', 'var a = f(b && {});', it
+      eq '--equery --replace "f({{__ && {} }})" "__ && __"', 'var a = f(b && {});', it, {input: 'var a = b && {};'}
 
   suite 'write to' ->
     replaced-content1 = '''
