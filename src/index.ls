@@ -167,11 +167,6 @@ run = ({
 
     count = if options.max-count? then min that, results-len else results-len
 
-    for result in results when not result.loc and result.key and result.value # add loc to Property
-      result.loc =
-        start: result.key.loc.start
-        end: result.value.loc.end
-
     sorted-results = sort-with results-sort-func, results
     sliced-results = sorted-results[til count]
 
