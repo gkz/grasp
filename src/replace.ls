@@ -2,12 +2,7 @@
 
 get-raw = (input, node) ->
   return that if node.raw
-  {start:{line:start-line, column:start-col}, end:{line:end-line, column:end-col}} = node.loc
-  area = input.slice start-line - 1, end-line
-  area.0 = area.0.slice start-col
-  area-last = area[*-1]
-  area[*-1] = area-last.slice 0, if start-line is end-line then end-col - start-col else end-col
-  unlines area
+  input.slice node.start, node.end
 
 replacer = (input, node, query-engine) ->
   (, selector) ->
@@ -23,8 +18,7 @@ process-replacement = (replacement, input, node, query-engine) ->
     .replace /{{((?:[^}]|}[^}])+)}}/g, replacer input, node, query-engine
 
 replace = (replacement, input, nodes, query-engine) ->
-  orig-input-lines = lines input
-  input-lines = orig-input-lines.slice 0
+  input-lines = lines input
   col-offset = 0
   line-offset = 0
   last-line = null
@@ -43,7 +37,7 @@ replace = (replacement, input, nodes, query-engine) ->
     start-col = start.column + col-offset
     end-col = end.column + if start-line-num is end-line-num then col-offset else 0
 
-    replace-lines = lines process-replacement replacement, orig-input-lines, node, query-engine
+    replace-lines = lines process-replacement replacement, input, node, query-engine
     start-line = input-lines[start-line-num]
     end-line = input-lines[end-line-num]
 
