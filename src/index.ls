@@ -171,12 +171,15 @@ run = ({
     sliced-results = sorted-results[til count]
 
     if replacement?
-      replaced = replace replacement, clean-input, sliced-results, query-engine
-      if options.to or options.in-place
-        results-format := 'pairs'
-        out [name, replaced]
-      else
-        out replaced
+      try
+        replaced = replace replacement, clean-input, sliced-results, query-engine
+        if options.to or options.in-place
+          results-format := 'pairs'
+          out [name, replaced]
+        else
+          out replaced
+      catch
+        console.error "#name: Error during replacement. #{e.message}."
     else if options.count
       if options.display-filename
         if options.json or data

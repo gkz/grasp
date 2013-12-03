@@ -180,6 +180,147 @@ suite 'replace' ->
     test 'equery with {} in replacement' ->
       eq '--equery --replace "f({{__ && {} }})" "__ && __"', 'var a = f(b && {});', it, {input: 'var a = b && {};'}
 
+  suite 'filters' ->
+    obj-input = '''
+                var obj = {
+                  a: 1,
+                  b: 2,
+                  c: 3
+                };
+                '''
+    arr-input = '[1,2,3,4]'
+
+    test 'join' ->
+      result = '''
+               var obj = {
+                 a: 1,
+                 b: 2,
+                 c: 3,
+                 d: 4
+               };
+               '''
+      eq 'obj --replace "{\n  {{.props | join \',\n  \' }},\n  d: 4\n}"', result, it, {input: obj-input}
+
+    test 'join no arg' ->
+      eq 'arr --replace "[{{ num | join }}]"', '[1234]', it, {input: arr-input}
+
+    test 'join before other filters' ->
+      eq 'arr --replace "[{{ num | join \', \' | tail }}]"', '[2, 3, 4]', it, {input: arr-input}
+
+    test 'prepend' ->
+      eq 'arr --replace "[{{ num | prepend 0 | join \', \' }}]"', '[0, 1, 2, 3, 4]', it, {input: arr-input}
+
+    test 'prepend multiple args' ->
+      eq 'arr --replace "[{{ num | prepend 0 -1 | join \', \' }}]"', '[-1, 0, 1, 2, 3, 4]', it, {input: arr-input}
+
+    test 'append' ->
+      eq 'arr --replace "[{{ num | append 5 | join \', \' }}]"', '[1, 2, 3, 4, 5]', it, {input: arr-input}
+
+    test 'append multiple args' ->
+      eq 'arr --replace "[{{ num | append 5 6 | join \', \' }}]"', '[1, 2, 3, 4, 5, 6]', it, {input: arr-input}
+
+    test 'before' ->
+      eq 'arr --replace "[{{ num | join \', \' | before \'0, \' }}]"', '[0, 1, 2, 3, 4]', it, {input: arr-input}
+
+    test 'before multiple times' ->
+      eq 'arr --replace "[{{ num | join \', \' | before \'0, \' | before \'-1, \'}}]"', '[-1, 0, 1, 2, 3, 4]', it, {input: arr-input}
+
+    test 'after' ->
+      eq 'arr --replace "[{{ num | join \', \' | after \', 5\' }}]"', '[1, 2, 3, 4, 5]', it, {input: arr-input}
+
+    test 'after multiple times' ->
+      eq 'arr --replace "[{{ num | join \', \' | after \', 5\' | after \', 6\'}}]"', '[1, 2, 3, 4, 5, 6]', it, {input: arr-input}
+
+    test 'wrap one arg' ->
+      eq 'arr --replace "[{{ num | join \', \' | wrap \\\' }}]"', "['1, 2, 3, 4']", it, {input: arr-input}
+
+    test 'wrap two args' ->
+      eq 'arr --replace "[{{ num | join \', \' | wrap [ ] }}]"', '[[1, 2, 3, 4]]', it, {input: arr-input}
+
+    test 'nth' ->
+      eq 'arr --replace "[{{ num | nth 1 }}]"', '[2]', it, {input: arr-input}
+
+    test 'nth-last' ->
+      eq 'arr --replace "[{{ num | nth-last 1 }}]"', '[3]', it, {input: arr-input}
+
+    test 'first' ->
+      eq 'arr --replace "[{{ num | first }}]"', '[1]', it, {input: arr-input}
+
+    test 'head' ->
+      eq 'arr --replace "[{{ num | head }}]"', '[1]', it, {input: arr-input}
+
+    test 'tail' ->
+      eq 'arr --replace "[{{ num | tail }}]"', '[2]', it, {input: arr-input}
+
+    test 'last' ->
+      eq 'arr --replace "[{{ num | last }}]"', '[4]', it, {input: arr-input}
+
+    test 'initial' ->
+      eq 'arr --replace "[{{ num | initial }}]"', '[1]', it, {input: arr-input}
+
+    test 'tail join' ->
+      eq 'arr --replace "[{{ num | tail | join \', \' }}]"', '[2, 3, 4]', it, {input: arr-input}
+
+    test 'initial join' ->
+      eq 'arr --replace "[{{ num | initial | join \', \' }}]"', '[1, 2, 3]', it, {input: arr-input}
+
+    test 'slice' ->
+      eq 'arr --replace "[{{ num | slice 1 3 | join \', \' }}]"', '[2, 3]', it, {input: arr-input}
+
+    test 'reverse' ->
+      eq 'arr --replace "[{{ num | reverse | join \', \' }}]"', '[4, 3, 2, 1]', it, {input: arr-input}
+
+    test 'each before' ->
+      eq 'arr --replace "[{{ num | each before 1 | join \', \' }}]"', '[11, 12, 13, 14]', it, {input: arr-input}
+
+    test 'each before multiple times' ->
+      eq 'arr --replace "[{{ num | each before 1 | each before 0 | join \', \' }}]"', '[011, 012, 013, 014]', it, {input: arr-input}
+
+    test 'each after' ->
+      eq 'arr --replace "[{{ num | each after 0 | join \', \' }}]"', '[10, 20, 30, 40]', it, {input: arr-input}
+
+    test 'each after multiple times' ->
+      eq 'arr --replace "[{{ num | each after 0 | each after 0 | join \', \' }}]"', '[100, 200, 300, 400]', it, {input: arr-input}
+
+    test 'each wrap one arg' ->
+      eq '''arr --replace '[{{ num | each wrap \\" | join ", " }}]' ''', '["1", "2", "3", "4"]', it, {input: arr-input}
+
+    test 'each wrap two args' ->
+      eq '''arr --replace '[{{ num | each wrap ( ) | join ", " }}]' ''', '[(1), (2), (3), (4)]', it, {input: arr-input}
+
+    test 'each wrap multiple times' ->
+      eq '''arr --replace '[{{ num | each wrap ( ) | each wrap [ ] | join ", " }}]' ''', '[[(1)], [(2)], [(3)], [(4)]]', it, {input: arr-input}
+
+    test 'each not enough args' ->
+      eq 'arr --replace "[{{ num | each before | join \', \' }}]"', {func-type: 'error', value: /No arguments supplied for 'each before'/}, it, {input: arr-input}
+
+    test 'invalid each' ->
+      eq 'arr --replace "[{{ num | each FAKE 0 }}]"', {func-type: 'error', value: /'FAKE' is not supported by 'each'/}, it, {input: arr-input}
+
+    test 'invalid filter' ->
+      eq 'arr --replace "[{{ num | FAKE }}]"', {func-type: 'error', value: /Invalid filter: FAKE/}, it, {input: arr-input}
+
+    test 'invalid filter with arg' ->
+      eq 'arr --replace "[{{ num | FAKE arg }}]"', {func-type: 'error', value: /Invalid filter: FAKE arg/}, it, {input: arr-input}
+
+    test 'no arg supplied' ->
+      eq 'arr --replace "[{{ num | nth }}]"', {func-type: 'error', value: /No arguments supplied for 'nth' filter/}, it, {input: arr-input}
+
+    test 'squery non-spaced |' ->
+      eq 'arr --replace "{{ [op=|] }}"', 'x | y', it, {input: '[x | y]'}
+
+    test 'squery spaced |' ->
+      eq 'arr --replace "{{ [op= | ] }}"', 'x | y', it, {input: '[x | y]'}
+
+    test 'equery' ->
+      eq '"f(__)" --equery --replace "[{{ x|y }}]"', '[x | y]', it, {input: 'f(x | y)'}
+
+    test 'equery filter fail' ->
+      eq '"f(__)" --equery --replace "[{{ g( x | y ) }}]"', '[g(x|y)]', it, {input: 'f(g(x|y))'}
+
+    test 'extra bit to args-str' ->
+      eq 'arr --replace "[{{ num | after || }}2]"', '[1||2]', it, {input: '[1]'}
+
   suite 'write to' ->
     replaced-content1 = '''
       debugger;

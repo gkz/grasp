@@ -1,14 +1,105 @@
-{lines, unlines} = require 'prelude-ls'
+{lines, unlines, filter} = require 'prelude-ls'
 
 get-raw = (input, node) ->
-  return that if node.raw
-  input.slice node.start, node.end
+  raw = if node.raw
+    that
+  else
+    input.slice node.start, node.end
+  "#{ node.raw-prepend or '' }#raw#{ node.raw-append or '' }"
+
+args-regex = //
+               '([^']*)'
+             | "([^"]*)"
+             | \\(.)
+             | (\S+)
+             //g
+
+filter-regex = //
+               \s+\|\s+
+               ([-a-zA-Z]+)
+               ((?:\s+(?:'[^']*'|"[^"]*"|[^\|\s]+))*)
+               //
 
 replacer = (input, node, query-engine) ->
-  (, selector) ->
-    results = query-engine.query selector, node
-    if results.0
-      get-raw input, that
+  (, replacement-arg) ->
+    [selector, ...filters] = replacement-arg.trim!.split filter-regex
+    try
+      orig-results = query-engine.query selector, node
+    catch
+      orig-results = query-engine.query replacement-arg, node
+      filters := []
+    if orig-results.length
+      results = orig-results
+      raw-prepend = ''
+      raw-append = ''
+      join = null
+
+      while filters.length
+        filter-name = filters.shift!
+        args-str = filters.shift!.trim!
+        args-str += filters.shift! # extra
+        args = []
+        if args-str
+          while args-regex.exec args-str
+            args.push (filter (-> it?), that).1
+          args-regex.last-index = 0
+        if filter-name in <[ prepend before after prepend append wrap nth nth-last slice each ]> and not args.length
+          throw new Error "No arguments supplied for '#filter-name' filter"
+
+        switch filter-name
+        | 'join' =>
+          join := if args.length then args.0 else ''
+        | 'before' =>
+          raw-prepend := "#{args.0}#raw-prepend"
+        | 'after' =>
+          raw-append += args.0
+        | 'prepend' =>
+          for arg in args then results.unshift type: 'Raw', raw: arg
+        | 'append' =>
+          for arg in args then results.push type: 'Raw', raw: arg
+        | 'wrap' =>
+          [pre, post] = if args.length is 1 then [args.0, args.0] else args
+          raw-prepend := "#pre#raw-prepend"
+          raw-append += post
+        | 'each' =>
+          throw new Error "No arguments supplied for 'each #{args.0}'" if args.length < 2
+          switch args.0
+          | 'before' =>
+            for result in results
+              result.raw-prepend = "#{args.1}#{ result.raw-prepend or ''}"
+          | 'after' =>
+            for result in results
+              result.raw-append = "#{ result.raw-append or ''}#{args.1}"
+          | 'wrap' =>
+            [pre, post] = if args.length is 2 then [args.1, args.1] else [args.1, args.2]
+            for result in results
+              result.raw-prepend = "#{pre}#{ result.raw-prepend or ''}"
+              result.raw-append = "#{ result.raw-append or ''}#{post}"
+          | otherwise =>
+            throw new Error "'#{args.0}' is not supported by 'each'"
+        | 'nth' =>
+          n = +args.0
+          results := results.slice n, (n + 1)
+        | 'nth-last' =>
+          n = results.length - +args.0 - 1
+          results := results.slice n, (n + 1)
+        | 'first', 'head' =>
+          results := results.slice 0, 1
+        | 'tail' =>
+          results := results.slice 1
+        | 'last' =>
+          len = results.length
+          results := results.slice (len - 1), len
+        | 'initial' =>
+          results := results.slice 0, (results.length - 1)
+        | 'slice' =>
+          results := [].slice.apply results, args
+        | 'reverse' =>
+          results.reverse!
+        | otherwise =>
+          throw new Error "Invalid filter: #filter-name#{ if args-str then " #args-str" else ''}"
+      raw-results = [get-raw input, result for result in results]
+      "#raw-prepend#{ if join? then raw-results.join join else raw-results.0 }#raw-append"
     else
       ''
 process-replacement = (replacement, input, node, query-engine) ->
