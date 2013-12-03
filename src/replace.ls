@@ -23,11 +23,14 @@ filter-regex = //
 replacer = (input, node, query-engine) ->
   (, replacement-arg) ->
     [selector, ...filters] = replacement-arg.trim!.split filter-regex
-    try
-      orig-results = query-engine.query selector, node
-    catch
-      orig-results = query-engine.query replacement-arg, node
-      filters := []
+    if node._named?[selector]
+      orig-results = [that]
+    else
+      try
+        orig-results = query-engine.query selector, node
+      catch
+        orig-results = query-engine.query replacement-arg, node
+        filters := []
     if orig-results.length
       results = orig-results
       raw-prepend = ''

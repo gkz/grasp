@@ -321,6 +321,16 @@ suite 'replace' ->
     test 'extra bit to args-str' ->
       eq 'arr --replace "[{{ num | after || }}2]"', '[1||2]', it, {input: '[1]'}
 
+  suite 'named wildcards' ->
+    test 'simple' ->
+      eq '--equery --replace "{{b}} + {{a}}" "$a + $b;" test/data/tt.js', 'x + y;', it, {input: 'y + x;'}
+
+    test 'more complex' ->
+      eq '--equery --replace "f({{b}}, true, {{b}}, {{a}})" "f($a, $b)" test/data/tt.js', 'f(x, true, x, y);', it, {input: 'f(y, x);'}
+
+    test 'with filter' ->
+      eq '--equery --replace "{{ num | wrap \\\' }}" "__ * $num" test/data/tt.js', "'2';", it, {input: 'x * 2;'}
+
   suite 'write to' ->
     replaced-content1 = '''
       debugger;
