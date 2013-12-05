@@ -24,7 +24,7 @@ replacer = (input, node, query-engine) ->
   (, replacement-arg) ->
     [selector, ...filters] = replacement-arg.trim!.split filter-regex
     if node._named?[selector]
-      orig-results = [that]
+      orig-results = [].concat that
     else
       try
         orig-results = query-engine.query selector, node

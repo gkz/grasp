@@ -323,13 +323,16 @@ suite 'replace' ->
 
   suite 'named wildcards' ->
     test 'simple' ->
-      eq '--equery --replace "{{b}} + {{a}}" "$a + $b;" test/data/tt.js', 'x + y;', it, {input: 'y + x;'}
+      eq '--equery --replace "{{b}} + {{a}}" "$a + $b;"', 'x + y;', it, {input: 'y + x;'}
 
     test 'more complex' ->
-      eq '--equery --replace "f({{b}}, true, {{b}}, {{a}})" "f($a, $b)" test/data/tt.js', 'f(x, true, x, y);', it, {input: 'f(y, x);'}
+      eq '--equery --replace "f({{b}}, true, {{b}}, {{a}})" "f($a, $b)"', 'f(x, true, x, y);', it, {input: 'f(y, x);'}
 
     test 'with filter' ->
-      eq '--equery --replace "{{ num | wrap \\\' }}" "__ * $num" test/data/tt.js', "'2';", it, {input: 'x * 2;'}
+      eq '--equery --replace "{{ num | wrap \\\' }}" "__ * $num"', "'2';", it, {input: 'x * 2;'}
+
+    test 'array' ->
+      eq '--equery --replace "f({{args | reverse | join \', \'}})" "f(_$args)"', 'f(x, y);', it, {input: 'f(y, x);'}
 
   suite 'write to' ->
     replaced-content1 = '''
