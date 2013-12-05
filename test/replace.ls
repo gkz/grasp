@@ -334,6 +334,9 @@ suite 'replace' ->
     test 'array' ->
       eq '--equery --replace "f({{args | reverse | join \', \'}})" "f(_$args)"', 'f(x, y);', it, {input: 'f(y, x);'}
 
+    test 'object' ->
+      eq '--equery --replace "{ {{props | reverse | join \', \'}} }" "({_:$props})"', '{ y:2, x: 1 };', it, {input: '({x: 1, y:2});'}
+
   suite 'write to' ->
     replaced-content1 = '''
       debugger;

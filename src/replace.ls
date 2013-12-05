@@ -3,8 +3,12 @@
 get-raw = (input, node) ->
   raw = if node.raw
     that
-  else
+  else if node.start?
     input.slice node.start, node.end
+  else if node.key? and node.value? # property
+    input.slice node.key.start, node.value.end
+  else
+    ''
   "#{ node.raw-prepend or '' }#raw#{ node.raw-append or '' }"
 
 args-regex = //
