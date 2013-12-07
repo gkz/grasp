@@ -323,7 +323,7 @@ suite 'replace' ->
 
   suite 'named wildcards' ->
     test 'simple' ->
-      eq '--equery --replace "{{b}} + {{a}}" "$a + $b;"', 'x + y;', it, {input: 'y + x;'}
+      eq '--equery --replace "{{b}} + {{a}}" "$a + $b"', 'x + y;', it, {input: 'y + x;'}
 
     test 'more complex' ->
       eq '--equery --replace "f({{b}}, true, {{b}}, {{a}})" "f($a, $b)"', 'f(x, true, x, y);', it, {input: 'f(y, x);'}
