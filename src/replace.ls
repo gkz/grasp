@@ -60,14 +60,14 @@ replacer = (input, node, query-engine) ->
           raw-prepend := "#{args.0}#raw-prepend"
         | 'after' =>
           raw-append += args.0
-        | 'prepend' =>
-          for arg in args then results.unshift type: 'Raw', raw: arg
-        | 'append' =>
-          for arg in args then results.push type: 'Raw', raw: arg
         | 'wrap' =>
           [pre, post] = if args.length is 1 then [args.0, args.0] else args
           raw-prepend := "#pre#raw-prepend"
           raw-append += post
+        | 'prepend' =>
+          for arg in args then results.unshift type: 'Raw', raw: arg
+        | 'append' =>
+          for arg in args then results.push type: 'Raw', raw: arg
         | 'each' =>
           throw new Error "No arguments supplied for 'each #{args.0}'" if args.length < 2
           switch args.0

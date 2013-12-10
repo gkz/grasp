@@ -293,12 +293,20 @@ run = ({
     async.each-series targets, (search-target '.'), -> end target-paths
     void
 
+get-query-engine = -> {squery: 'grasp-squery', equery: 'grasp-equery'}[it] or it
 run <<< {
   VERSION
-  search: (selector, input) -->
-    run {args: {_: [selector]}, input, +data, exit: (, results) -> results}
-  replace: (selector, replacement, input) -->
-    run {args: {_: [selector], replace: replacement}, input, exit: (, results) -> results}
+  search: (engine, selector, input) -->
+    run do
+      args: {_: [selector], engine: get-query-engine engine}
+      input: input
+      data: true
+      exit: (, results) -> results
+  replace: (engine, selector, replacement, input) -->
+    run do
+      args: {_: [selector], engine: (get-query-engine engine), replace: replacement}
+      input: input
+      exit: (, results) -> results
 }
 
 module.exports = run
