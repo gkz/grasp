@@ -253,7 +253,7 @@ run = ({
     filename.match ext-test-regex
 
   target-paths = []
-  search-target = (up-path) ->
+  search-target = (base-path, up-path) ->
     (target, done) !->
       try
         if target is '-'
@@ -270,15 +270,16 @@ run = ({
             done!
           stdin.resume!
         else
-          target-path = path.join up-path, target
+          target-path = path.resolve up-path, target
           stat = fs.lstat-sync target-path
           if stat.is-directory! and options.recursive
-            async.each-series (fs.readdir-sync target-path), (search-target target-path), ->
+            async.each-series (fs.readdir-sync target-path), (search-target base-path, target-path), ->
               done!
           else if stat.is-file! and test-ext target
             file-contents = fs.read-file-sync target-path, 'utf8'
-            target-paths.push target-path
-            search target-path, file-contents
+            display-path = path.relative base-path, target-path
+            target-paths.push display-path
+            search display-path, file-contents
             done!
           else
             done!
@@ -290,7 +291,8 @@ run = ({
     search '(input)', input
     end ['-'] # as if stdin for replacement
   else
-    async.each-series targets, (search-target '.'), -> end target-paths
+    cwd = process.cwd!
+    async.each-series targets, (search-target cwd, cwd), -> end target-paths
     void
 
 get-query-engine = -> {squery: 'grasp-squery', equery: 'grasp-equery'}[it] or it

@@ -1,6 +1,7 @@
 grasp = require '..'
 require! {
   clc: 'cli-color'
+  path
 }
 {strict-equal: equal, deep-equal, throws}:assert = require 'assert'
 {keys, reject, map, lines} = require 'prelude-ls'
@@ -21,28 +22,30 @@ class StdIn extends EventEmitter
   set-encoding: ->
 
 class FileSystem
-  (@tree) ->
+  (files) ->
+    @files = {}
+    for name, info of files
+      @files[path.join process.cwd!, name] = info
 
-  read-file-sync: (path) ->
-    node = @tree[path]
+  read-file-sync: (target-path) ->
+    node = @files[path.resolve target-path]
     if node.type is 'directory'
-      throw new Error "#path is directory"
+      throw new Error "#target-path is directory"
     else
       node.contents
 
-  read-dir-sync: (path) ->
-    node = @tree[path]
+  read-dir-sync: (target-path) ->
+    node = @files[path.resolve target-path]
     if node.type is 'file'
-      throw new Error "#path is file"
+      throw new Error "#target-path is file"
     else
       keys node
 
-  lstat-sync: (path) ->
-    node = @tree[path]
+  lstat-sync: (target-path) ->
+    node = @files[path.resolve target-path]
 
     is-directory: -> node.type is 'directory'
     is-file: -> node.type is 'file'
-
 
 q = (args, opts = {}) ->
   opts <<< {args}
