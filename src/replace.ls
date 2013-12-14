@@ -12,16 +12,16 @@ get-raw = (input, node) ->
   "#{ node.raw-prepend or '' }#raw#{ node.raw-append or '' }"
 
 args-regex = //
-               '([^']*)'
-             | "([^"]*)"
-             | \\(.)
+               '((?:\\'|[^'])*)'
+             | "((?:\\"|[^"])*)"
+             | (\\.)
              | (\S+)
              //g
 
 filter-regex = //
                \s+\|\s+
                ([-a-zA-Z]+)
-               ((?:\s+(?:'[^']*'|"[^"]*"|[^\|\s]+))*)
+               ((?:\s+(?:'(?:\\'|[^'])*'|"(?:\\"|[^"])*"|[^\|\s]+))*)
                //
 
 replacer = (input, node, query-engine) ->
@@ -48,7 +48,7 @@ replacer = (input, node, query-engine) ->
         args = []
         if args-str
           while args-regex.exec args-str
-            args.push (filter (-> it?), that).1
+            args.push (filter (-> it?), that).1.replace /\\(.)/g '$1'
           args-regex.last-index = 0
         if filter-name in <[ prepend before after prepend append wrap nth nth-last slice each ]> and not args.length
           throw new Error "No arguments supplied for '#filter-name' filter"

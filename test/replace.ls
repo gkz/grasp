@@ -190,6 +190,15 @@ suite 'replace' ->
                 '''
     arr-input = '[1,2,3,4]'
 
+    test 'args escaped single quote' ->
+      eq '''arr --replace "['{{ num | join '\\', \\''}}']"''', "['1', '2', '3', '4']", it, {input: arr-input}
+
+    test 'args escaped double quote' ->
+      eq '''arr --replace '["{{ num | join "\\", \\""}}"]' ''', '["1", "2", "3", "4"]', it, {input: arr-input}
+
+    test 'args escaped single char' ->
+      eq 'arr --replace "[{{ num | join \\\ }}]"', '[1\\2\\3\\4]', it, {input: arr-input}
+
     test 'join' ->
       result = '''
                var obj = {
