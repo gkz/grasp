@@ -197,7 +197,7 @@ suite 'replace' ->
       eq '''arr --replace '["{{ num | join "\\", \\""}}"]' ''', '["1", "2", "3", "4"]', it, {input: arr-input}
 
     test 'args escaped single char' ->
-      eq 'arr --replace "[{{ num | join \\\ }}]"', '[1\\2\\3\\4]', it, {input: arr-input}
+      eq 'arr --replace "[{{ num | join \\\\ }}]"', '[1\\2\\3\\4]', it, {input: arr-input}
 
     test 'join' ->
       result = '''
