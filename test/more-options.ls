@@ -2,10 +2,10 @@
 
 suite 'more options' ->
   test 'version' ->
-    eq '--version', 'grasp v0.1.0', it
+    eq '--version', 'grasp v0.2.0', it
 
   test 'version no callback' ->
-    eq '--version', 'grasp v0.1.0', it, {-callback}
+    eq '--version', 'grasp v0.2.0', it, {-callback}
 
   test 'file (selector)' ->
     eq '--file test/data/selector test/data/t.js', [

@@ -1,6 +1,6 @@
 grasp
 ====
-JavaScript structural search and replace.
+JavaScript structural search, replace, and refactor.
 
 [Demo](http://graspjs.com#demo), [documentation](http://graspjs.com/docs/), and more: [graspjs.com](http://graspjs.com).
 
