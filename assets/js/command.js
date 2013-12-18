@@ -47,7 +47,7 @@
     'l': ['ls', []]
   };
   runCommand = function(arg$, arg1$){
-    var fs, process, term, callback, error, stdin, exit, command, args, mvCp, writeAppend, ref$, names, output, res$, i$, len$, name, target, targetPath, e, file, recursive, filename, $demoContainer, $term, cancel, save;
+    var fs, process, term, callback, error, stdin, exit, command, args, mvCp, writeAppend, ref$, _console, names, output, res$, i$, len$, name, target, targetPath, e, file, recursive, filename, $demoContainer, $term, cancel, save;
     fs = arg$.fs, process = arg$.process, term = arg$.term, callback = arg$.callback, error = arg$.error, stdin = arg$.stdin, exit = arg$.exit;
     command = arg1$[0], args = slice$.call(arg1$, 1);
     mvCp = function(cmd, args){
@@ -116,6 +116,13 @@
     if (command in aliases) {
       ref$ = aliases[command], command = ref$[0], args = ref$[1];
     }
+    _console = {
+      log: callback,
+      warn: callback,
+      error: callback,
+      time: function(){},
+      timeEnd: function(){}
+    };
     switch (command) {
     case 'grasp':
       grasp({
@@ -125,13 +132,20 @@
         exit: exit,
         stdin: stdin,
         fs: fs,
-        console: {
-          log: callback,
-          warn: callback,
-          error: callback,
-          time: function(){},
-          timeEnd: function(){}
-        }
+        console: _console
+      });
+      break;
+    case 'help':
+      grasp({
+        args: {
+          help: true
+        },
+        error: error,
+        callback: callback,
+        exit: exit,
+        stdin: stdin,
+        fs: fs,
+        console: _console
       });
       break;
     case 'clear':

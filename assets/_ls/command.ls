@@ -81,21 +81,18 @@ run-command = ({fs, process, term, callback, error, stdin, exit}, [command, ...a
   if command of aliases
     [command, args] = aliases[command]
 
+  _console =
+    log: callback
+    warn: callback
+    error: callback
+    time: ->
+    time-end: ->
+
   switch command
   | 'grasp' =>
-    grasp do
-      args: unwords args
-      error: error
-      callback: callback
-      exit: exit
-      stdin: stdin
-      fs: fs
-      console:
-        log: callback
-        warn: callback
-        error: callback
-        time: ->
-        time-end: ->
+    grasp {args: (unwords args), error, callback, exit, stdin, fs, console: _console}
+  | 'help' =>
+    grasp {args: {+help}, error, callback, exit, stdin, fs, console: _console}
   | 'clear' =>
     term.clear!
   | 'pwd' =>
