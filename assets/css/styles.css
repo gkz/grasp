@@ -301,13 +301,13 @@ ol li, .grasp-docs-main li {
     margin-left: 10px;
     margin-top: 3px; }
 
-.grasp-demo-header {
-  color: #ea2a15;
-  font-size: 48px;
-  border-bottom: none;
-  margin-bottom: 0;
+.content .grasp-demo-header {
   padding-top: 80px;
   margin-top: -60px; }
+  .content .grasp-demo-header a {
+    color: #ea2a15;
+    font-size: 48px;
+    border-bottom: none; }
 
 #demo-terminal {
   height: 500px;
