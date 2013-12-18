@@ -9,5 +9,5 @@ dev-dependencies:
   LiveScript: '~1.2.0'
   'prelude-ls': '~1.0.3'
   browserify: '~2.34.3'
-  grasp: '~0.1.0'
+  grasp: '~0.2.0'
   'grasp-syntax-javascript': '~0.1.0'

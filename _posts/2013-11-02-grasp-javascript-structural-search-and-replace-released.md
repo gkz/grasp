@@ -1,12 +1,12 @@
 ---
 layout: post
-title: grasp 0.1.0 released!
+title: Grasp 0.1.0 released!
 base_url: ../../../../..
 ---
 
-The first version of grasp, 0.1.0, has been released!
+The first version of Grasp, 0.1.0, has been released!
 
-Grasp is a command line utility that allows you to search and replace your JavaScript code - but unlike programs like "grep" or "sed", it searches for the structure behind your code (the abstract syntax) rather than simply its textual representation. We call this structural search and replace, and it allows for much more powerful search and replace.
+Grasp is a command line utility that allows you to search and replace your JavaScript code - but unlike programs like `grep` or `sed`, it searches for the structure behind your code (the abstract syntax) rather than simply its textual representation. We call this structural search and replace, and it allows for much more powerful search and replace.
 
 Install with `npm install -g grasp`.
 
@@ -18,4 +18,4 @@ Grasp is quiet feature rich for its first release. The command line portion is t
 
 ### Speed
 
-I haven't done any profiling/optimization of grasp yet, due to the fact that I ran into my self imposed deadline for releasing the first version, and that it runs in a reasonable time already for most purposes. In the upcoming releases, I focus on optimization to improve the experience on larger code bases.
+I haven't done any profiling/optimization of Grasp yet, due to the fact that I ran into my self imposed deadline for releasing the first version, and that it runs in a reasonable time already for most purposes. In the upcoming releases, I focus on optimization to improve the experience on larger code bases.

@@ -5,6 +5,7 @@ Process = require './process'
 {run} = require './command'
 
 process = new Process
+window.process = process
 fs = new FileSystem process
 
 # initial files

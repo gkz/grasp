@@ -4,7 +4,7 @@ permalink: /squery/
 title: squery
 ---
 
-Squery stands for "Selector Query" and uses CSS style selectors to query a abstract syntax tree (AST). It is the default query engine for grasp, the other being [equery](../equery). If for some reason your query engine is set to equery, you can set it back to squery with `-s, --squery`.
+Squery stands for "Selector Query" and uses CSS style selectors to query a abstract syntax tree (AST). It is the default query engine for Grasp, the other being [equery](../equery). If for some reason your query engine is set to equery, you can set it back to squery with `-s, --squery`.
 
 
 ## Selectors
@@ -49,13 +49,11 @@ If for some reason the node type cannot be the first thing in a compound stateme
 
 ### Attributes
 
+Attribute selectors match nodes whose attributes match the specified test, not the value of the attributes themselves. To select an attribute of a node, use a [property selector](#property), eg. `node.attribute`.
+
 You can see all available attributes on the [JavaScript syntax page](../syntax-js). There are three types of attributes, those which contain other nodes, those which contain arrays of other nodes, and those which contain primitive values (literals such as `true`, `34`, etc.). We call attributes which contain either nodes, or arrays of nodes "complex attributes", and those which contain primitive values "primitive attributes".
 
 For instance, the update expression node has a primitive attribute called `prefix`, which contains a boolean specifying if the operator is prefix or postfix. Its `argument` attribute however is a complex one, as it consists of another node.
-
-`[...]` style attributes match nodes who pass these attribute selectors, not the value of the attributes themselves.
-
-`@attr` matches the attribute itself - it matches any node which exists in the specified attribute. For example, `@left` matches `2` in `2 + 3`.
 
 `[attr]` matches a node which has the attribute `attr` eg. `[left]` matches `2 + 3` in the code `2 + 3`.
 
@@ -112,11 +110,15 @@ The sibling selector: `before ~ sibling` matches any node which has the same par
 
 The adjacent selector: `before + adjacent` matches any node that has the same parent as `before`, and appears directly after `before`, which matches the `sibling` selector.
 
+And the [property selector](#property) which warrants its own section.
+
 Nodes can have both attributes which are other nodes, or attributes which contain arrays of other nodes. The previous selectors treat a node which is in an array of other nodes as a direct child of that node. For instance, an array expression contains the attribute `elements` which is an array of its elements. For the code `[1, 2, 3]` the selector `arr > 1` will match `1`.
 
-The property selector: `node.attribute` matches the node contained in the specified attribute, or if the attribute is an array containing multiple nodes, will match all the nodes in the array.
-
 If you leave out the left hand side of any of these selectors, `:root` is assumed. If you leave out the right hand side of any of these selectors, `*` wildcard is assumed.
+
+### Property
+
+The property selector `node.attribute` matches the node contained in the specified attribute, or if the attribute is an array containing multiple nodes, will match all the nodes in the array.
 
 You have several tools at your disposal when you access an array of nodes using the property selector. For the following examples, the code `[1, 2, 3, 4]` will be used:
 

@@ -30,7 +30,7 @@ Textually, they are different, but their underlying syntactic structure is the s
 
 For more details about how JavaScript code is transformed into a abstract syntax tree, take a look at our [JavaScript syntax page](../syntax-js).
 
-### How grasp uses the abtract syntax tree
+### How Grasp uses the abtract syntax tree
 
 Grasp parses your code into such a tree, and then uses special patterns you supply to search the code.
 
@@ -48,7 +48,7 @@ First, let's attempt to accomplish that with `grep`:
 
 Well, it found the variable we were looking for, but it also matched `error` in our error message string. That's unfortunate.
 
-We could complicate our search pattern and try to exclude text found in quotes, or we could just use a program that understands the structure of our code instead. We tell grasp to look for identifiers, whose name is "error":
+We could complicate our search pattern and try to exclude text found in quotes, or we could just use a program that understands the structure of our code instead. We tell Grasp to look for identifiers, whose name is "error":
 
 <pre><code>$ grasp 'ident[name=error]' file.js
 1:var <span class="bold red">error</span> = new Error("There was an error attempting to parse the input.");

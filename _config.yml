@@ -11,5 +11,5 @@ exclude:
 safe: true
 lsi: false
 pygments: true
-title: 'grasp - JavaScript structural search and replace'
-version: '0.1.0'
+title: 'Grasp - JavaScript structural search, replace, and refactor'
+version: '0.2.0'

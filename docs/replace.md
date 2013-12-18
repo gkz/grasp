@@ -5,7 +5,7 @@ title: Replacement
 ---
 
 {% raw %}
-You can use the `-R, --replace replacement::String` flag to replace each matched node with the `replacement` text you specify instead of printing out the matches. In grasp, positional arguments can be anywhere, not just at the end - this means that you can do `grasp selector --replace replacement file.js`, if that reads better for you.
+You can use the `-R, --replace replacement::String` flag to replace each matched node with the `replacement` text you specify instead of printing out the matches. In Grasp, positional arguments can be anywhere, not just at the end - this means that you can do `grasp selector --replace replacement file.js`, if that reads better for you.
 
 There are a couple of special cases in the replacement text. First, the text `{{}}` will be replaced with the source of the matched node.
 
@@ -33,8 +33,88 @@ An example:
       f(++y);
     }
 
+If a node has any named matches (currently only a feature of equery, eg. `$name` or `_$items`), you can access this named submatch by simply using the name instead of a selector, eg. `{{name}}`, `{{items}}`.
+
+If more than one match is found, the first match is used. If you would like to print out more than one match, you can use the `join` [filter](#filters).
 
 The replacement text you specify replaces the entire text of the matched node in the source - if you poorly form your replacement, then the result will be poorly formed as well.
-{% endraw %}
 
 By default, the results of using `--replace` will be printed out. If you wish to write new file(s), check out the [`--to` option](../options#to), or if you wish edit the input file(s) in place, check out the [`--in-place` option](../options#in-place).
+
+### Filters
+
+You can append a variety of filters to your selector in the `{{selector}}` syntax. Each filter starts off with a spaced pipe ` | ` - `{{ selector | filter1 | filter2 }}`.
+
+Filters may have zero of more arguments. Arguments are listed after the filter name and are separated by a space. `{{ selector | filter arg0 arg1 }}`.
+
+The available filters are (the code `[1, 2, 3, 4];` will be used for the examples):
+
+- `join [separator]` - Takes the list of matches and joins them with the optional separator argument. If no separator is specified, they are joined with an empty string.
+
+  Eg. `grasp arr --replace '[{{.elements | join "," }}]'` &rarr; `[1,2,3,4];`
+
+- `prepend args...` - Prepends (aka unshifts) its arguments to the list of matches.
+
+  Eg. `grasp arr --replace '[{{.elements | prepend 0 | join "," }}]'` &rarr; `[0,1,2,3,4];`
+
+- `append args...` - Appends (aka pushes) its arguments to the list of matches.
+
+  Eg. `grasp arr --replace '[{{.elements | append 5 | join "," }}]'` &rarr; `[1,2,3,4,5];`
+
+- `before arg` - Prepends its text argument to the entire result. Equivalent to `arg{{}}`. More useful with `each`.
+
+  Eg. `grasp arr --replace '{{ 1 | before "0." }}'` &rarr; `0.1;`
+
+- `after arg` - Appends its text argument to the entire result. Equivalent to `{{}}arg`. More useful with `each`.
+
+  Eg. `grasp arr --replace '{{ 1 | after 0 }}'` &rarr; `10;`
+
+- `wrap arg [arg]` - Wraps its text arguments around the entire result. If only one argument is supplied, it uses that for both before and after. If two arguments are supplied, the first argument is prepended, and the second is appended. Equivalent to `arg{{}}arg`. Again, this is more useful with `each`.
+
+  Eg. `grasp arr --replace '{{ 1 | wrap \" }}'` &rarr; `"1";`
+
+  Eg. `grasp arr --replace '{{ 1 | wrap [ ] }}'` &rarr; `[1];`
+
+- `each filter [args...]` - Takes a filter (either `before`, `after`, or `wrap`) and applies it to each matched node.
+
+  Eg. `grasp arr --replace '[{{.elements | each before 1 | join "," }}]'` &rarr; `[11,12,13,14];`
+
+  Eg. `grasp arr --replace '[{{.elements | each after 0 | join "," }}]'` &rarr; `[10,20,30,40];`
+
+  Eg. `grasp arr --replace '[{{.elements | each wrap ( ) | join "," }}]'` &rarr; `[(1),(2),(3),(4)];`
+
+- `nth num` - Takes the nth node of the matched results. Zero based indexing.
+
+  Eg. `grasp arr --replace '{{.elements | nth 0 }}'` &rarr; `1;`
+
+- `nth-last num` - Takes the nth last node of the matched results. Zero based indexing.
+
+  Eg. `grasp arr --replace '{{.elements | nth-last 0 }}'` &rarr; `4;`
+
+- `first` - Takes the first node of the matched results. Equivalent to `nth 0`.
+
+  Eg. `grasp arr --replace '{{.elements | first }}'` &rarr; `1;`
+
+- `tail` - Takes all but the first node of the matched results.
+
+  Eg. `grasp arr --replace '[{{.elements | tail | join "," }}]'` &rarr; `[2,3,4];`
+
+- `last` - Takes the last node of the matched results. Equivalent to `nth-last 0`.
+
+  Eg. `grasp arr --replace '{{.elements | last | join "," }}'` &rarr; `4;`
+
+- `initial` - Takes all but the last node of the matched results.
+
+  Eg. `grasp arr --replace '[{{.elements | initial | join "," }}]'` &rarr; `[1,2,3];`
+
+- `slice num [num]` - Acts like JavaScript's `slice` on the matched results.
+
+  Eg. `grasp arr --replace '[{{.elements | slice 2 | join "," }}]'` &rarr; `[3,4];`
+
+  Eg. `grasp arr --replace '[{{.elements | slice 2 3 | join "," }}]'` &rarr; `[3];`
+
+- `reverse` - Reverses the list of matched results.
+
+  Eg. `grasp arr --replace '[{{.elements | reverse | join "," }}]'` &rarr; `[4,3,2,1];`
+
+{% endraw %}

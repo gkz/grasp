@@ -7,11 +7,11 @@ base_url: ..
 
 ## What are some use cases?
 
-Any time you would use `grep` or `sed` to search or replace your JavaScript code, you can use grasp instead.
+Any time you would use `grep` or `sed` to search or replace your JavaScript code, you can use Grasp instead.
 
 The replace function is great for easily refactoring your code.
 
-In general grasp allows you to search in ways you didn't even think were possible. For instance, say you wanted to find a specific function in your codebase, but couldn't remember where it was. All you remember was that it was part of an object literal, and it called the function `isEven` somewhere in the body. ie. this code lies somewhere in your codebase:
+In general Grasp allows you to search in ways you didn't even think were possible. For instance, say you wanted to find a specific function in your codebase, but couldn't remember where it was. All you remember was that it was part of an object literal, and it called the function `isEven` somewhere in the body. ie. this code lies somewhere in your codebase:
 
     var obj = {
       toEven: function(x) {
@@ -25,7 +25,7 @@ In general grasp allows you to search in ways you didn't even think were possibl
 
 You could simply search for `isEven` with grep, but that would find all cases of its use, which not what you want. Furthermore, grep won't even limit itself to finding identifiers named `isEven`, it will find the text `isEven` in strings or comments as well.
 
-Or, you can use grasp to find exactly what you want:
+Or, you can use Grasp to find exactly what you want:
 
 <pre><code>
 $ grasp -r 'obj.props func! #isEven' .
@@ -51,14 +51,14 @@ The word "grasp", when used as a verb can mean:
 This seems apt for a program which lets you search using the more meaningful structure behind your code, rather than simply its textual representation.
 
 ## I found a bug, where can I report it?
-The [GitHub issues section for grasp](https://github.com/gkz/grasp/issues).
+The [GitHub issues section for Grasp](https://github.com/gkz/grasp/issues).
 
-## What languages does grasp support?
-Currently, the only language supported is JavaScript, however grasp was written with the idea of supporting multiple languages in mind. The option `-l, --language` is reserved for this purpose.
+## What languages does Grasp support?
+Currently, the only language supported is JavaScript, however Grasp was written with the idea of supporting multiple languages in mind. The option `-l, --language` is reserved for this purpose.
 
-In order for grasp to support a language, that language needs to have a parser written in JavaScript, and that parser needs to produce location information which maps the produced AST nodes to their origin in the source.
+In order for Grasp to support a language, that language needs to have a parser written in JavaScript, and that parser needs to produce location information which maps the produced AST nodes to their origin in the source.
 
-Some languages which could be included in a future version of grasp, depending on the availability of an appropriate parser, include:
+Some languages which could be included in a future version of Grasp, depending on the availability of an appropriate parser, include:
 
 * CoffeeScript
 * [LiveScript](http://livescript.net)
@@ -83,4 +83,4 @@ The code is [licensed under the MIT license](https://github.com/gkz/grasp/blob/m
 Version `{{ site.version }}`.
 
 ## I have a question not answered here, where can I ask it?
-Post in the [GitHub issues section for grasp](https://github.com/gkz/grasp/issues) with the title "question: &lt;your question here&gt;".
+Join `#graspjs` on Freenode and ask `gkz` or post in the [GitHub issues section for Grasp](https://github.com/gkz/grasp/issues) with the title "question: &lt;your question here&gt;".
