@@ -44,7 +44,8 @@
     '..': ['cd', ['..']],
     '...': ['cd', ['../..']],
     '....': ['cd', ['../../..']],
-    'l': ['ls', []]
+    'l': ['ls', []],
+    'help': ['grasp', ['--help']]
   };
   runCommand = function(arg$, arg1$){
     var fs, process, term, callback, error, stdin, exit, command, args, mvCp, writeAppend, ref$, _console, names, output, res$, i$, len$, name, target, targetPath, e, file, recursive, filename, $demoContainer, $term, cancel, save;
@@ -116,30 +117,17 @@
     if (command in aliases) {
       ref$ = aliases[command], command = ref$[0], args = ref$[1];
     }
-    _console = {
-      log: callback,
-      warn: callback,
-      error: callback,
-      time: function(){},
-      timeEnd: function(){}
-    };
     switch (command) {
     case 'grasp':
+      _console = {
+        log: callback,
+        warn: callback,
+        error: callback,
+        time: function(){},
+        timeEnd: function(){}
+      };
       grasp({
         args: unwords(args),
-        error: error,
-        callback: callback,
-        exit: exit,
-        stdin: stdin,
-        fs: fs,
-        console: _console
-      });
-      break;
-    case 'help':
-      grasp({
-        args: {
-          help: true
-        },
         error: error,
         callback: callback,
         exit: exit,
