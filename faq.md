@@ -9,7 +9,7 @@ base_url: ..
 
 Any time you would use `grep` or `sed` to search or replace your JavaScript code, you can use Grasp instead.
 
-The replace function is great for easily refactoring your code.
+The replace function is great for easily refactoring your code - see the blog post [Refactoring your JavaScript code with Grasp]({{ page.base_url }}/blog/2014/01/07/refactoring-javascript-with-grasp/).
 
 In general Grasp allows you to search in ways you didn't even think were possible. For instance, say you wanted to find a specific function in your codebase, but couldn't remember where it was. All you remember was that it was part of an object literal, and it called the function `isEven` somewhere in the body. ie. this code lies somewhere in your codebase:
 
