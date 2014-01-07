@@ -56,6 +56,9 @@ The [GitHub issues section for Grasp](https://github.com/gkz/grasp/issues).
 ## Is ES6 supported?
 Grasp uses [acorn](https://github.com/marijnh/acorn) to parse JavaScript. Acorn does not currently support ES6, but once it does Grasp will be updated to support it as well.
 
+## Does Grasp do any scope analysis?
+Not yet, but it's something I'm looking into for future versions!
+
 ## What languages does Grasp support?
 Currently, the only language supported is JavaScript, however Grasp was written with the idea of supporting multiple languages in mind. The option `-l, --language` is reserved for this purpose.
 

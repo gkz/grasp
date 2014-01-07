@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Grasp 0.1.0 released!
+category: release
 base_url: ../../../../..
 ---
 

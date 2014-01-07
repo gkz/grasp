@@ -7,9 +7,9 @@ base_url: .
 <div class="grasp-home-header">
   <div class="container">
     <div class="clearfix">
-      <h1>grasp</h1>
+      <h1 id="brand-heading">grasp</h1>
       <div class="grasp-install">
-        <a href="./docs/install">install</a>
+        <a href="{{ page.base_url }}/docs/install">install</a>
         <code>npm install -g grasp</code>
       </div>
     </div>
@@ -17,14 +17,15 @@ base_url: .
   </div>
 </div>
 
-<div class="container content">
+<div class="container">
+  <div class="content">
   <div class="row">
     <div class="grasp-description col-md-12">
       <p>Grasp is a command line utility that allows you to search and replace your JavaScript code - but unlike programs such as <code>grep</code> or <code>sed</code>, it searches the structure behind your code (the abstract syntax tree), rather than simply the text you've written - this allows you to:
       </p>
       <ul>
         <li>Search your code with unparalleled power
-        <li>Quickly and easily refactor your code
+        <li><a href="{{ page.base_url}}/blog/2014/01/07/refactoring-javascript-with-grasp/">Quickly and easily refactor your code</a>
         <li>Implement basic macros in a single line
       </ul>
       <p>Latest blog post: <a href="{{ site.posts.first.url}}">{{ site.posts.first.title }}</a>
@@ -33,7 +34,7 @@ base_url: .
 
   <div class="row features" id="examples">
     <div class="col-md-4">
-      <a href="./docs/squery">Search using CSS style selectors</a>
+      <a href="{{ page.base_url }}/docs/squery">Search using CSS style selectors</a>
 <pre class="term">
 <span class="yellow">$</span> grasp 'if.test[op=&amp;&amp;]' a.js
 <span class="green">2</span><span class="cyan">:</span>  if (<span class="red bold">x &amp;&amp; f(x)</span>) { return x; }
@@ -42,7 +43,7 @@ base_url: .
 </pre>
     </div>
     <div class="col-md-4">
-      <a href="{{ base.base_url }}/docs/equery/">Search using JS code w/ wildcards</a>
+      <a href="{{ page.base_url }}/docs/equery/">Search using JS code w/ wildcards</a>
 <pre class="term">
 <span class="yellow">$</span> grasp -e 'return __ + __' b.js
 <span class="green">3</span><span class="cyan">:</span>  if (x &lt; 2) { <span class="red bold">return x + 2;</span> }
@@ -51,7 +52,7 @@ base_url: .
 </pre>
     </div>
     <div class="col-md-4">
-      <a href="{{ page.page_url }}/docs/replace/">Make complex replacements</a>
+      <a href="{{ page.base_url }}/docs/replace/">Make complex replacements</a>
 <pre class="term">
 <span class="yellow">$</span> cat c.js
 f(x &lt; y, x == z);
@@ -75,5 +76,6 @@ f(y+x, z+x);
   <div id="demo-container">
     <div id="demo-terminal" class="term">
     </div>
+  </div>
   </div>
 </div>

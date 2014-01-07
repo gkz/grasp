@@ -1,7 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Telex)
+
 $main-color: #2A5C0B
 $main-sec-color: lighten($main-color, 1.5%)
 $main-shadow: darken($main-color, 5%)
 $bg-color: lighten($main-color, 75%)
+$content-bg-color: #FEFEFE
 $highlight-color: #EA2A15
 $text-color: #042608
 $nav-text-color: #C2FF9C
@@ -37,21 +40,26 @@ blockquote
   border-color: lighten($main-color, 20%)
 
 pre
-  border-radius: 0
-  border: none
-  background-color: lighten($bg-color, 5%)
+  background-color: #F7F7F9
+  border: 1px solid #E1E1E8
+  border-radius: 3px
 
 code
   color: $text-color
-  background-color: darken($bg-color, 10%)
+  background-color: darken($bg-color, 5%)
   border-radius: 0
-  padding: 3px 6px
+
+h1, h2, h3, h4, h5, h6, .navbar-brand
+  font-family: Telex, "Helvetica Neue", Helvetica, Arial, sans-serif
 
 h2
   margin-top: 40px
+  color: darken($main-color, 2.5%)
 
 h3
   margin-top: 30px
+  margin-bottom: 15px
+  color: lighten($main-color, 5%)
 
 h2, h3
   &:first-child
@@ -273,17 +281,28 @@ ol, .grasp-docs-main
       margin-top: 5px
 
 .content
-  margin-top: 30px
+  $border-color: #D1F0BF
+  padding: 30px
+  margin: 0 -30px
+  border: 1px solid $border-color
+  border-top: none
+  background-color: $content-bg-color
 
   h1, h2, h3, h4, h5, h6
     code
       font-size: 100%
-      background-color: $bg-color
+      background-color: $content-bg-color
 
   h2
     border-bottom: 1px solid lighten($text-color, 30%)
     padding-bottom: 9px
     margin-bottom: 20px
+
+@media (max-width: 767px)
+  .content
+    margin: 0 -15px
+    border-left: none
+    border-right: none
 
 .grasp-page-header
   background-color: $main-sec-color
@@ -294,10 +313,20 @@ ol, .grasp-docs-main
     margin: 0
     text-shadow: $text-shadow
 
-  .date
-    margin-top: 3px
-    color: #bbb
+  .date-author
+    $date-author-color: lighten($main-sec-color, 60%)
+    margin-top: 4px
     font-size: 90%
+    color: $date-author-color
+
+    .date
+      font-style: italic
+    .author
+      color: $date-author-color
+      border: none
+
+      &:hover
+        border-bottom: 1px solid $date-author-color
 
 .grasp-home-header
   background-color: $main-sec-color
@@ -327,6 +356,7 @@ ol, .grasp-docs-main
     code
       display: block
       float: left
+      padding: 3px 6px
       font-size: 100%
 
   p
@@ -377,6 +407,7 @@ ol, .grasp-docs-main
 $demo-terminal-height: 500px
 #demo-terminal
   height: $demo-terminal-height
+  margin-bottom: 40px
   overflow-y: scroll
 
 #demo-container
@@ -404,6 +435,7 @@ $docs-nav-bg: darken($bg-color, 7.5%)
   padding: 15px 0
   background-color: $docs-nav-bg
   border-radius: 3px
+  margin-bottom: 0
 
   li.current:before
     content: ''
@@ -448,19 +480,28 @@ $docs-nav-bg: darken($bg-color, 7.5%)
     font-size: 80%
 
 #disqus_thread
-  margin-top: 100px
+  margin-top: 80px
+
+.note
+  border-left: 2px solid #E8A20C
+  padding: 5px
+  padding-left: 15px
 
 footer
-  margin-top: 80px
-  padding-top: 40px
-  padding-bottom: 30px
-  border-top: 1px solid darken($bg-color, 20%)
+  padding-top: 25px
+  padding-bottom: 50px
 
-  .by
-    margin-bottom: 20px
+  iframe, span
+    display: block
+    float: left
+  span
+    margin-right: 10px
 
-    iframe, span
-      display: block
-      float: left
-    span
-      margin-right: 10px
+  .license
+    float: right
+    margin-right: 0
+
+@media (max-width: 767px)
+  footer .license
+    float: left
+    margin-top: 5px

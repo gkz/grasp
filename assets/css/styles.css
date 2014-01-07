@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Telex);
 body {
   padding-top: 50px;
   background-color: #f0fce9;
@@ -24,21 +25,26 @@ blockquote {
   border-color: #54b716; }
 
 pre {
-  border-radius: 0;
-  border: none;
-  background-color: white; }
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  border-radius: 3px; }
 
 code {
   color: #042608;
-  background-color: #d2f7bc;
-  border-radius: 0;
-  padding: 3px 6px; }
+  background-color: #e1fad2;
+  border-radius: 0; }
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+  font-family: Telex, "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 h2 {
-  margin-top: 40px; }
+  margin-top: 40px;
+  color: #25510a; }
 
 h3 {
-  margin-top: 30px; }
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #34730e; }
 
 h2:first-child, h3:first-child {
   margin-top: 0; }
@@ -222,15 +228,24 @@ ol li, .grasp-docs-main li {
     .grasp-navbar .social-buttons .twitter-share-button {
       margin-top: 5px; } }
 .content {
-  margin-top: 30px; }
+  padding: 30px;
+  margin: 0 -30px;
+  border: 1px solid #d1f0bf;
+  border-top: none;
+  background-color: #fefefe; }
   .content h1 code, .content h2 code, .content h3 code, .content h4 code, .content h5 code, .content h6 code {
     font-size: 100%;
-    background-color: #f0fce9; }
+    background-color: #fefefe; }
   .content h2 {
     border-bottom: 1px solid #13b025;
     padding-bottom: 9px;
     margin-bottom: 20px; }
 
+@media (max-width: 767px) {
+  .content {
+    margin: 0 -15px;
+    border-left: none;
+    border-right: none; } }
 .grasp-page-header {
   background-color: #2d630c;
   color: white;
@@ -238,10 +253,17 @@ ol li, .grasp-docs-main li {
   .grasp-page-header h1 {
     margin: 0;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15); }
-  .grasp-page-header .date {
-    margin-top: 3px;
-    color: #bbbbbb;
-    font-size: 90%; }
+  .grasp-page-header .date-author {
+    margin-top: 4px;
+    font-size: 90%;
+    color: #c8f5ac; }
+    .grasp-page-header .date-author .date {
+      font-style: italic; }
+    .grasp-page-header .date-author .author {
+      color: #c8f5ac;
+      border: none; }
+      .grasp-page-header .date-author .author:hover {
+        border-bottom: 1px solid #c8f5ac; }
 
 .grasp-home-header {
   background-color: #2d630c;
@@ -267,6 +289,7 @@ ol li, .grasp-docs-main li {
     .grasp-home-header .grasp-install code {
       display: block;
       float: left;
+      padding: 3px 6px;
       font-size: 100%; }
   .grasp-home-header p {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
@@ -311,6 +334,7 @@ ol li, .grasp-docs-main li {
 
 #demo-terminal {
   height: 500px;
+  margin-bottom: 40px;
   overflow-y: scroll; }
 
 #demo-container .edit-file {
@@ -332,7 +356,8 @@ ol li, .grasp-docs-main li {
 .grasp-docs-nav {
   padding: 15px 0;
   background-color: #daf8c7;
-  border-radius: 3px; }
+  border-radius: 3px;
+  margin-bottom: 0; }
   .grasp-docs-nav li.current:before {
     content: "";
     position: absolute;
@@ -370,17 +395,26 @@ ol li, .grasp-docs-main li {
     font-size: 80%; }
 
 #disqus_thread {
-  margin-top: 100px; }
+  margin-top: 80px; }
+
+.note {
+  border-left: 2px solid #e8a20c;
+  padding: 5px;
+  padding-left: 15px; }
 
 footer {
-  margin-top: 80px;
-  padding-top: 40px;
-  padding-bottom: 30px;
-  border-top: 1px solid #b4f18e; }
-  footer .by {
-    margin-bottom: 20px; }
-    footer .by iframe, footer .by span {
-      display: block;
-      float: left; }
-    footer .by span {
-      margin-right: 10px; }
+  padding-top: 25px;
+  padding-bottom: 50px; }
+  footer iframe, footer span {
+    display: block;
+    float: left; }
+  footer span {
+    margin-right: 10px; }
+  footer .license {
+    float: right;
+    margin-right: 0; }
+
+@media (max-width: 767px) {
+  footer .license {
+    float: left;
+    margin-top: 5px; } }

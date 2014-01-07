@@ -6,12 +6,17 @@
   <div class="grasp-page-header">
     <div class="container">
       <h1>{{ page.title }}</h1>
-      {% if page.date %}<div class="date">{{ page.date | date: "%-d %B %Y" }}</div>{% endif %}
+      {% if page.date %}
+      <div class="date-author">
+        <span class="date">{{ page.date | date: "%-d %B %Y" }}</span> -
+        <a class="author" href="https://twitter.com/gkzahariev">George Zahariev</a>
+      </div>
+      {% endif %}
     </div>
   </div>
 
-  <div class="content">
-    <div class="container">
+  <div class="container">
+    <div class="content">
       {{ content }}
     </div>
   </div>
