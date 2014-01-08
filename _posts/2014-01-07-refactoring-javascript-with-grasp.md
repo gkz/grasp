@@ -15,7 +15,16 @@ You can go about refactoring your code in several ways; a small change can be do
 Install Grasp with <code>npm install -g grasp</code> (<a href="{{ page.base_url }}/docs/install">more info</a>)
 </p>
 
-In this guide we'll go over how to do some common JavaScript refactoring tasks using Grasp, like renaming an identifier or modifying a function call. First up, the simplest example:
+In this guide we'll go over how to do some JavaScript refactoring tasks using Grasp:
+
+- [Renaming an identifier](#renaming_an_identifier)
+- [Multiple arguments to a single options object](#multiple_arguments_to_a_single_options_object)
+- [Reducing the scope of your changes](#reducing_the_scope_of_your_changes)
+- [Refactoring a function call](#refactoring_a_function_call)
+- [To Yoda conditions, we change](#to_yoda_conditions_we_change)
+- [Changing how you do default arguments](#changing_how_you_do_default_arguments)
+
+First up, the simplest example:
 
 ### Renaming an identifier
 
