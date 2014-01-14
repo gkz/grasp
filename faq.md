@@ -59,6 +59,9 @@ Grasp uses [acorn](https://github.com/marijnh/acorn) to parse JavaScript. Acorn 
 ## Does Grasp do any scope analysis?
 Not yet, but it's something I'm looking into for future versions!
 
+## Why does Grasp use Acorn rather than Esprima to parse JS?
+[Esprima](http://esprima.org/) and [Acorn](https://github.com/marijnh/acorn) are both JavaScript parsers that output in the Mozilla SpiderMonkey AST format. Grasp uses Acorn as it is much faster at parsing JavaScript when location information is needed.
+
 ## What languages does Grasp support?
 Currently, the only language supported is JavaScript, however Grasp was written with the idea of supporting multiple languages in mind. The option `-l, --language` is reserved for this purpose.
 
