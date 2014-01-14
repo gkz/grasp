@@ -71,6 +71,10 @@ Looks good! Now we can set a replacement using the `--replace` or `-R` options, 
 <span class="yellow">$</span> grasp '#remote' -R remoteConnection file.js
 </pre>
 
+<p class="note">
+Windows users, you may need to use double quotes rather than single quotes to wrap your arguments, eg. <code>grasp "#remote" ...</code>
+</p>
+
 Let's look at our updated code:
 
 {% highlight javascript %}
