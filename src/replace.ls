@@ -154,6 +154,6 @@ replace = (replacement, input, nodes, query-engine) ->
     last-line := end-line-num + line-offset
     prev-node := node
 
-  unlines input-lines .replace /\n$/, ''
+  unlines input-lines 
 
 module.exports = {replace}
