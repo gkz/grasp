@@ -2,10 +2,14 @@
 layout: doc-page
 permalink: /replace/
 title: Replacement
+base_url: ../..
 ---
 
-{% raw %}
 You can use the `-R, --replace replacement::String` flag to replace each matched node with the `replacement` text you specify instead of printing out the matches. In Grasp, positional arguments can be anywhere, not just at the end - this means that you can do `grasp selector --replace replacement file.js`, if that reads better for you.
+
+For a bunch of examples, check out [Refactoring your JavaScript code with Grasp]({{ page.base_url }}/blog/2014/01/07/refactoring-javascript-with-grasp/).
+
+{% raw %}
 
 There are a couple of special cases in the replacement text. First, the text `{{}}` will be replaced with the source of the matched node.
 
@@ -39,9 +43,13 @@ If more than one match is found, the first match is used. If you would like to p
 
 The replacement text you specify replaces the entire text of the matched node in the source - if you poorly form your replacement, then the result will be poorly formed as well.
 
-By default, the results of using `--replace` will be printed out. If you wish to write new file(s), check out the [`--to` option](../options#to), or if you wish edit the input file(s) in place, check out the [`--in-place` option](../options#in-place).
+{% endraw %}
+
+By default, the results of using `--replace` will be printed out. If you wish to write new file(s), check out the [`--to` option]({{ page.base_url }}/docs/options#to), or if you wish edit the input file(s) in place, check out the [`--in-place` option]({{ page.base_url}}/docs/options#in-place).
 
 ### Filters
+
+{% raw %}
 
 You can append a variety of filters to your selector in the `{{selector}}` syntax. Each filter starts off with a spaced pipe ` | ` - `{{ selector | filter1 | filter2 }}`.
 
