@@ -248,9 +248,11 @@ run = ({
     console.time-end 'everything' if debug
     exit exit-code, (if options.json then json-string else processed-results)
 
-  ext-test-regex = //(?:#{ options.extensions.join '|' })$//
-  test-ext = (filename) ->
-    filename.match ext-test-regex
+  exts = options.extensions
+  test-ext = if exts.length is 0 or exts.length is 1 and exts.0 is '.'
+    -> true
+  else
+    (.match //\.(?:#{ exts.join '|' })$//)
 
   target-paths = []
   search-target = (base-path, up-path) ->

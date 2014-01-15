@@ -28,3 +28,12 @@ suite 'recursive' ->
 
   test 'no target specified, default to .' ->
     eq '--recursive "#x"', results, it, {dir: 'test/data/'}
+
+  results2 = [
+    * func-type: 'error', value: /Error: Could not parse JavaScript from/
+    * func-type: 'error', value: /Error: Could not parse JavaScript from/
+    'test/data/replacement:1:console.##log#(\'debug\');'
+  ]
+
+  test 'no extension' ->
+    eq '--extensions "." --recursive "#log" test/data', results2, it
