@@ -9,6 +9,7 @@ get-raw = (input, node) ->
     input.slice node.key.start, node.value.end
   else
     ''
+  node.raw = raw
   "#{ node.raw-prepend or '' }#raw#{ node.raw-append or '' }"
 
 args-regex = //
@@ -112,7 +113,7 @@ replacer = (input, node, query-engine) ->
 process-replacement = (replacement, input, node, query-engine) ->
   replacement
     .replace /\\n/g, '\n'
-    .replace /{{}}/g, get-raw input, node
+    .replace /{{}}/g, -> get-raw input, node # don't want to call get-raw unless we need to
     .replace /{{((?:[^}]|}[^}])+)}}/g, replacer input, node, query-engine
 
 replace = (replacement, input, nodes, query-engine) ->
@@ -150,7 +151,7 @@ replace = (replacement, input, nodes, query-engine) ->
     input-lines.splice start-line-num, number-of-lines, ...replace-lines
 
     line-offset += replace-lines.length - number-of-lines
-    col-offset := end-len - end-col
+    col-offset += end-len - end-col
     last-line := end-line-num + line-offset
     prev-node := node
 

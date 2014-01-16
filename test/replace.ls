@@ -54,6 +54,9 @@ suite 'replace' ->
         }
       }''', it
 
+  test 'more than two matches in a single line' ->
+    eq '--replace xxx "#y"', 'xxx + xxx + xxx;', it, {input: 'y + y + y;'}
+
   test 'replace from file' ->
     eq '--replace-file test/data/replacement debugger test/data/tt.js', '''console.log('debug');
       function foobar(o) {
