@@ -9,7 +9,7 @@ suite 'replace' ->
         with (o) {
           return XX + XX;
         }
-      }''', it
+      }\n''', it
 
   test 'single line longer length' ->
     eq '--replace XXX "#zz" test/data/tt.js', '''debugger;
@@ -17,7 +17,7 @@ suite 'replace' ->
         with (o) {
           return XXX + XXX;
         }
-      }''', it
+      }\n''', it
 
   test 'single line shorter length' ->
     eq '--replace X "#zz" test/data/tt.js', '''debugger;
@@ -25,7 +25,7 @@ suite 'replace' ->
         with (o) {
           return X + X;
         }
-      }''', it
+      }\n''', it
 
   test 'multiple lines to multiple lines' ->
     eq '--replace "{\n\n    return zz + zz; }" "with block" test/data/tt.js', '''debugger;
@@ -33,17 +33,17 @@ suite 'replace' ->
         with (o) {
 
           return zz + zz; }
-      }''', it
+      }\n''', it
 
   test 'multiple lines to single line' ->
     eq '--replace "{ return zz + zz; }" "with block" test/data/tt.js', '''debugger;
       function foobar(o) {
         with (o) { return zz + zz; }
-      }''', it
+      }\n''', it
 
   test 'multiple lines to single line with end context' ->
     eq '--replace "z - foo" bi test/data/dir/ttt.js', '''var moooo = 23;
-      var x = z - foo; z - foo;''', it
+      var x = z - foo; z - foo;\n''', it
 
   test 'single line to multiple lines' ->
     eq '--replace "return zz +\nzz;" return test/data/tt.js', '''debugger;
@@ -52,7 +52,7 @@ suite 'replace' ->
           return zz +
       zz;
         }
-      }''', it
+      }\n''', it
 
   test 'more than two matches in a single line' ->
     eq '--replace xxx "#y"', 'xxx + xxx + xxx;', it, {input: 'y + y + y;'}
@@ -63,7 +63,7 @@ suite 'replace' ->
         with (o) {
           return zz + zz;
         }
-      }''', it
+      }\n''', it
 
   test 'replace from file error' ->
     eq '--replace-file test/data/FAKE debugger test/data/t.js', [
@@ -76,7 +76,7 @@ suite 'replace' ->
         with (o) {
           return XX + XX;
         }
-      }''', it
+      }\n''', it
 
   test 'replacement with {}' ->
     eq '--replace "{}" "#zz" test/data/tt.js', '''debugger;
@@ -84,7 +84,7 @@ suite 'replace' ->
         with (o) {
           return {} + {};
         }
-      }''', it
+      }\n''', it
 
   suite 'whole match replacement' ->
     test 'single line' ->
@@ -93,7 +93,7 @@ suite 'replace' ->
         with (o) {
           return o(zz + zz);
         }
-      }''', it
+      }\n''', it
 
     test 'single line multiple' ->
       eq '--replace "o({{}})" "#zz" test/data/tt.js', '''debugger;
@@ -101,7 +101,7 @@ suite 'replace' ->
         with (o) {
           return o(zz) + o(zz);
         }
-      }''', it
+      }\n''', it
 
     test 'single line multiple to multiple lines' ->
       eq '--replace "o({\n      a: {{{}}: 1}\n    })" "#zz" test/data/tt.js', '''debugger;
@@ -113,7 +113,7 @@ suite 'replace' ->
             a: {zz: 1}
           });
         }
-      }''', it
+      }\n''', it
 
     test 'multiple lines' ->
       eq '--replace "var f = {{}}" func test/data/tt.js', '''debugger;
@@ -121,7 +121,7 @@ suite 'replace' ->
         with (o) {
           return zz + zz;
         }
-      }''', it
+      }\n''', it
 
   suite 'sub match replacement' ->
     test 'prop' ->
@@ -130,7 +130,7 @@ suite 'replace' ->
         with (o) {
           return zz + zz;
         }
-      }''', it
+      }\n''', it
 
     test 'child' ->
       eq '--replace "function moo(oooo) {{block}}" "func" test/data/tt.js', '''debugger;
@@ -138,7 +138,7 @@ suite 'replace' ->
         with (o) {
           return zz + zz;
         }
-      }''', it
+      }\n''', it
 
     test 'operator' ->
       eq "--replace 'x {{.op}} y' 'bi' test/data/tt.js", '''debugger;
@@ -146,7 +146,7 @@ suite 'replace' ->
         with (o) {
           return x + y;
         }
-      }''', it
+      }\n''', it
 
     test 'more complex' ->
       replacement = '{\n  if ({{with.object}} == 9) {\n    return 2 {{bi.op}} 3;\n  }\n}'
@@ -155,22 +155,21 @@ suite 'replace' ->
         if (o == 9) {
           return 2 + 3;
         }
-      }''', it
+      }\n''', it
 
     test 'even more complex' ->
       replacement = '{\n  f({{with[obj=#o] return ident}} == {{bi[op=+] ident}});\n}'
       eq "--replace '#replacement' 'func.body' test/data/tt.js", '''debugger;
       function foobar(o) {
         f(zz == zz);
-      }''', it
+      }\n''', it
 
     test 'overlapping' ->
       eq 'bi --replace "{{.l}}-{{.r}}"', 'f(1 + 2-3);', it, {input: 'f(1 + 2 + 3);'}
 
     test 'no sub result' ->
       eq '--replace "lala({{FAKE}});" "func" test/data/tt.js', '''debugger;
-      lala();
-      ''', it
+      lala();\n''', it
 
     test 'equery' ->
       eq '--equery --replace "return o({{__ + __}});" "return __;" test/data/tt.js', '''debugger;
@@ -178,7 +177,7 @@ suite 'replace' ->
         with (o) {
           return o(zz + zz);
         }
-      }''', it
+      }\n''', it
 
     test 'equery with {} in replacement' ->
       eq '--equery --replace "f({{__ && {} }})" "__ && __"', 'var a = f(b && {});', it, {input: 'var a = b && {};'}
@@ -356,7 +355,7 @@ suite 'replace' ->
         with (o) {
           return XX + XX;
         }
-      }
+      }\n
       '''
 
     replaced-content2 = '''
@@ -371,7 +370,7 @@ suite 'replace' ->
           b: 2,
           c: 3
         };
-      }
+      }\n
       '''
 
     test 'object' ->
