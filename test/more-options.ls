@@ -1,11 +1,14 @@
 {eq} = require './_helpers'
+fs = require 'fs'
 
 suite 'more options' ->
+  current-version = JSON.parse fs.read-file-sync 'package.json', 'utf8' .version
+
   test 'version' ->
-    eq '--version', 'grasp v0.2.0', it
+    eq '--version', "grasp v#current-version", it
 
   test 'version no callback' ->
-    eq '--version', 'grasp v0.2.0', it, {-callback}
+    eq '--version', "grasp v#current-version", it, {-callback}
 
   test 'file (selector)' ->
     eq '--file test/data/selector test/data/t.js', [

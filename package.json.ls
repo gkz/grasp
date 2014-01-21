@@ -1,6 +1,6 @@
 name: 'grasp'
 author: 'George Zahariev'
-version: '0.2.0'
+version: '0.2.1'
 homepage: 'http://graspjs.com'
 description: 'JavaScript structural search, replace, and refactor'
 keywords:
@@ -41,7 +41,7 @@ dependencies:
   'cli-color': '~0.2.2'
   async: '~0.2.9'
   optionator: '~0.1.1'
-  'grasp-squery': '~0.2.0'
+  'grasp-squery': '~0.2.1'
   'grasp-equery': '~0.2.0'
   'grasp-syntax-javascript': '~0.1.0'
 
