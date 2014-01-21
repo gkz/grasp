@@ -59,6 +59,17 @@ suite 'lib options' ->
     test 'basic' ->
       eq 'return file.js', '2:  ##return x * x;#', it, {fs}
 
+  suite 'text-format' ->
+    text-format =
+      green: ->
+      cyan: ->
+      magenta: ->
+      red: ->
+      bold: -> "!!#it!!"
+
+    test 'basic' ->
+      eq 'return test/data/t.js', '2:  !!return x * x;!!', it, {text-format}
+
   suite 'input' ->
     input = '''
             if (x) {

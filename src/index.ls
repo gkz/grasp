@@ -1,6 +1,5 @@
 require! {
   path
-  clc: 'cli-color'
   acorn
   squery: 'grasp-squery'
   equery: 'grasp-equery'
@@ -23,6 +22,7 @@ run = ({
   data = false
   stdin
   fs = require 'fs'
+  text-format = require 'cli-color'
   input
   console = _console
 } = {}) ->
@@ -124,8 +124,8 @@ run = ({
       exit 2
       return
 
-  color = Obj.map (-> if options.color then it else (-> "#it")), clc{green, cyan, magenta, red}
-  bold = clc.bold
+  color = Obj.map (-> if options.color then it else (-> "#it")), text-format{green, cyan, magenta, red}
+  bold = text-format.bold
   text-format-funcs = {color, bold}
 
   results-data = []
