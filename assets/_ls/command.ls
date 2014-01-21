@@ -19,7 +19,9 @@ class StdIn extends EventEmitter
   resume: -> @interval = set-interval @emit-data, 0
   set-encoding: ->
 
-bold = -> "[[b;;]#it]"
+text-format = {}
+for let name in <[ green cyan magenta red bold ]>
+  text-format[name] = -> "<span class='#name'>#it</span>"
 
 aliases =
   '..':
@@ -92,7 +94,7 @@ run-command = ({fs, process, term, callback, error, stdin, exit}, [command, ...a
       error: callback
       time: ->
       time-end: ->
-    grasp {args: (unwords args), error, callback, exit, stdin, fs, console: _console}
+    grasp {args: (unwords args), error, callback: callback, exit, stdin, text-format, fs, console: _console}
   | 'clear' =>
     term.clear!
   | 'pwd' =>
@@ -100,8 +102,8 @@ run-command = ({fs, process, term, callback, error, stdin, exit}, [command, ...a
   | 'ls' =>
     names = fs.readdir-sync args.0 || '.'
     output = for name in sort names
-      if fs.lstat-sync name .is-directory! then bold name else name
-    callback unwords output
+      if fs.lstat-sync name .is-directory! then text-format.bold name else name
+    callback unwords output if output.length
   | 'cd' =>
     target = args.0 or '/'
     target-path = if target is '-' then process.previous-cwd! else path.resolve process.cwd!, target
@@ -125,7 +127,7 @@ run-command = ({fs, process, term, callback, error, stdin, exit}, [command, ...a
         output.push fs.read-file-sync file
       catch
         error "cat: #{e.message}"
-    callback <| unchars output .replace /\n$/, ''
+    callback <| unchars output
   | 'echo' =>
     callback unwords args
   | 'touch' =>

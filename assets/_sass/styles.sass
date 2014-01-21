@@ -134,14 +134,20 @@ ol, .grasp-docs-main
   color: #859900
 .yellow
   color: #b58900
+.magenta
+  color: #d33682
 
 .terminal
   font-family: $mono
   font-size: 13px
   line-height: 18px
 
-  .terminal-output div div, .prompt
-    line-height: 18px
+  .terminal-output
+    white-space: pre
+    div div, .prompt
+      line-height: 18px
+  .cmd .prompt
+    margin-top: 2px
 
 .grasp-navbar
   background-color: $main-color
@@ -471,13 +477,14 @@ $docs-nav-bg: darken($bg-color, 7.5%)
   list-style-type: none
   padding: 0
 
-  a
+  .grasp-post-headline
     font-size: 40px
     border: none
 
   .grasp-post-date
     color: #999
     font-size: 80%
+    margin-bottom: 2px
 
 #disqus_thread
   margin-top: 80px
@@ -487,9 +494,14 @@ $docs-nav-bg: darken($bg-color, 7.5%)
   padding: 5px
   padding-left: 15px
 
+.tweets
+  iframe, blockquote
+    float: left
+    margin-right: 10px !important
+
 footer
-  padding-top: 25px
-  padding-bottom: 50px
+  padding-top: 20px
+  padding-bottom: 40px
 
   iframe, span
     display: block

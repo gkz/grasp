@@ -12,4 +12,4 @@ safe: true
 lsi: false
 pygments: true
 title: 'Grasp - JavaScript structural search, replace, and refactor'
-version: '0.2.0'
+version: '0.2.1'

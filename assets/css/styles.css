@@ -119,12 +119,19 @@ ol li, .grasp-docs-main li {
 .yellow {
   color: #b58900; }
 
+.magenta {
+  color: #d33682; }
+
 .terminal {
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
   font-size: 13px;
   line-height: 18px; }
-  .terminal .terminal-output div div, .terminal .prompt {
-    line-height: 18px; }
+  .terminal .terminal-output {
+    white-space: pre; }
+    .terminal .terminal-output div div, .terminal .terminal-output .prompt {
+      line-height: 18px; }
+  .terminal .cmd .prompt {
+    margin-top: 2px; }
 
 .grasp-navbar {
   background-color: #2a5c0b;
@@ -387,12 +394,13 @@ ol li, .grasp-docs-main li {
 .grasp-post-list {
   list-style-type: none;
   padding: 0; }
-  .grasp-post-list a {
+  .grasp-post-list .grasp-post-headline {
     font-size: 40px;
     border: none; }
   .grasp-post-list .grasp-post-date {
     color: #999999;
-    font-size: 80%; }
+    font-size: 80%;
+    margin-bottom: 2px; }
 
 #disqus_thread {
   margin-top: 80px; }
@@ -402,9 +410,13 @@ ol li, .grasp-docs-main li {
   padding: 5px;
   padding-left: 15px; }
 
+.tweets iframe, .tweets blockquote {
+  float: left;
+  margin-right: 10px !important; }
+
 footer {
-  padding-top: 25px;
-  padding-bottom: 50px; }
+  padding-top: 20px;
+  padding-bottom: 40px; }
   footer iframe, footer span {
     display: block;
     float: left; }

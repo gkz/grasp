@@ -2,18 +2,15 @@
 (function(){
   var path, FileSystem, Process, run, process, fs;
   path = require('path');
-  window.process = {
-    stdout: {}
-  };
   FileSystem = require('./fs');
   Process = require('./process');
   run = require('./command').run;
   process = new Process;
   window.process = process;
   fs = new FileSystem(process);
-  fs.writeFileSync('a.js', 'function g(x) {\n  if (x && f(x)) { return [1, 2]; }\n  doSomething();\n  while(x < 2) {\n    if (xs.length && ys.length) {\n      return xs[x] + ys[x];\n    }\n    x++;\n  }\n  if (x == 3 && list[x]) {\n    return list;\n  }\n}');
-  fs.writeFileSync('b.js', 'function g(x, str) {\n  if (x == null) { return; }\n  if (x < 2) { return x + 2; }\n  switch (n) {\n    case 1:\n      f({x: str});\n      try {\n        zz(o);\n      } catch (e) {\n        return e;\n      }\n    case 2:\n      return \'>>\' + str.slice(2);\n  }\n  return f(z) + x;\n}');
-  fs.writeFileSync('c.js', 'f(x < y, x == z);');
+  fs.writeFileSync('a.js', 'function g(x) {\n  if (x && f(x)) { return [1, 2]; }\n  doSomething();\n  while(x < 2) {\n    if (xs.length && ys.length) {\n      return xs[x] + ys[x];\n    }\n    x++;\n  }\n  if (x == 3 && list[x]) {\n    return list;\n  }\n}\n');
+  fs.writeFileSync('b.js', 'function g(x, str) {\n  if (x == null) { return; }\n  if (x < 2) { return x + 2; }\n  switch (n) {\n    case 1:\n      f({x: str});\n      try {\n        zz(o);\n      } catch (e) {\n        return e;\n      }\n    case 2:\n      return \'>>\' + str.slice(2);\n  }\n  return f(z) + x;\n}\n');
+  fs.writeFileSync('c.js', 'f(x < y, x == z);\n');
   $.terminal.ansi_colors.normal = {
     black: '#000',
     red: '#dc322f',
@@ -29,7 +26,11 @@
     $demo = $('#demo-terminal');
     return $demo.terminal(function(args, term){
       return run({
-        callback: term.echo,
+        callback: function(it){
+          return term.echo(it, {
+            raw: true
+          });
+        },
         error: term.error,
         term: term,
         fs: fs,

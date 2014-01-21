@@ -8,6 +8,7 @@
     function Process(){
       this._cwd = '/';
     }
+    prototype.stdout = {};
     prototype.cwd = function(){
       return this._cwd;
     };

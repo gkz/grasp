@@ -4,7 +4,7 @@
  *|  __ / // // // // // _  // _// // / / // _  // _//     // //  \/ // _ \/ /
  *| /  / // // // // // ___// / / // / / // ___// / / / / // // /\  // // / /__
  *| \___//____ \\___//____//_/ _\_  / /_//____//_/ /_/ /_//_//_/ /_/ \__\_\___/
- *|           \/              /____/                              version 0.7.7
+ *|           \/              /____/                              version 0.7.12
  * http://terminal.jcubic.pl
  *
  * Licensed under GNU LGPL Version 3 license
@@ -22,7 +22,7 @@
  * Copyright 2007-2012 Steven Levithan <stevenlevithan.com>
  * Available under the MIT License
  *
- * Date: Wed, 09 Oct 2013 13:38:31 +0000
+ * Date: Sat, 21 Dec 2013 16:57:21 +0000
  */
 
 
@@ -557,24 +557,16 @@
                 if (enabled) {
                     if (data[data.length-1] !== item) {
                         data.push(item);
-                        pos = data.length-1;
                         if (size && data.length > size) {
                             data = data.slice(-size);
                         }
+                        pos = data.length-1;
                         $.Storage.set(name + 'commands', $.json_stringify(data));
                     }
                 }
             },
             data: function() {
                 return data;
-            },
-            next: function() {
-                if (pos < data.length-1) {
-                    ++pos;
-                }
-                if (pos !== -1) {
-                    return data[pos];
-                }
             },
             reset: function() {
                 pos = data.length-1;
@@ -588,13 +580,24 @@
             position: function() {
                 return pos;
             },
+            current: function() {
+                return data[pos];
+            },
+            next: function() {
+                if (pos < data.length-1) {
+                    ++pos;
+                }
+                if (pos !== -1) {
+                    return data[pos];
+                }
+            },
             previous: function() {
                 var old = pos;
                 if (pos > 0) {
                     --pos;
                 }
                 if (old !== -1) {
-                    return data[old];
+                    return data[pos];
                 }
             },
             clear: function() {
@@ -673,14 +676,16 @@
         // -----------------------------------------------------------------------
         function reverse_history_search(next) {
             var history_data = history.data();
-            var regex;
+            var regex, save_string;
             var len = history_data.length;
             if (next && reverse_search_position > 0) {
                 len -= reverse_search_position;
             }
             if (reverse_search_string.length > 0) {
                 for (var j=reverse_search_string.length; j>0; j--) {
-                    regex = new RegExp('^' + reverse_search_string.substring(0, j));
+                    save_string = reverse_search_string.substring(0, j).
+                        replace(/([.*+{}\[\]?])/g, '\\$1');
+                    regex = new RegExp(save_string);
                     for (var i=len; i--;) {
                         if (regex.test(history_data[i])) {
                             reverse_search_position = history_data.length - i;
@@ -696,6 +701,7 @@
                     }
                 }
             }
+            reverse_search_string = ''; // clear if not found any
         }
         // -----------------------------------------------------------------------
         // :: Recalculate number of characters in command line
@@ -1027,9 +1033,11 @@
                     //UP ARROW or CTRL+P
                     if (first_up_history) {
                         last_command = command;
+                        self.set(history.current());
+                    } else {
+                        self.set(history.previous());
                     }
                     first_up_history = false;
-                    self.set(history.previous());
                 } else if (history && e.which === 40 ||
                            (e.which === 78 && e.ctrlKey)) {
                     //DOWN ARROW or CTRL+N
@@ -1078,6 +1086,7 @@
                         command = last_command;
                         redraw();
                         reverse_search = false;
+                        reverse_search_string = '';
                     }
                 } else if (e.which === 39 ||
                            (e.which === 70 && e.ctrlKey)) {
@@ -1400,7 +1409,7 @@
         // characters
         self.data('cmd', self);
         return self;
-    };
+    }; // cmd plugin
 
     // -------------------------------------------------------------------------
     // :: TOOLS
@@ -1414,18 +1423,50 @@
         return string.length - skipFormattingCount(string);
     }
     // -------------------------------------------------------------------------
+  
+    // -------------------------------------------------------------------------
     function processCommand(string, fn) {
         var args = string.split(/(\s+)/);
         return {
             name: args[0],
-            args: fn(args.slice(2).join(''))
+            args: fn(args.slice(2).join('')),
+            rest: string.replace(new RegExp('^' + $.terminal.escape_regex(args[0]) + ' '), '')
         };
     }
+    var color_names = [
+        'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige',
+        'bisque', 'black', 'blanchedalmond', 'blue', 'blueviolet', 'brown',
+        'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral',
+        'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan',
+        'darkgoldenrod', 'darkgray', 'darkgreen', 'darkkhaki', 'darkmagenta',
+        'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon',
+        'darkseagreen', 'darkslateblue', 'darkslategray', 'darkturquoise',
+        'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dodgerblue',
+        'firebrick', 'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro',
+        'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'greenyellow',
+        'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki',
+        'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue',
+        'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgreen',
+        'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen',
+        'lightskyblue', 'lightslategray', 'lightsteelblue', 'lightyellow',
+        'lime', 'limegreen', 'linen', 'magenta', 'maroon', 'mediumaquamarine',
+        'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen',
+        'mediumslateblue', 'mediumspringgreen', 'mediumturquoise',
+        'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin',
+        'navajowhite', 'navy', 'oldlace', 'olive', 'olivedrab', 'orange',
+        'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise',
+        'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum',
+        'powderblue', 'purple', 'red', 'rosybrown', 'royalblue', 'saddlebrown',
+        'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'silver',
+        'skyblue', 'slateblue', 'slategray', 'snow', 'springgreen', 'steelblue',
+        'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat',
+        'white', 'whitesmoke', 'yellow', 'yellowgreen'];
     // -------------------------------------------------------------------------
     var format_split_re = /(\[\[[gbiuso]*;[^;]*;[^\]]*\](?:[^\]]*\\\][^\]]*|[^\]]*|[^\[]*\[[^\]]*)\]?)/;
     var format_parts_re = /\[\[([gbiuso]*);([^;]*);([^;\]]*);?([^;\]]*);?([^\]]*)\]([^\]]*\\\][^\]]*|[^\]]*|[^\[]*\[[^\]]*)\]?/g;
     var format_re = /\[\[([gbiuso]*;[^;\]]*;[^;\]]*(?:;|[^\]()]*);?[^\]]*)\]([^\]]*\\\][^\]]*|[^\]]*|[^\[]*\[[^\]]*)\]?/gi;
-    var color_hex_re = /#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})/;
+    var format_full_re = /^\[\[([gbiuso]*;[^;\]]*;[^;\]]*(?:;|[^\]()]*);?[^\]]*)\]([^\]]*\\\][^\]]*|[^\]]*|[^\[]*\[[^\]]*)\]$/gi;
+    var color_hex_re = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
     var url_re = /https?:\/\/(?:(?!&[^;]+;)[^\s:"'<>)])+/g;
     var email_re = /((([^<>('")[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/g;
     var command_re = /('[^']*'|"(\\"|[^"])*"|\/(\\\/|[^\/])*\/|(\\ |[^ ])+|[\w-]+)/g;
@@ -1433,7 +1474,36 @@
     var format_last_re = /\[\[[gbiuso]*;[^;]*;[^\]]*\]?$/;
     $.terminal = {
         // -----------------------------------------------------------------------
-        // :: split text into lines with equal length so each line can be renderd
+        // :: Validate html color (it can be name or hex)
+        // -----------------------------------------------------------------------
+        valid_color: function(color) {
+            return color.match(color_hex_re) || $.inArray(color, color_names) !== -1;
+        },
+        // -----------------------------------------------------------------------
+        // :: Escape all special regex characters, so it can be use as regex to
+        // :: match exact string that contain those characters
+        // -----------------------------------------------------------------------
+        escape_regex: function(string) {
+            var special = /([\^\$\[\]\(\)\+\*\.\|])/g;
+            return string.replace(special, '\\$1');
+        },
+        // -----------------------------------------------------------------------
+        // :: test if string contain formatting
+        // -----------------------------------------------------------------------
+        have_formatting: function(str) {
+            return str.match(format_re);
+        },
+        is_formatting: function(str) {
+            return str.match(format_full_re);
+        },
+        // -----------------------------------------------------------------------
+        // :: return array of formatting and text between them
+        // -----------------------------------------------------------------------
+        format_split: function(str) {
+            return str.split(format_split_re);
+        },
+        // -----------------------------------------------------------------------
+        // :: split text into lines with equal length so each line can be rendered
         // :: separatly (text formating can be longer then a line).
         // -----------------------------------------------------------------------
         split_equal: function(str, length) {
@@ -1442,6 +1512,8 @@
             var braket = 0;
             var prev_format = '';
             var result = [];
+            // add format text as 5th paramter to formatting it's used for
+            // data attribute in format function
             var array = str.replace(format_re, function(_, format, text) {
                 var semicolons = format.match(/;/g).length;
                 // missing semicolons
@@ -1452,8 +1524,9 @@
                 } else {
                     semicolons = '';
                 }
-                //return '[[' + format + ']' + text + ']';
-                // closing braket will break formatting
+                // return '[[' + format + ']' + text + ']';
+                // closing braket will break formatting so we need to escape those using
+                // html entity equvalent
                 return '[[' + format + semicolons +
                     text.replace(/\\\]/g, '&#93;').replace(/\n/g, '\\n') + ']' +
                     text + ']';
@@ -1549,7 +1622,7 @@
             }, options || {});
             if (typeof str === 'string') {
                 //support for formating foo[[u;;]bar]baz[[b;#fff;]quux]zzz
-                var splited = str.split(format_split_re);
+                var splited = $.terminal.format_split(str);
                 if (splited && splited.length > 1) {
                     str = $.map(splited, function(text) {
                         if (text === '') {
@@ -1582,21 +1655,31 @@
                                     text_decoration.push('overline');
                                 }
                                 if (text_decoration.length) {
-                                    style_str += 'text-decoration:' + text_decoration.join(' ') + ';';
+                                    style_str += 'text-decoration:' +
+                                        text_decoration.join(' ') + ';';
                                 }
                                 if (style.indexOf('i') !== -1) {
                                     style_str += 'font-style:italic;';
                                 }
-                                if (color.match(color_hex_re)) {
+                                if ($.terminal.valid_color(color)) {
                                     style_str += 'color:' + color + ';';
                                     if (style.indexOf('g') !== -1) {
                                         style_str += 'text-shadow:0 0 5px ' + color + ';';
                                     }
                                 }
-                                if (background.match(color_hex_re)) {
+                                if ($.terminal.valid_color(background)) {
                                     style_str += 'background-color:' + background;
                                 }
-                                var result = '<span style="' + style_str + '"' + (_class !== '' ? ' class="' + _class + '"' : '') + ' data-text="'+ (data_text==='' ? text : data_text.replace(/&#93;/g, ']')).replace('"', '&quote;') + '">' + text + '</span>';
+                                var data;
+                                if (data_text === '') {
+                                    data = text;
+                                } else {
+                                    data = data_text.replace(/&#93;/g, ']');
+                                }
+                                var result = '<span style="' + style_str + '"' +
+                                    (_class !== '' ? ' class="' + _class + '"' : '') +
+                                    ' data-text="'+ data.replace('"', '&quote;') +
+                                    '">' + text + '</span>';
                                 return result;
                             });
                         } else {
@@ -2114,9 +2197,10 @@
     // -----------------------------------------------------------------------
     // :: TERMINAL PLUGIN CODE
     // -----------------------------------------------------------------------
-    var version = '0.7.7';
+    var version = '0.7.12';
+    var version_set = !version.match(/^\{\{/);
     var copyright = 'Copyright (c) 2011-2013 Jakub Jankiewicz <http://jcubic.pl>';
-    var version_string = 'version ' + version;
+    var version_string = version_set ? ' version ' + version : ' ';
     //regex is for placing version string aligned to the right
     var reg = new RegExp(" {" + version_string.length + "}$");
     // -----------------------------------------------------------------------
@@ -2124,16 +2208,16 @@
     // -----------------------------------------------------------------------
     var signatures = [
         ['jQuery Terminal', '(c) 2011-2013 jcubic'],
-        ['jQuery Terminal Emulator v. ' + version,
+        ['jQuery Terminal Emulator' + (version_set ? ' v. ' + version : ''),
          copyright.replace(/ *<.*>/, '')],
-        ['jQuery Terminal Emulator version ' + version_string,
+        ['jQuery Terminal Emulator' + (version_set ? version_string : ''),
          copyright.replace(/^Copyright /, '')],
         ['      _______                 ________                        __',
          '     / / _  /_ ____________ _/__  ___/______________  _____  / /',
          ' __ / / // / // / _  / _/ // / / / _  / _/     / /  \\/ / _ \\/ /',
          '/  / / // / // / ___/ // // / / / ___/ // / / / / /\\  / // / /__',
          '\\___/____ \\\\__/____/_/ \\__ / /_/____/_//_/ /_/ /_/  \\/\\__\\_\\___/',
-         '         \\/          /____/                                   '.replace(reg, '') +
+         '         \\/          /____/                                   '.replace(reg, ' ') +
          version_string,
          copyright],
         ['      __ _____                     ________                              __',
@@ -2361,10 +2445,17 @@
                     callback(commands);
                 };
                 finalize(result);
-            } else if (type !== 'function') {
-                throw type + " is invalid interpreter value";
             } else {
-                finalize({interpreter: interpreter, completion: settings.completion});
+                // allow $('<div/>).terminal();
+                if (type === 'undefined') {
+                    interpreter = $.noop;
+                } else if (type !== 'function') {
+                    throw type + " is invalid interpreter value";
+                }
+                finalize({
+                    interpreter: interpreter,
+                    completion: settings.completion
+                });
             }
         }
         // -----------------------------------------------------------------------
@@ -2640,10 +2731,10 @@
         // :: and call user login function with callback that set token
         // :: if user call it with value that is truthy
         // -----------------------------------------------------------------------
-        function login() {
+        function login(authenticate, success) {
             var user = null;
             command_line.prompt('login: ');
-            // don't stor logins in history
+            // don't store logins in history
             if (settings.history) {
                 command_line.history().disable();
             }
@@ -2661,15 +2752,22 @@
                             throw "Value of login property must be a function";
                         }
                         var passwd = command;
-                        settings.login(user, passwd, function(token) {
+                        authenticate(user, passwd, function(token) {
                             if (token) {
                                 var name = settings.name;
                                 name = (name ?  name + '_': '') + terminal_id + '_';
                                 $.Storage.set(name + 'token', token);
                                 $.Storage.set(name + 'login', user);
-                                //restore commands and run interpreter
+                                // restore commands and run interpreter
                                 command_line.commands(commands);
-                                initialize();
+                                if (settings.history) {
+                                    command_line.history().enable();
+                                }
+                                if (typeof success == 'function') {
+                                    // will be used only on init since users have know when
+                                    // login success
+                                    success();
+                                }
                             } else {
                                 self.error('Wrong password try again');
                                 command_line.prompt('login: ');
@@ -2703,10 +2801,7 @@
             var name = (settings.name ? settings.name + '_': '') + terminal_id + '_';
             $.Storage.remove(name + 'token');
             $.Storage.remove(name + 'login');
-            if (settings.history) {
-                command_line.history().disable();
-            }
-            login();
+            login(settings.login, initialize);
             if (typeof settings.onAfterlogout === 'function') {
                 try {
                     settings.onAfterlogout(self);
@@ -2757,9 +2852,6 @@
         // ---------------------------------------------------------------------
         function initialize() {
             prepare_top_interpreter();
-            if (settings.history) {
-                command_line.history().enable();
-            }
             show_greetings();
             if (typeof settings.onInit === 'function') {
                 try {
@@ -2828,9 +2920,7 @@
                             }
                         }
                     }
-                    var special = /([\^\$\[\]\(\)\+\*\.\|])/g;
-                    var clean = string.replace(special, '\\$1');
-                    var reg = new RegExp('^' + clean);
+                    var reg = new RegExp('^' + $.terminal.escape_regex(string));
                     interpreters.top().completion(self, string, function(commands) {
                         var test = command_line.get().substring(0, command_line.position());
                         if (test !== command) {
@@ -2998,6 +3088,14 @@
                     }
                     return self;
                 },
+                // -----------------------------------------------------------------------
+                // :: Prompt for login and password
+                // -----------------------------------------------------------------------
+                login: login,
+                // -----------------------------------------------------------------------
+                // :: User defined settings and defaults as well
+                // -----------------------------------------------------------------------
+                settings: settings,
                 // -----------------------------------------------------------------------
                 // :: Return commands function from top interpreter
                 // -----------------------------------------------------------------------
@@ -3307,6 +3405,7 @@
                 // -----------------------------------------------------------------------
                 echo: function(string, options) {
                     try {
+                        string = string || '';
                         var settings = $.extend({
                             flush: true,
                             raw: false,
@@ -3329,6 +3428,7 @@
                         }
                         on_scrollbar_show_resize();
                     } catch (e) {
+                        // if echo throw exception we can't use error to display that exception
                         alert('terminal.echo ' + exception_message(e) + '\n' +
                               e.stack);
                     }
@@ -3609,6 +3709,7 @@
                     //default name is login so you can pass true
                 })($.type(settings.login) === 'boolean' ? 'login' : settings.login);
             }
+            terminals.append(self);
             if (validate('prompt', settings.prompt)) {
                 var interpreters;
                 var command_line;
@@ -3642,7 +3743,6 @@
                         },
                         commands: commands
                     });
-                    terminals.append(self);
                     if (settings.enabled === true) {
                         self.focus(undefined, true);
                     } else {
@@ -3661,12 +3761,14 @@
                     });
                     if (settings.login && self.token && !self.token() && self.login_name &&
                         !self.login_name()) {
-                        login();
+                        login(settings.login, initialize);
                     } else {
                         initialize();
                     }
-                    num_chars = get_num_chars(self);
-                    command_line.resize(num_chars);
+                    if (self.is(':visible')) {
+                        num_chars = get_num_chars(self);
+                        command_line.resize(num_chars);
+                    }
                     self.oneTime(100, function() {
                         $(window).bind('resize.terminal', function() {
                             if (self.is(':visible')) {

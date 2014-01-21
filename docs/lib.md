@@ -40,7 +40,8 @@ You get the function `grasp`, which is called with an object. The options are:
 * `exit`: A function called when Grasp has done running. It is called with two arguments, the first is an exit code (`0` - all ok, `1` - no results, `2` - error), and potentially a final value.
 * `stdin`: The stdin object - must have the same interface as `process.stdin`. Required if you want to use stdin.
 * `fs`: The file system object - must have the same interface as `require('fs')`. Defaults to `require('fs')`.
-* `console`: An object with `log`, `warn`, `error`, `time`, and `timeEnd` functions. Must have the same interface as `console`. Defaults to `console`.
+* `textFormat`: Text format functions object - must specify `green`, `cyan`, `magenta`, `red`, and `bold` functions ala [cli-color](https://github.com/medikoo/cli-color) (which is the default if nothing is specified).
+* `console`: An object with `log`, `warn`, `error`, `time`, and `timeEnd` functions. Must have the same interface as `console`, which is the default.
 * `input`: A string with the input which to search or replace. Use this instead of specifying `stdin` or `fs` if more convenient.
 
 You can also use two helper functions. They are accessible as properties of `grasp`: `grasp.search` and `grasp.replace`.

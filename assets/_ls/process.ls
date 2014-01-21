@@ -4,6 +4,7 @@ module.exports = class Process
   ->
     @_cwd = '/'
 
+  stdout: {}
   cwd: -> @_cwd
   previous-cwd: -> @_previous-cwd
   chdir: (dir) !->

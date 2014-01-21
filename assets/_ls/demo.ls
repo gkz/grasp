@@ -1,5 +1,4 @@
 path = require 'path'
-window.process = stdout: {} # required to placate cli-color when we require grasp next line
 FileSystem = require './fs'
 Process = require './process'
 {run} = require './command'
@@ -22,7 +21,7 @@ fs.write-file-sync 'a.js', '''
                              if (x == 3 && list[x]) {
                                return list;
                              }
-                           }
+                           }\n
                            '''
 fs.write-file-sync 'b.js', '''
                            function g(x, str) {
@@ -40,10 +39,10 @@ fs.write-file-sync 'b.js', '''
                                  return '>>' + str.slice(2);
                              }
                              return f(z) + x;
-                           }
+                           }\n
                            '''
 fs.write-file-sync 'c.js', '''
-                           f(x < y, x == z);
+                           f(x < y, x == z);\n
                            '''
 
 # solarized colors for terminal output
@@ -60,7 +59,7 @@ $.terminal.ansi_colors.normal =
 <- $
 $demo = $ '#demo-terminal'
 $demo.terminal do
-  (args, term) -> run {callback: term.echo, error: term.error, term: term, fs, process}, args
+  (args, term) -> run {callback: (-> term.echo it, {+raw}), error: term.error, term: term, fs, process}, args
   greetings: ''
   enabled: false
   keydown: (e, term) -> term.resume! if (e.which or e.key-code) in [67, 90] and e.ctrl-key # CTRL+C or CTRL+Z
