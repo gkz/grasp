@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Refactoring your JavaScript code with Grasp
-category: how-to
 base_url: ../../../../..
 ---
 
