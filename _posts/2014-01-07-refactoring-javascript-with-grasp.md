@@ -378,4 +378,4 @@ Complicated changes are easy with Grasp!
 
 ### Conclusion
 
-I hope you have learned a few of things and will consider using Grasp the next time you need to search, replace, or refactor your JavaScript code. Check out the [documentation]({{ page.base_url }}/docs/), [demo]({{ page.base_url}}#demo), and [home page]({{ page.base_url}}) for more information!
+I hope you have learned a few of things and will consider using Grasp the next time you need to search, replace, or refactor your JavaScript code. Check out the [documentation]({{ page.base_url }}/docs/), [demo]({{ page.base_url}}#demo), and [home page]({{ page.base_url}}) for more information! For another example of refactoring JavaScript with Grasp, check out [this blog post]({{ page.base_url }}/blog/2014/02/09/refactoring-javascript-with-grasp-real-life-examples).
