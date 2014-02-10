@@ -53,6 +53,9 @@ This seems apt for a program which lets you search using the more meaningful str
 ## I found a bug, where can I report it?
 The [GitHub issues section for Grasp](https://github.com/gkz/grasp/issues).
 
+## Does Grasp completely replace `grep` or `sed`?
+No. If you are searching text other than JavaScript code, you should still use those text based tools. If the searches you are doing are very simple, or textual in nature, then you can still use those tools.
+
 ## Is ES6 supported?
 Grasp uses [acorn](https://github.com/marijnh/acorn) to parse JavaScript. Acorn does not currently support ES6, but once it does Grasp will be updated to support it as well.
 
