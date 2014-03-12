@@ -180,7 +180,7 @@ options =
     description: 'same as --context NUM'
     example: '-3'
 
-get-options = (input, VERSION) ->
+get-options = (input, version) ->
   {parse, generate-help, generate-help-for-option} = optionator do
     prepend: '''
              Usage: grasp [option]... [selector] [file]...
@@ -190,7 +190,7 @@ get-options = (input, VERSION) ->
              Example: grasp --context 2 'if.test bi[op="<"]' file.js file2.js
              '''
     append: """
-            Version #VERSION
+            Version #version
             <http://graspjs.com/>
             """
     mutually-exclusive: [
