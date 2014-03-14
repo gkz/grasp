@@ -40,7 +40,7 @@ dependencies:
   'prelude-ls': '~1.0.3'
   'cli-color': '~0.2.2'
   async: '~0.2.9'
-  optionator: '~0.1.1'
+  optionator: '~0.2.1'
   'grasp-squery': '~0.2.1'
   'grasp-equery': '~0.2.0'
   'grasp-syntax-javascript': '~0.1.0'

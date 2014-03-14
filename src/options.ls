@@ -180,25 +180,20 @@ options =
     description: 'same as --context NUM'
     example: '-3'
 
-get-options = (input, version) ->
-  {parse, generate-help, generate-help-for-option} = optionator do
-    prepend: '''
-             Usage: grasp [option]... [selector] [file]...
+module.exports = optionator do
+  prepend: '''
+           Usage: grasp [option]... [selector] [file]...
 
-             Search (or --replace) for selector in file(s) or standard input.
-             For more help '--help more', '--help --option-name', '--help syntax'
-             Example: grasp --context 2 'if.test bi[op="<"]' file.js file2.js
-             '''
-    append: """
-            Version #version
-            <http://graspjs.com/>
-            """
-    mutually-exclusive: [
-      <[ replace replace-file ]>
-    ]
-    options: options
-
-  result = parse input
-  {options: result, positional: result._, generate-help, generate-help-for-option}
-
-module.exports = {options, get-options}
+           Search (or --replace) for selector in file(s) or standard input.
+           For more help '--help more', '--help --option-name', '--help syntax'
+           Example: grasp --context 2 'if.test bi[op="<"]' file.js file2.js
+           '''
+  append: """
+          Version {{version}}
+          <http://graspjs.com/>
+          """
+  mutually-exclusive: [
+    <[ replace replace-file ]>
+  ]
+  options: options
+<<< {options}

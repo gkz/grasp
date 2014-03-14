@@ -89,11 +89,11 @@ generate-help-for-category = (name) ->
   #{ unlines names }
   """
 
-module.exports = (generate-help, generate-help-for-option, positional) ->
+module.exports = (generate-help, generate-help-for-option, positional, interpolate) ->
   if positional.length
     help-strings = for arg in positional
       if arg is 'advanced'
-        generate-help {+show-hidden}
+        generate-help {+show-hidden, interpolate}
       else if /^(--?)(\S+)/.exec arg
         [,dashes,option-name] = that
         if dashes.length is 2
@@ -124,4 +124,4 @@ module.exports = (generate-help, generate-help-for-option, positional) ->
           "No such help option: #arg."
     help-strings |> flatten |> join '\n\n'
   else
-    generate-help!
+    generate-help {interpolate}

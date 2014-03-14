@@ -8,7 +8,7 @@ require! {
 {min, sort-with, lines, chars, split, join,  map, Obj} = require 'prelude-ls'
 {format-result, format-name, format-count}:format = require './format'
 {replace} = require './replace'
-{get-options} = require './options'
+{parse: parse-options,  generate-help, generate-help-for-option} = require './options'
 help = require './help'
 _console = console
 
@@ -32,13 +32,11 @@ run = ({
     return
 
   try
-    {options, positional, generate-help, generate-help-for-option} = get-options args, VERSION
+    {_:positional, debug}:options = parse-options args
   catch
     error e.message
     exit 2
     return
-
-  debug = options.debug
 
   if debug
     console.time 'everything'
@@ -52,7 +50,7 @@ run = ({
     return
 
   get-help = (positional = []) ->
-    help generate-help, generate-help-for-option, positional
+    help generate-help, generate-help-for-option, positional, {version: VERSION}
 
   if options.help
     help-string = get-help positional
