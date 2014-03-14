@@ -12,7 +12,7 @@ require! {
 help = require './help'
 _console = console
 
-VERSION = '0.2.1'
+version = '0.2.1'
 
 run = ({
   args
@@ -44,13 +44,13 @@ run = ({
     console.log options
 
   if options.version
-    version-string = "grasp v#VERSION"
+    version-string = "grasp v#version"
     callback version-string
     exit 0, version-string
     return
 
   get-help = (positional = []) ->
-    help generate-help, generate-help-for-option, positional, {version: VERSION}
+    help generate-help, generate-help-for-option, positional, {version}
 
   if options.help
     help-string = get-help positional
@@ -296,8 +296,8 @@ run = ({
     void
 
 get-query-engine = -> {squery: 'grasp-squery', equery: 'grasp-equery'}[it] or it
-run <<< {
-  VERSION
+run <<<
+  VERSION: version
   search: (engine, selector, input) -->
     run do
       args: {_: [selector], engine: get-query-engine engine}
@@ -309,6 +309,5 @@ run <<< {
       args: {_: [selector], engine: (get-query-engine engine), replace: replacement}
       input: input
       exit: (, results) -> results
-}
 
 module.exports = run

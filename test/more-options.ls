@@ -1,8 +1,7 @@
 {eq} = require './_helpers'
-fs = require 'fs'
 
 suite 'more options' ->
-  current-version = JSON.parse fs.read-file-sync 'package.json', 'utf8' .version
+  current-version = require '../package.json' .version
 
   test 'version' ->
     eq '--version', "grasp v#current-version", it

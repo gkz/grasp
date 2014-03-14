@@ -7,6 +7,8 @@ suite 'lib functions' ->
             return x * x;
           }
           '''
+  test 'version' ->
+    equal grasp.VERSION, (require '../package.json' .version)
 
   suite 'search' ->
     test 'basic' ->
