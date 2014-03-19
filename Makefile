@@ -19,7 +19,7 @@ lib:
 lib/%.js: src/%.ls lib
 	$(LSC) --compile --output lib "$<"
 
-.PHONY: build test coverage install loc clean
+.PHONY: build test coverage install-dev install loc clean
 
 all: build
 
@@ -31,8 +31,11 @@ test: build
 coverage: build
 	$(ISTANBUL) cover $(MOCHA2) -- --reporter dot --ui tdd --compilers ls:$(LS)
 
-install: package.json
+dev-install: package.json
 	npm install .
+
+install:
+	npm install -g .
 
 loc:
 	wc -l src/*
