@@ -44,6 +44,7 @@ dependencies:
   'grasp-squery': '~0.2.1'
   'grasp-equery': '~0.2.0'
   'grasp-syntax-javascript': '~0.1.0'
+  levn: '~0.2.2'
 
 dev-dependencies:
   LiveScript: '~1.2.0'

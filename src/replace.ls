@@ -1,4 +1,5 @@
 {lines, unlines, filter} = require 'prelude-ls'
+levn = require 'levn'
 
 get-raw = (input, node) ->
   raw = if node.raw
@@ -11,13 +12,6 @@ get-raw = (input, node) ->
     ''
   node.raw = raw
   "#{ node.raw-prepend or '' }#raw#{ node.raw-append or '' }"
-
-args-regex = //
-               '((?:\\'|[^'])*)'
-             | "((?:\\"|[^"])*)"
-             | (\\.)
-             | (\S+)
-             //g
 
 filter-regex = //
                \s+\|\s+
@@ -46,43 +40,39 @@ replacer = (input, node, query-engine) ->
         filter-name = filters.shift!
         args-str = filters.shift!.trim!
         args-str += filters.shift! # extra
-        args = []
-        if args-str
-          while args-regex.exec args-str
-            args.push (filter (-> it?), that).1.replace /\\(.)/g '$1'
-          args-regex.last-index = 0
+        args = levn.parse 'Array', args-str
         if filter-name in <[ prepend before after prepend append wrap nth nth-last slice each ]> and not args.length
           throw new Error "No arguments supplied for '#filter-name' filter"
 
         switch filter-name
         | 'join' =>
-          join := if args.length then args.0 else ''
+          join := if args.length then "#{args.0}" else ''
         | 'before' =>
           raw-prepend := "#{args.0}#raw-prepend"
         | 'after' =>
-          raw-append += args.0
+          raw-append += "#{args.0}"
         | 'wrap' =>
           [pre, post] = if args.length is 1 then [args.0, args.0] else args
           raw-prepend := "#pre#raw-prepend"
-          raw-append += post
+          raw-append += "#post"
         | 'prepend' =>
-          for arg in args then results.unshift type: 'Raw', raw: arg
+          for arg in args then results.unshift type: 'Raw', raw: "#arg"
         | 'append' =>
-          for arg in args then results.push type: 'Raw', raw: arg
+          for arg in args then results.push type: 'Raw', raw: "#arg"
         | 'each' =>
           throw new Error "No arguments supplied for 'each #{args.0}'" if args.length < 2
           switch args.0
           | 'before' =>
             for result in results
-              result.raw-prepend = "#{args.1}#{ result.raw-prepend or ''}"
+              result.raw-prepend = "#{args.1}#{ result.raw-prepend ? ''}"
           | 'after' =>
             for result in results
-              result.raw-append = "#{ result.raw-append or ''}#{args.1}"
+              result.raw-append = "#{ result.raw-append ? ''}#{args.1}"
           | 'wrap' =>
             [pre, post] = if args.length is 2 then [args.1, args.1] else [args.1, args.2]
             for result in results
-              result.raw-prepend = "#{pre}#{ result.raw-prepend or ''}"
-              result.raw-append = "#{ result.raw-append or ''}#{post}"
+              result.raw-prepend = "#{pre}#{ result.raw-prepend ? ''}"
+              result.raw-append = "#{ result.raw-append ? ''}#{post}"
           | otherwise =>
             throw new Error "'#{args.0}' is not supported by 'each'"
         | 'nth' =>

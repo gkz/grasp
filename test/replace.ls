@@ -198,9 +198,6 @@ suite 'replace' ->
     test 'args escaped double quote' ->
       eq '''arr --replace '["{{ num | join "\\", \\""}}"]' ''', '["1", "2", "3", "4"]', it, {input: arr-input}
 
-    test 'args escaped single char' ->
-      eq 'arr --replace "[{{ num | join \\\\ }}]"', '[1\\2\\3\\4]', it, {input: arr-input}
-
     test 'join' ->
       result = '''
                var obj = {
@@ -222,13 +219,13 @@ suite 'replace' ->
       eq 'arr --replace "[{{ num | prepend 0 | join \', \' }}]"', '[0, 1, 2, 3, 4]', it, {input: arr-input}
 
     test 'prepend multiple args' ->
-      eq 'arr --replace "[{{ num | prepend 0 -1 | join \', \' }}]"', '[-1, 0, 1, 2, 3, 4]', it, {input: arr-input}
+      eq 'arr --replace "[{{ num | prepend 0, -1 | join \', \' }}]"', '[-1, 0, 1, 2, 3, 4]', it, {input: arr-input}
 
     test 'append' ->
       eq 'arr --replace "[{{ num | append 5 | join \', \' }}]"', '[1, 2, 3, 4, 5]', it, {input: arr-input}
 
     test 'append multiple args' ->
-      eq 'arr --replace "[{{ num | append 5 6 | join \', \' }}]"', '[1, 2, 3, 4, 5, 6]', it, {input: arr-input}
+      eq 'arr --replace "[{{ num | append 5, 6 | join \', \' }}]"', '[1, 2, 3, 4, 5, 6]', it, {input: arr-input}
 
     test 'before' ->
       eq 'arr --replace "[{{ num | join \', \' | before \'0, \' }}]"', '[0, 1, 2, 3, 4]', it, {input: arr-input}
@@ -243,10 +240,10 @@ suite 'replace' ->
       eq 'arr --replace "[{{ num | join \', \' | after \', 5\' | after \', 6\'}}]"', '[1, 2, 3, 4, 5, 6]', it, {input: arr-input}
 
     test 'wrap one arg' ->
-      eq 'arr --replace "[{{ num | join \', \' | wrap \\\' }}]"', "['1, 2, 3, 4']", it, {input: arr-input}
+      eq '''arr --replace "[{{ num | join ', ' | wrap '\\'' }}]"''', "['1, 2, 3, 4']", it, {input: arr-input}
 
     test 'wrap two args' ->
-      eq 'arr --replace "[{{ num | join \', \' | wrap [ ] }}]"', '[[1, 2, 3, 4]]', it, {input: arr-input}
+      eq '''arr --replace "[{{ num | join ', ' | wrap '[', ']' }}]"''', '[[1, 2, 3, 4]]', it, {input: arr-input}
 
     test 'nth' ->
       eq 'arr --replace "[{{ num | nth 1 }}]"', '[2]', it, {input: arr-input}
@@ -276,37 +273,37 @@ suite 'replace' ->
       eq 'arr --replace "[{{ num | initial | join \', \' }}]"', '[1, 2, 3]', it, {input: arr-input}
 
     test 'slice' ->
-      eq 'arr --replace "[{{ num | slice 1 3 | join \', \' }}]"', '[2, 3]', it, {input: arr-input}
+      eq 'arr --replace "[{{ num | slice 1, 3 | join \', \' }}]"', '[2, 3]', it, {input: arr-input}
 
     test 'reverse' ->
       eq 'arr --replace "[{{ num | reverse | join \', \' }}]"', '[4, 3, 2, 1]', it, {input: arr-input}
 
     test 'each before' ->
-      eq 'arr --replace "[{{ num | each before 1 | join \', \' }}]"', '[11, 12, 13, 14]', it, {input: arr-input}
+      eq 'arr --replace "[{{ num | each before, 1 | join \', \' }}]"', '[11, 12, 13, 14]', it, {input: arr-input}
 
     test 'each before multiple times' ->
-      eq 'arr --replace "[{{ num | each before 1 | each before 0 | join \', \' }}]"', '[011, 012, 013, 014]', it, {input: arr-input}
+      eq 'arr --replace "[{{ num | each before, 1 | each before, 0 | join \', \' }}]"', '[011, 012, 013, 014]', it, {input: arr-input}
 
     test 'each after' ->
-      eq 'arr --replace "[{{ num | each after 0 | join \', \' }}]"', '[10, 20, 30, 40]', it, {input: arr-input}
+      eq 'arr --replace "[{{ num | each after, 0 | join \', \' }}]"', '[10, 20, 30, 40]', it, {input: arr-input}
 
     test 'each after multiple times' ->
-      eq 'arr --replace "[{{ num | each after 0 | each after 0 | join \', \' }}]"', '[100, 200, 300, 400]', it, {input: arr-input}
+      eq 'arr --replace "[{{ num | each after, 0 | each after, 0 | join \', \' }}]"', '[100, 200, 300, 400]', it, {input: arr-input}
 
     test 'each wrap one arg' ->
-      eq '''arr --replace '[{{ num | each wrap \\" | join ", " }}]' ''', '["1", "2", "3", "4"]', it, {input: arr-input}
+      eq '''arr --replace '[{{ num | each wrap, "\\"" | join ", " }}]' ''', '["1", "2", "3", "4"]', it, {input: arr-input}
 
     test 'each wrap two args' ->
-      eq '''arr --replace '[{{ num | each wrap ( ) | join ", " }}]' ''', '[(1), (2), (3), (4)]', it, {input: arr-input}
+      eq '''arr --replace '[{{ num | each wrap, "(", ")" | join ", " }}]' ''', '[(1), (2), (3), (4)]', it, {input: arr-input}
 
     test 'each wrap multiple times' ->
-      eq '''arr --replace '[{{ num | each wrap ( ) | each wrap [ ] | join ", " }}]' ''', '[[(1)], [(2)], [(3)], [(4)]]', it, {input: arr-input}
+      eq '''arr --replace '[{{ num | each wrap, "(", ")" | each wrap, "[", "]" | join ", " }}]' ''', '[[(1)], [(2)], [(3)], [(4)]]', it, {input: arr-input}
 
     test 'each not enough args' ->
       eq 'arr --replace "[{{ num | each before | join \', \' }}]"', {func-type: 'error', value: /No arguments supplied for 'each before'/}, it, {input: arr-input}
 
     test 'invalid each' ->
-      eq 'arr --replace "[{{ num | each FAKE 0 }}]"', {func-type: 'error', value: /'FAKE' is not supported by 'each'/}, it, {input: arr-input}
+      eq 'arr --replace "[{{ num | each FAKE, 0 }}]"', {func-type: 'error', value: /'FAKE' is not supported by 'each'/}, it, {input: arr-input}
 
     test 'invalid filter' ->
       eq 'arr --replace "[{{ num | FAKE }}]"', {func-type: 'error', value: /Invalid filter: FAKE/}, it, {input: arr-input}
@@ -340,7 +337,7 @@ suite 'replace' ->
       eq '--equery --replace "f({{b}}, true, {{b}}, {{a}})" "f($a, $b)"', 'f(x, true, x, y);', it, {input: 'f(y, x);'}
 
     test 'with filter' ->
-      eq '--equery --replace "{{ num | wrap \\\' }}" "__ * $num"', "'2';", it, {input: 'x * 2;'}
+      eq '''--equery --replace "{{ num | wrap ' }}" "__ * $num"''', "'2';", it, {input: 'x * 2;'}
 
     test 'array' ->
       eq '--equery --replace "f({{args | reverse | join \', \'}})" "f(_$args)"', 'f(x, y);', it, {input: 'f(y, x);'}
