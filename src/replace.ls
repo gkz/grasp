@@ -42,7 +42,7 @@ replacer = (input, node, query-engine) ->
         args-str = filters.shift!.trim!
         args-str += filters.shift! # extra
         args = levn.parse 'Array', args-str
-        if filter-name in <[ prepend before after prepend append wrap nth nth-last slice each replace ]> and not args.length
+        if filter-name in <[ prepend before after prepend append wrap nth nth-last slice each replace substring substr ]> and not args.length
           throw new Error "No arguments supplied for '#filter-name' filter"
         else if filter-name in <[ replace ]> and args.length < 2
           throw new Error "Must supply at least two arguments for '#filter-name' filter"
@@ -100,6 +100,18 @@ replacer = (input, node, query-engine) ->
         | 'replace' =>
           let args
             text-operations.push (.replace args.0, args.1)
+        | 'lowercase' =>
+          text-operations.push (.to-lower-case!)
+        | 'uppercase' =>
+          text-operations.push (.to-upper-case!)
+        | 'trim' =>
+          text-operations.push (.trim!)
+        | 'substring' =>
+          let args
+            text-operations.push (.substring args.0, args.1)
+        | 'substr' =>
+          let args
+            text-operations.push (.substr args.0, args.1)
         | otherwise =>
           throw new Error "Invalid filter: #filter-name#{ if args-str then " #args-str" else ''}"
       raw-results = [get-raw input, result for result in results]

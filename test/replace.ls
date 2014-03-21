@@ -191,6 +191,7 @@ suite 'replace' ->
                 };
                 '''
     arr-input = '[1,2,3,4]'
+    str-input = 'var s = "Hi";'
 
     test 'args escaped single quote' ->
       eq '''arr --replace "['{{ num | join '\\', \\''}}']" ''', "['1', '2', '3', '4']", it, {input: arr-input}
@@ -279,10 +280,25 @@ suite 'replace' ->
       eq 'arr --replace "[{{ num | reverse | join \', \' }}]"', '[4, 3, 2, 1]', it, {input: arr-input}
 
     test 'replace' ->
-      eq '''str --replace '{{ :root | replace /"([^"]*)"/g, "$1 + 1" }}' ''', "var s = hi + 1;", it, {input: 'var s = "hi";'}
+      eq '''str --replace '{{ :root | replace /"([^"]*)"/g, "$1 + 1" }}' ''', "var s = Hi + 1;", it, {input: str-input}
 
     test 'replace more' ->
-      eq '''str --replace '{{ :root | replace /"([^"]*)"/g, "$1 + 1" | replace /1/, "there"}}' ''', "var s = hi + there;", it, {input: 'var s = "hi";'}
+      eq '''str --replace '{{ :root | replace /"([^"]*)"/g, "$1 + 1" | replace /1/, "there"}}' ''', "var s = Hi + there;", it, {input: str-input}
+
+    test 'lowercase' ->
+      eq '''str --replace '{{ :root | lowercase }}' ''', 'var s = "hi";', it, {input: str-input}
+
+    test 'uppercase' ->
+      eq '''str --replace '{{ :root | uppercase }}' ''', 'var s = "HI";', it, {input: str-input}
+
+    test 'trim' ->
+      eq '''str --replace '{{ :root | replace /"/g " " | trim }}' ''', 'var s = Hi;', it, {input: str-input}
+
+    test 'substring' ->
+      eq '''str --replace '{{ :root | substring 1, 3 }}' ''', 'var s = Hi;', it, {input: str-input}
+
+    test 'substring' ->
+      eq '''str --replace '{{ :root | substr 1, 2 }}' ''', 'var s = Hi;', it, {input: str-input}
 
     test 'each before' ->
       eq 'arr --replace "[{{ num | each before, 1 | join \', \' }}]"', '[11, 12, 13, 14]', it, {input: arr-input}
