@@ -193,7 +193,7 @@ suite 'replace' ->
     arr-input = '[1,2,3,4]'
 
     test 'args escaped single quote' ->
-      eq '''arr --replace "['{{ num | join '\\', \\''}}']"''', "['1', '2', '3', '4']", it, {input: arr-input}
+      eq '''arr --replace "['{{ num | join '\\', \\''}}']" ''', "['1', '2', '3', '4']", it, {input: arr-input}
 
     test 'args escaped double quote' ->
       eq '''arr --replace '["{{ num | join "\\", \\""}}"]' ''', '["1", "2", "3", "4"]', it, {input: arr-input}
@@ -278,6 +278,12 @@ suite 'replace' ->
     test 'reverse' ->
       eq 'arr --replace "[{{ num | reverse | join \', \' }}]"', '[4, 3, 2, 1]', it, {input: arr-input}
 
+    test 'replace' ->
+      eq '''str --replace '{{ :root | replace /"([^"]*)"/g, "$1 + 1" }}' ''', "var s = hi + 1;", it, {input: 'var s = "hi";'}
+
+    test 'replace more' ->
+      eq '''str --replace '{{ :root | replace /"([^"]*)"/g, "$1 + 1" | replace /1/, "there"}}' ''', "var s = hi + there;", it, {input: 'var s = "hi";'}
+
     test 'each before' ->
       eq 'arr --replace "[{{ num | each before, 1 | join \', \' }}]"', '[11, 12, 13, 14]', it, {input: arr-input}
 
@@ -313,6 +319,9 @@ suite 'replace' ->
 
     test 'no arg supplied' ->
       eq 'arr --replace "[{{ num | nth }}]"', {func-type: 'error', value: /No arguments supplied for 'nth' filter/}, it, {input: arr-input}
+
+    test 'two args required' ->
+      eq 'arr --replace "{{ :root | replace // }}"', {func-type: 'error', value: /Error during replacement.*Must supply at least two arguments for 'replace' filter/}, it, {input: arr-input}
 
     test 'squery non-spaced |' ->
       eq 'arr --replace "{{ [op=|] }}"', 'x | y', it, {input: '[x | y]'}

@@ -1,4 +1,4 @@
-{lines, unlines, filter} = require 'prelude-ls'
+{lines, unlines, filter, fold} = require 'prelude-ls'
 levn = require 'levn'
 
 get-raw = (input, node) ->
@@ -35,14 +35,17 @@ replacer = (input, node, query-engine) ->
       raw-prepend = ''
       raw-append = ''
       join = null
+      text-operations = []
 
       while filters.length
         filter-name = filters.shift!
         args-str = filters.shift!.trim!
         args-str += filters.shift! # extra
         args = levn.parse 'Array', args-str
-        if filter-name in <[ prepend before after prepend append wrap nth nth-last slice each ]> and not args.length
+        if filter-name in <[ prepend before after prepend append wrap nth nth-last slice each replace ]> and not args.length
           throw new Error "No arguments supplied for '#filter-name' filter"
+        else if filter-name in <[ replace ]> and args.length < 2
+          throw new Error "Must supply at least two arguments for '#filter-name' filter"
 
         switch filter-name
         | 'join' =>
@@ -94,10 +97,17 @@ replacer = (input, node, query-engine) ->
           results := [].slice.apply results, args
         | 'reverse' =>
           results.reverse!
+        | 'replace' =>
+          let args
+            text-operations.push (.replace args.0, args.1)
         | otherwise =>
           throw new Error "Invalid filter: #filter-name#{ if args-str then " #args-str" else ''}"
       raw-results = [get-raw input, result for result in results]
-      "#raw-prepend#{ if join? then raw-results.join join else raw-results.0 }#raw-append"
+      output-string = "#raw-prepend#{ if join? then raw-results.join join else raw-results.0 }#raw-append"
+      if text-operations.length
+        fold (|>), output-string, text-operations
+      else
+        output-string
     else
       ''
 process-replacement = (replacement, input, node, query-engine) ->
