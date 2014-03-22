@@ -42,3 +42,27 @@ suite 'lib functions' ->
 
     test 'equery' ->
       equal (grasp.replace 'equery' 'x', 'y', input).0, replaced
+
+    test 'with replace function' ->
+      equal (grasp.replace 'squery' 'func', (get-raw, node, query) ->
+        x = get-raw (query '.params' .0)
+        """
+        function #{ node.id.name }AddZ(#{ query '.params' .map get-raw .concat ['z'] .join ', ' }) {
+          return #x * #x + z;
+        }
+        """
+      , input).0, """
+                  function squareAddZ(x, z) {
+                    return x * x + z;
+                  }
+                  """
+
+    test 'with replace function (equery)' ->
+      equal (grasp.replace 'equery', 'return $x * $x;', (get-raw, node, query, named) ->
+        X = (get-raw named.x).to-upper-case!
+        "return #X * #X;"
+      , input).0, """
+                  function square(x) {
+                    return X * X;
+                  }
+                  """

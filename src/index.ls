@@ -90,7 +90,7 @@ run = ({
   targets = (if options.recursive then ['.'] else ['-']) unless targets.length
   targets-len = targets.length
 
-  if options.replace
+  if options.replace or options.replace-func
     replacement = that
   else if options.replace-file
     try
@@ -305,9 +305,15 @@ run <<<
       data: true
       exit: (, results) -> results
   replace: (engine, selector, replacement, input) -->
-    run do
-      args: {_: [selector], engine: (get-query-engine engine), replace: replacement}
-      input: input
-      exit: (, results) -> results
+    args =
+      _: [selector]
+      engine: (get-query-engine engine)
+
+    if typeof! replacement is 'Function'
+      args.replace-func = replacement
+    else
+      args.replace = replacement
+
+    run {args, input, exit: (, results) -> results}
 
 module.exports = run

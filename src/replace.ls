@@ -122,11 +122,21 @@ replacer = (input, node, query-engine) ->
         output-string
     else
       ''
-process-replacement = (replacement, input, node, query-engine) ->
-  replacement
-    .replace /\\n/g, '\n'
-    .replace /{{}}/g, -> get-raw input, node # don't want to call get-raw unless we need to
-    .replace /{{((?:[^}]|}[^}])+)}}/g, replacer input, node, query-engine
+
+get-replacement-func = (replacement, input, query-engine) ->
+  if typeof! replacement is 'Function'
+    (node) ->
+      replacement do
+        -> get-raw input, it
+        node
+        -> query-engine.query it, node
+        node._named
+  else
+    replacement-prime = replacement.replace /\\n/g, '\n'
+    (node) ->
+      replacement-prime
+      .replace /{{}}/g, -> get-raw input, node # func b/c don't want to call get-raw unless we need to
+      .replace /{{((?:[^}]|}[^}])+)}}/g, replacer input, node, query-engine
 
 replace = (replacement, input, nodes, query-engine) ->
   input-lines = lines input
@@ -134,6 +144,7 @@ replace = (replacement, input, nodes, query-engine) ->
   line-offset = 0
   last-line = null
   prev-node = end: 0
+  replace-node = get-replacement-func replacement, input, query-engine
 
   for node in nodes
     continue if node.start < prev-node.end
@@ -148,7 +159,7 @@ replace = (replacement, input, nodes, query-engine) ->
     start-col = start.column + col-offset
     end-col = end.column + if start-line-num is end-line-num then col-offset else 0
 
-    replace-lines = lines process-replacement replacement, input, node, query-engine
+    replace-lines = lines replace-node node
     start-line = input-lines[start-line-num]
     end-line = input-lines[end-line-num]
 

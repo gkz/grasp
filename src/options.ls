@@ -72,6 +72,10 @@ options =
     type: 'file::String'
     description: 'replace each match with contents of file'
     example: '--replace-file path/to/file'
+  * option: 'replace-func'
+    type: 'Function'
+    description: 'use function instead of string pattern when using as library'
+    hidden: true
   * option: 'to'
     alias: 't'
     type: 'Object | String'
@@ -193,7 +197,7 @@ module.exports = optionator do
           <http://graspjs.com/>
           """
   mutually-exclusive: [
-    <[ replace replace-file ]>
+    <[ replace replace-file replace-func ]>
   ]
   options: options
 <<< {options}
