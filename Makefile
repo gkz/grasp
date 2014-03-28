@@ -14,7 +14,7 @@ package.json: package.json.ls
 	$(LSC) --compile package.json.ls
 
 lib:
-	mkdir lib/
+	mkdir -p lib/
 
 lib/%.js: src/%.ls lib
 	$(LSC) --compile --output lib "$<"
