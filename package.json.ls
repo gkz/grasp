@@ -37,7 +37,7 @@ scripts:
 
 dependencies:
   acorn: '~0.4.2'
-  'prelude-ls': '~1.0.3'
+  'prelude-ls': '~1.1.0'
   'cli-color': '~0.2.2'
   async: '~0.2.9'
   optionator: '~0.2.2'
