@@ -164,6 +164,12 @@ suite 'replace' ->
         f(zz == zz);
       }\n''', it
 
+    test 'implied root node with spaced |' ->
+      eq 'ident --replace "{{ | uppercase}}"', 'var FOO = BAR;', it, {input: 'var foo = bar;'}
+
+    test 'implied root node with non-spaced |' ->
+      eq 'ident --replace "{{| uppercase}}"', 'var FOO = BAR;', it, {input: 'var foo = bar;'}
+
     test 'overlapping' ->
       eq 'bi --replace "{{.l}}-{{.r}}"', 'f(1 + 2-3);', it, {input: 'f(1 + 2 + 3);'}
 

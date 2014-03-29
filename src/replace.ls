@@ -21,15 +21,19 @@ filter-regex = //
 
 replacer = (input, node, query-engine) ->
   (, replacement-arg) ->
-    [selector, ...filters] = replacement-arg.trim!.split filter-regex
-    if node._named?[selector]
-      orig-results = [].concat that
+    if /^\s*\|\s+/.test replacement-arg
+      orig-results = [node]
+      [, ...filters] = " #{ replacement-arg.trim! }".split filter-regex # prepend space so regex works
     else
-      try
-        orig-results = query-engine.query selector, node
-      catch
-        orig-results = query-engine.query replacement-arg, node
-        filters := []
+      [selector, ...filters] = replacement-arg.trim!.split filter-regex
+      if node._named?[selector]
+        orig-results = [].concat that
+      else
+        try
+          orig-results = query-engine.query selector, node
+        catch
+          orig-results = query-engine.query replacement-arg, node
+          filters := []
     if orig-results.length
       results = orig-results
       raw-prepend = ''
