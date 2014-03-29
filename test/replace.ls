@@ -291,14 +291,29 @@ suite 'replace' ->
     test 'uppercase' ->
       eq '''str --replace '{{ :root | uppercase }}' ''', 'var s = "HI";', it, {input: str-input}
 
+    test 'capitalize' ->
+      eq '''ident --replace '{{ :root | capitalize }}' ''', 'Foo + Bar;', it, {input: 'foo + bar;'}
+
+    test 'capitalize' ->
+      eq '''ident --replace '{{ :root | uncapitalize }}' ''', 'foo + bar;', it, {input: 'Foo + Bar;'}
+
+    test 'camelize' ->
+      eq '''ident --replace '{{ :root | camelize }}' ''', 'fooBar;', it, {input: 'foo_bar;'}
+
+    test 'str' ->
+      eq '''str --replace '{{ :root | dasherize }}' ''', 'var s = "foo-bar";', it, {input: 'var s = "fooBar";'}
+
     test 'trim' ->
       eq '''str --replace '{{ :root | replace /"/g " " | trim }}' ''', 'var s = Hi;', it, {input: str-input}
 
     test 'substring' ->
       eq '''str --replace '{{ :root | substring 1, 3 }}' ''', 'var s = Hi;', it, {input: str-input}
 
-    test 'substring' ->
+    test 'substr' ->
       eq '''str --replace '{{ :root | substr 1, 2 }}' ''', 'var s = Hi;', it, {input: str-input}
+
+    test 'str-slice' ->
+      eq '''str --replace '{{ :root | str-slice 1, -1 }}' ''', 'var s = Hi;', it, {input: str-input}
 
     test 'each before' ->
       eq 'arr --replace "[{{ num | each before, 1 | join \', \' }}]"', '[11, 12, 13, 14]', it, {input: arr-input}

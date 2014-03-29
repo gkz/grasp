@@ -1,4 +1,4 @@
-{lines, unlines, filter, fold} = require 'prelude-ls'
+{lines, unlines, filter, fold, capitalize, camelize, dasherize} = require 'prelude-ls'
 levn = require 'levn'
 
 get-raw = (input, node) ->
@@ -42,7 +42,8 @@ replacer = (input, node, query-engine) ->
         args-str = filters.shift!.trim!
         args-str += filters.shift! # extra
         args = levn.parse 'Array', args-str
-        if filter-name in <[ prepend before after prepend append wrap nth nth-last slice each replace substring substr ]> and not args.length
+        if not args.length and filter-name in <[ prepend before after prepend append wrap nth nth-last
+                                                 slice each replace substring substr str-slice ]>
           throw new Error "No arguments supplied for '#filter-name' filter"
         else if filter-name in <[ replace ]> and args.length < 2
           throw new Error "Must supply at least two arguments for '#filter-name' filter"
@@ -104,6 +105,14 @@ replacer = (input, node, query-engine) ->
           text-operations.push (.to-lower-case!)
         | 'uppercase' =>
           text-operations.push (.to-upper-case!)
+        | 'capitalize' =>
+          text-operations.push capitalize
+        | 'uncapitalize' =>
+          text-operations.push -> (it.char-at 0).to-lower-case! + it.slice 1
+        | 'camelize' =>
+          text-operations.push camelize
+        | 'dasherize' =>
+          text-operations.push dasherize
         | 'trim' =>
           text-operations.push (.trim!)
         | 'substring' =>
@@ -112,6 +121,9 @@ replacer = (input, node, query-engine) ->
         | 'substr' =>
           let args
             text-operations.push (.substr args.0, args.1)
+        | 'str-slice' =>
+          let args
+            text-operations.push (.slice args.0, args.1)
         | otherwise =>
           throw new Error "Invalid filter: #filter-name#{ if args-str then " #args-str" else ''}"
       raw-results = [get-raw input, result for result in results]
