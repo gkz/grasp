@@ -310,7 +310,7 @@ suite 'replace' ->
       eq '''str --replace '{{ :root | dasherize }}' ''', 'var s = "foo-bar";', it, {input: 'var s = "fooBar";'}
 
     test 'trim' ->
-      eq '''str --replace '{{ :root | replace /"/g " " | trim }}' ''', 'var s = Hi;', it, {input: str-input}
+      eq '''str --replace '{{ :root | replace /"/g, " " | trim }}' ''', 'var s = Hi;', it, {input: str-input}
 
     test 'substring' ->
       eq '''str --replace '{{ :root | substring 1, 3 }}' ''', 'var s = Hi;', it, {input: str-input}
