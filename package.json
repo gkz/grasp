@@ -41,7 +41,7 @@
     "build": "make build"
   },
   "dependencies": {
-    "acorn": "~0.4.2",
+    "acorn": "~0.5.0",
     "prelude-ls": "~1.1.0",
     "cli-color": "~0.2.2",
     "async": "~0.2.9",
