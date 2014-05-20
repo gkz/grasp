@@ -22,9 +22,9 @@ suite 'lib options' ->
 
     test '- and files' ->
       results =
-        'test/data/t.js:1:function ##square#(x) {'
+        'test/data/a.js:1:function ##square#(x) {'
         '(standard input):1:function ##square#(x) {'
-      eq '#square test/data/t.js - test/data/tt.js', results, it, {stdin: StdIn data}
+      eq '#square test/data/a.js - test/data/b.js', results, it, {stdin: StdIn data}
 
     test 'error in stdin input' ->
       eq '#x', [func-type: 'error', value: /Could not parse JavaScript/], it, {stdin: StdIn '%$@%@%'}
@@ -38,10 +38,10 @@ suite 'lib options' ->
       done!
 
     test 'matches' ->
-      q '#x test/data/t.js', {exit: f it, 0; error: ->}
+      q '#x test/data/a.js', {exit: f it, 0; error: ->}
 
     test 'no matches' ->
-      q '#NONEXISTANT test/data/t.js', {exit: f it, 1; error: ->}
+      q '#NONEXISTANT test/data/a.js', {exit: f it, 1; error: ->}
 
     test 'no exit' ->
       equal void, q '--version', {error: ->}
@@ -68,7 +68,7 @@ suite 'lib options' ->
       bold: -> "!!#it!!"
 
     test 'basic' ->
-      eq 'return test/data/t.js', '2:  !!return x * x;!!', it, {text-format}
+      eq 'return test/data/a.js', '2:  !!return x * x;!!', it, {text-format}
 
   suite 'input' ->
     input = '''

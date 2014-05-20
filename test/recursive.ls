@@ -8,19 +8,19 @@ suite 'recursive' ->
 
   test 'basic' ->
     eq '--recursive "#x" test/data', [
+      'test/data/a.js:1:function square(##x#) {'
+      'test/data/a.js:2:  return ##x# * x;'
+      'test/data/a.js:2:  return x * ##x#;'
       * func-type: 'error', value: /Error: Could not parse JavaScript from/
-      'test/data/dir/ttt.js:2:var ##x# = z -'
-      'test/data/t.js:1:function square(##x#) {'
-      'test/data/t.js:2:  return ##x# * x;'
-      'test/data/t.js:2:  return x * ##x#;'
+      'test/data/dir/c.js:2:var ##x# = z -'
     ], it
 
   results = [
+    'a.js:1:function square(##x#) {'
+    'a.js:2:  return ##x# * x;'
+    'a.js:2:  return x * ##x#;'
     * func-type: 'error', value: /Error: Could not parse JavaScript from/
-    'dir/ttt.js:2:var ##x# = z -'
-    't.js:1:function square(##x#) {'
-    't.js:2:  return ##x# * x;'
-    't.js:2:  return x * ##x#;'
+    'dir/c.js:2:var ##x# = z -'
   ]
 
   test 'on .' ->
