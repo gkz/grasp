@@ -1,7 +1,8 @@
 ---
 layout: doc-page
 title: Concepts
-permalink: /concepts/
+permalink: /docs/concepts/
+base_url: ../..
 ---
 
 ### Textual versus structural

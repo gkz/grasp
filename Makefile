@@ -50,6 +50,7 @@ serve:
 
 install: package.json
 	npm install .
+	bundle install
 
 clean:
 	rm package.json

@@ -1,7 +1,7 @@
 ---
 layout: doc-page
 title: Installation
-permalink: /install/
+permalink: /docs/install/
 base_url: ../..
 ---
 

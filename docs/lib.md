@@ -1,7 +1,8 @@
 ---
 layout: doc-page
 title: Using as a Library
-permalink: /lib/
+permalink: /docs/lib/
+base_url: ../..
 ---
 
 Grasp is actually a library. The Grasp executable uses the Grasp library as such:

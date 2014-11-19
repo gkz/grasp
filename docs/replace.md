@@ -1,7 +1,7 @@
 ---
 layout: doc-page
-permalink: /replace/
 title: Replacement
+permalink: /docs/replace/
 base_url: ../..
 ---
 

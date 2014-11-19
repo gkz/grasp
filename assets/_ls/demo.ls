@@ -1,10 +1,12 @@
 path = require 'path'
 FileSystem = require './fs'
-Process = require './process'
-{run} = require './command'
 
+Process = require './process'
 process = new Process
 window.process = process
+
+{run} = require './command'
+
 fs = new FileSystem process
 
 # initial files

@@ -1,7 +1,8 @@
 ---
 layout: doc-page
-permalink: /squery/
+permalink: /docs/squery/
 title: squery
+base_url: ../..
 ---
 
 Squery stands for "Selector Query" and uses CSS style selectors to query a abstract syntax tree (AST). It is the default query engine for Grasp, the other being [equery](../equery). If for some reason your query engine is set to equery, you can set it back to squery with `-s, --squery`.

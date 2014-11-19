@@ -1,7 +1,8 @@
 ---
 layout: doc-page
-permalink: /equery/
+permalink: /docs/equery/
 title: equery
+base_url: ../..
 ---
 
 Equery stands for "Example Query" and uses JavaScript code examples with wildcards and some other special syntax to query the abstract syntax tree (AST). It is the second query engine for Grasp, the default being [squery](../squery). You must use the `-e, --equery` flags to enable equery.
