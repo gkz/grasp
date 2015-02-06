@@ -122,7 +122,7 @@ options =
   * option: 'line-number'
     alias: 'n'
     type: 'Boolean'
-    default: 'true'
+    default: 'false'
     description: 'print line number with output lines'
   * option: 'col-number'
     alias: 'b'
@@ -155,7 +155,7 @@ options =
   * option: 'color'
     alias: ['O', 'colour']
     type: 'Boolean'
-    default: 'true'
+    default: 'false'
     description: 'use color to highlight matches'
   * option: 'json'
     alias: 'j'
