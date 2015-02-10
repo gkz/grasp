@@ -58,7 +58,7 @@ run = ({
     exit 0, help-string
     return
 
-  query-engine = if options.engine
+  query-engine = if options.engine?
     require options.engine
   else if options.squery
     squery
@@ -75,7 +75,7 @@ run = ({
   options.before-context ?= options.context
   options.after-context ?= options.context
 
-  if options.file
+  if options.file?
     try
       selector = fs.read-file-sync that, 'utf8'
     catch
@@ -90,7 +90,9 @@ run = ({
   targets = (if options.recursive then ['.'] else ['-']) unless targets.length
   targets-len = targets.length
 
-  if options.replace or options.replace-func
+  if options.replace?
+    replacement = that
+  if options.replace-func
     replacement = that
   else if options.replace-file
     try
@@ -314,6 +316,6 @@ run <<<
     else
       args.replace = replacement
 
-    run {args, input, exit: (, results) -> results}
+    run {args, input, exit: (, results) -> results.0}
 
 module.exports = run

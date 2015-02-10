@@ -182,7 +182,7 @@ replace = (replacement, input, nodes, query-engine) ->
     start-context = start-line.slice 0, start-col
     end-context = end-line.slice end-col
 
-    replace-lines.0 = "#start-context#{replace-lines.0}"
+    replace-lines.0 = "#start-context#{replace-lines.0 ? ''}"
     replace-last = replace-lines[*-1]
 
     end-len = replace-last.length

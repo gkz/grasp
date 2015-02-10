@@ -30,18 +30,27 @@ suite 'lib functions' ->
                '''
 
     test 'basic' ->
-      equal (grasp.replace 'squery', '#x', 'y', input).0, replaced
+      equal (grasp.replace 'squery', '#x', 'y', input), replaced
+
+    test 'replace with nothing' ->
+      replaced = '''
+                 function square(x) {
+                   return ;
+                 }
+                 '''
+      equal (grasp.replace 'squery', 'func', '', input), ''
+      equal (grasp.replace 'squery', 'return.arg', '', input), replaced
 
     test 'curried' ->
-      equal (grasp.replace 'squery', '#x', 'y')(input).0, replaced
-      equal (grasp.replace 'squery', '#x')('y')(input).0, replaced
-      equal (grasp.replace 'squery')('#x')('y')(input).0, replaced
+      equal (grasp.replace 'squery', '#x', 'y')(input), replaced
+      equal (grasp.replace 'squery', '#x')('y')(input), replaced
+      equal (grasp.replace 'squery')('#x')('y')(input), replaced
 
     test 'full squery' ->
-      equal (grasp.replace 'grasp-squery', '#x', 'y', input).0, replaced
+      equal (grasp.replace 'grasp-squery', '#x', 'y', input), replaced
 
     test 'equery' ->
-      equal (grasp.replace 'equery' 'x', 'y', input).0, replaced
+      equal (grasp.replace 'equery' 'x', 'y', input), replaced
 
     test 'with replace function' ->
       equal (grasp.replace 'squery' 'func', (get-raw, node, query) ->
@@ -51,7 +60,7 @@ suite 'lib functions' ->
           return #x * #x + z;
         }
         """
-      , input).0, """
+      , input), """
                   function squareAddZ(x, z) {
                     return x * x + z;
                   }
@@ -61,7 +70,7 @@ suite 'lib functions' ->
       equal (grasp.replace 'equery', 'return $x * $x;', (get-raw, node, query, named) ->
         X = (get-raw named.x).to-upper-case!
         "return #X * #X;"
-      , input).0, """
+      , input), """
                   function square(x) {
                     return X * X;
                   }
