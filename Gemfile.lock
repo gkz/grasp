@@ -22,7 +22,7 @@ GEM
     fast-stemmer (1.0.2)
     ffi (1.9.6)
     gemoji (2.1.0)
-    github-pages (32)
+    github-pages (33)
       RedCloth (= 4.2.9)
       github-pages-health-check (~> 0.2)
       jekyll (= 2.4.0)
@@ -36,7 +36,7 @@ GEM
       liquid (= 2.6.1)
       maruku (= 0.7.0)
       mercenary (~> 0.3)
-      pygments.rb (= 0.6.0)
+      pygments.rb (= 0.6.1)
       rdiscount (= 2.1.7)
       redcarpet (= 3.1.2)
       terminal-table (~> 1.4)
@@ -99,9 +99,9 @@ GEM
       blankslate (~> 2.0)
     posix-spawn (0.3.9)
     public_suffix (1.4.6)
-    pygments.rb (0.6.0)
+    pygments.rb (0.6.1)
       posix-spawn (~> 0.3.6)
-      yajl-ruby (~> 1.1.0)
+      yajl-ruby (~> 1.2.0)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -117,10 +117,10 @@ GEM
       parslet (~> 1.5.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    yajl-ruby (1.1.0)
+    yajl-ruby (1.2.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  github-pages (= 32)
+  github-pages (= 33)

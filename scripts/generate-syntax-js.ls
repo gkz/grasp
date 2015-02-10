@@ -6,7 +6,7 @@ out '''
 ---
 layout: doc-page
 title: JavaScript Syntax
-permalink: /syntax-js/
+permalink: /docs/syntax-js/
 base_url: ../..
 ---
 

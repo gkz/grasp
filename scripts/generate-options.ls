@@ -25,7 +25,7 @@ out '''
 ---
 layout: doc-page
 title: Options
-permalink: /options/
+permalink: /docs/options/
 base_url: ../..
 ---
 

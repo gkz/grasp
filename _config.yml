@@ -11,4 +11,4 @@ exclude:
 safe: true
 lsi: false
 title: 'Grasp - JavaScript structural search, replace, and refactor'
-version: '0.2.1'
+version: '0.3.0'
