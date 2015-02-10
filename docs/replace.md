@@ -53,7 +53,7 @@ By default, the results of using `--replace` will be printed out. If you wish to
 
 You can append a variety of filters to your selector in the `{{selector}}` syntax. Each filter starts off with a spaced pipe ` | ` - `{{ selector | filter1 | filter2 }}`.
 
-Filters may have zero of more arguments. Arguments are listed after the filter name and are separated by a space. `{{ selector | filter arg0 arg1 }}`.
+Filters may have zero of more arguments. Arguments are listed after the filter name and are separated by a comma. `{{ selector | filter arg0, arg1 }}`.
 
 The available filters are (the code `[1, 2, 3, 4];` will be used for the examples):
 
@@ -83,14 +83,14 @@ The available filters are (the code `[1, 2, 3, 4];` will be used for the example
   Eg. `grasp arr --replace '{{ 1 | after 0 }}'` &rarr; `10;`
 
 #### wrap
-`wrap arg [arg]` - Wraps its text arguments around the entire result. If only one argument is supplied, it uses that for both before and after. If two arguments are supplied, the first argument is prepended, and the second is appended. Equivalent to `arg{{}}arg`. Again, this is more useful with `each`.
+`wrap arg, [arg]` - Wraps its text arguments around the entire result. If only one argument is supplied, it uses that for both before and after. If two arguments are supplied, the first argument is prepended, and the second is appended. Equivalent to `arg{{}}arg`. Again, this is more useful with `each`.
 
 Eg. `grasp arr --replace '{{ 1 | wrap \" }}'` &rarr; `"1";`
 
 Eg. `grasp arr --replace '{{ 1 | wrap [ ] }}'` &rarr; `[1];`
 
 #### each
-`each filter [args...]` - Takes a filter (either `before`, `after`, or `wrap`) and applies it to each matched node.
+`each filter, [args...]` - Takes a filter (either `before`, `after`, or `wrap`) and applies it to each matched node.
 
 Eg. `grasp arr --replace '[{{.elements | each before 1 | join "," }}]'` &rarr; `[11,12,13,14];`
 
@@ -129,7 +129,7 @@ Eg. `grasp arr --replace '{{.elements | last | join "," }}'` &rarr; `4;`
 Eg. `grasp arr --replace '[{{.elements | initial | join "," }}]'` &rarr; `[1,2,3];`
 
 #### slice
-`slice num [num]` - Acts like JavaScript's `slice` on the matched results.
+`slice num, [num]` - Acts like JavaScript's `slice` on the matched results.
 
 Eg. `grasp arr --replace '[{{.elements | slice 2 | join "," }}]'` &rarr; `[3,4];`
 
@@ -139,5 +139,48 @@ Eg. `grasp arr --replace '[{{.elements | slice 2 3 | join "," }}]'` &rarr; `[3];
 `reverse` - Reverses the list of matched results.
 
 Eg. `grasp arr --replace '[{{.elements | reverse | join "," }}]'` &rarr; `[4,3,2,1];`
+
+#### replace
+`replace regex-pattern, replacement` - String replacement of matched result, just like JavaScript's `"String".replace(pattern, replacement)` function.
+
+#### lowercase
+
+`lowercase` - Lowercases string result of matched output, just like JavaScript's `"String".toLowerCase()`
+
+#### uppercase
+
+`uppercase` - Uppercases string result of matched output, just like JavaScript's `"String".toUpperCase()`
+
+#### trim
+
+`trim` - Trims string result of matched output, just like JavaScript's `"String".trim()`
+
+#### capitalize
+
+`capitalize` - Capitalizes the string result of matched output.
+
+#### uncapitalize
+
+`uncapitalize` - Uncapitalizes the string result of matched output.
+
+#### camelize
+
+`camelize` - Camelizes the string result of matched output.
+
+#### dasherize
+
+`dasherize` - Dasherizes the string result of matched output.
+
+#### substring
+
+`substring startIndex, [endIndex]` - Gets substring of string result of matched output, just like JavaScript's `"String".substring(startIndex, endIndex)`
+
+#### substr
+
+`substring startIndex, [length]` - Gets substring of string result of matched output, just like JavaScript's `"String".substr(startIndex, length)`
+
+#### str-slice
+
+`str-slice startIndex, [endIndex]` - Gets substring of string result of matched output, just like JavaScript's `"String".slice(startIndex, endIndex)`
 
 {% endraw %}
