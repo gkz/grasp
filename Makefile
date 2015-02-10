@@ -22,7 +22,7 @@ assets/js/demo-all.js: node_modules/grasp/lib $(JS)
 	$(BROWSERIFY) --no-detect-globals assets/js/demo.js > assets/js/demo-all.js
 
 assets/css:
-	mkdir assets/css
+	mkdir -p assets/css
 
 assets/css/%.css: assets/_sass/%.sass assets/css
 	sass "$<":"$@"
