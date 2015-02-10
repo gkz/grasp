@@ -1,8 +1,8 @@
 require! {
   path
   acorn
-  squery: 'grasp-squery'
-  equery: 'grasp-equery'
+  'grasp-squery': squery
+  'grasp-equery': equery
   async
 }
 {min, sort-with, lines, chars, split, join,  map, Obj} = require 'prelude-ls'

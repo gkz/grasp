@@ -1,6 +1,6 @@
 grasp = require '..'
 require! {
-  clc: 'cli-color'
+  'cli-color': clc
   path
 }
 {strict-equal: equal, deep-equal, throws}:assert = require 'assert'
