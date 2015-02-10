@@ -10,10 +10,10 @@ a, .glyphicon, .caret {
 
 a {
   color: #3f8a10;
-  border-bottom: 1px dotted #2a5c0b; }
+  border-bottom: 1px dotted #2A5C0B; }
   a:hover {
     text-decoration: none;
-    color: #2a5c0b;
+    color: #2A5C0B;
     border-bottom-style: solid; }
   a code {
     background: none;
@@ -25,8 +25,8 @@ blockquote {
   border-color: #54b716; }
 
 pre {
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
+  background-color: #F7F7F9;
+  border: 1px solid #E1E1E8;
   border-radius: 3px; }
 
 code {
@@ -46,7 +46,12 @@ h3 {
   margin-bottom: 15px;
   color: #34730e; }
 
-h2:first-child, h3:first-child {
+h4 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #25510a; }
+
+h2:first-child, h3:first-child, h4:first-child {
   margin-top: 0; }
 
 h2[id] {
@@ -57,7 +62,11 @@ h3[id] {
   padding-top: 70px;
   margin-top: -50px; }
 
-h2[id]:first-child, h3[id]:first-child {
+h4[id] {
+  padding-top: 60px;
+  margin-top: -50px; }
+
+h2[id]:first-child, h3[id]:first-child, h4[id]:first-child {
   margin-top: -50px;
   padding-top: 50px; }
 
@@ -134,28 +143,28 @@ ol li, .grasp-docs-main li {
     margin-top: 2px; }
 
 .grasp-navbar {
-  background-color: #2a5c0b;
+  background-color: #2A5C0B;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
   border-color: #204508;
   font-size: 14px; }
   .grasp-navbar .navbar-nav > li > a {
-    color: #c2ff9c;
+    color: #C2FF9C;
     border: 1px solid transparent;
     border: 1px solid transparent;
     border-top: none;
     border-bottom: none; }
     .grasp-navbar .navbar-nav > li > a:hover {
-      color: white; }
+      color: #fff; }
       .grasp-navbar .navbar-nav > li > a:hover .glyphicon {
-        color: white; }
+        color: #fff; }
       .grasp-navbar .navbar-nav > li > a:hover .caret {
-        border-top-color: white;
-        border-bottom-color: white; }
+        border-top-color: #fff;
+        border-bottom-color: #fff; }
     .grasp-navbar .navbar-nav > li > a:active {
       background-color: #28570a; }
     .grasp-navbar .navbar-nav > li > a .glyphicon {
-      color: #c2ff9c; }
+      color: #C2FF9C; }
   .grasp-navbar .navbar-nav > li.current a {
     background-color: #26530a;
     color: #d2ffb6;
@@ -163,8 +172,8 @@ ol li, .grasp-docs-main li {
   .grasp-navbar .navbar-nav > .dropdown {
     cursor: pointer; }
     .grasp-navbar .navbar-nav > .dropdown > a > .caret {
-      border-top-color: #c2ff9c;
-      border-bottom-color: #c2ff9c; }
+      border-top-color: #C2FF9C;
+      border-bottom-color: #C2FF9C; }
   .grasp-navbar .navbar-nav .dropdown-menu {
     padding: 0;
     padding-bottom: 3px;
@@ -181,18 +190,18 @@ ol li, .grasp-docs-main li {
     background-color: #28570a; }
     .grasp-navbar .navbar-nav .open .dropdown-menu > li > a {
       background-color: #28570a;
-      color: #c2ff9c; }
+      color: #C2FF9C; }
     .grasp-navbar .navbar-nav .open .dropdown-menu > li > a:hover {
       background-color: #2e650c;
-      color: white; }
+      color: #fff; }
   .grasp-navbar .navbar-nav .open .dropdown-toggle, .grasp-navbar .navbar-nav .open .dropdown-toggle:hover {
     background-color: #28570a;
-    color: white;
+    color: #fff;
     border-color: rgba(0, 0, 0, 0.15);
     z-index: 1001; }
     .grasp-navbar .navbar-nav .open .dropdown-toggle > .caret, .grasp-navbar .navbar-nav .open .dropdown-toggle:hover > .caret {
-      border-top-color: white;
-      border-bottom-color: white; }
+      border-top-color: #fff;
+      border-bottom-color: #fff; }
   .grasp-navbar .navbar-nav .open.current .dropdown-menu {
     background-color: #26530a; }
     .grasp-navbar .navbar-nav .open.current .dropdown-menu > li > a {
@@ -200,12 +209,12 @@ ol li, .grasp-docs-main li {
       color: #d2ffb6; }
     .grasp-navbar .navbar-nav .open.current .dropdown-menu > li > a:hover {
       background-color: #2c610c;
-      color: white; }
+      color: #fff; }
   .grasp-navbar .navbar-nav .open.current .dropdown-toggle, .grasp-navbar .navbar-nav .open.current .dropdown-toggle:hover {
     background-color: #26530a;
-    color: white; }
+    color: #fff; }
   .grasp-navbar .navbar-brand {
-    color: white;
+    color: #fff;
     border: none; }
   .grasp-navbar .social-buttons {
     float: left;
@@ -237,12 +246,12 @@ ol li, .grasp-docs-main li {
 .content {
   padding: 30px;
   margin: 0 -30px;
-  border: 1px solid #d1f0bf;
+  border: 1px solid #D1F0BF;
   border-top: none;
-  background-color: #fefefe; }
+  background-color: #FEFEFE; }
   .content h1 code, .content h2 code, .content h3 code, .content h4 code, .content h5 code, .content h6 code {
     font-size: 100%;
-    background-color: #fefefe; }
+    background-color: #FEFEFE; }
   .content h2 {
     border-bottom: 1px solid #13b025;
     padding-bottom: 9px;
@@ -255,7 +264,7 @@ ol li, .grasp-docs-main li {
     border-right: none; } }
 .grasp-page-header {
   background-color: #2d630c;
-  color: white;
+  color: #fff;
   padding: 45px 0; }
   .grasp-page-header h1 {
     margin: 0;
@@ -274,7 +283,7 @@ ol li, .grasp-docs-main li {
 
 .grasp-home-header {
   background-color: #2d630c;
-  color: white;
+  color: #fff;
   padding: 45px 0; }
   .grasp-home-header h1 {
     font-size: 72px;
@@ -288,9 +297,9 @@ ol li, .grasp-docs-main li {
     .grasp-home-header .grasp-install a {
       display: block;
       float: left;
-      color: white;
+      color: #fff;
       border: none;
-      background-color: #ea2a15;
+      background-color: #EA2A15;
       padding: 3px 6px;
       margin-right: 10px; }
     .grasp-home-header .grasp-install code {
@@ -315,7 +324,7 @@ ol li, .grasp-docs-main li {
     text-align: center;
     font-size: 22px;
     background-color: #2d630c;
-    color: white;
+    color: #fff;
     padding: 10px 0;
     display: block;
     margin-bottom: 10px; }
@@ -335,7 +344,7 @@ ol li, .grasp-docs-main li {
   padding-top: 80px;
   margin-top: -60px; }
   .content .grasp-demo-header a {
-    color: #ea2a15;
+    color: #EA2A15;
     font-size: 48px;
     border-bottom: none; }
 
@@ -357,7 +366,7 @@ ol li, .grasp-docs-main li {
   #demo-container .edit-file .edit-buttons {
     padding: 3px 0; }
     #demo-container .edit-file .edit-buttons .btn-primary {
-      background-color: #ea2a15;
+      background-color: #EA2A15;
       border: 1px solid rgba(0, 0, 0, 0.15); }
 
 .grasp-docs-nav {
@@ -398,7 +407,7 @@ ol li, .grasp-docs-main li {
     font-size: 40px;
     border: none; }
   .grasp-post-list .grasp-post-date {
-    color: #999999;
+    color: #999;
     font-size: 80%;
     margin-bottom: 2px; }
 
@@ -406,7 +415,7 @@ ol li, .grasp-docs-main li {
   margin-top: 80px; }
 
 .note {
-  border-left: 2px solid #e8a20c;
+  border-left: 2px solid #E8A20C;
   padding: 5px;
   padding-left: 15px; }
 
@@ -430,3 +439,5 @@ footer {
   footer .license {
     float: left;
     margin-top: 5px; } }
+
+/*# sourceMappingURL=styles.css.map */

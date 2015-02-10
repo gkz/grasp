@@ -57,72 +57,87 @@ Filters may have zero of more arguments. Arguments are listed after the filter n
 
 The available filters are (the code `[1, 2, 3, 4];` will be used for the examples):
 
-- `join [separator]` - Takes the list of matches and joins them with the optional separator argument. If no separator is specified, they are joined with an empty string.
+#### join
+`join [separator]` - Takes the list of matches and joins them with the optional separator argument. If no separator is specified, they are joined with an empty string.
 
   Eg. `grasp arr --replace '[{{.elements | join "," }}]'` &rarr; `[1,2,3,4];`
 
-- `prepend args...` - Prepends (aka unshifts) its arguments to the list of matches.
+#### prepend
+`prepend args...` - Prepends (aka unshifts) its arguments to the list of matches.
 
   Eg. `grasp arr --replace '[{{.elements | prepend 0 | join "," }}]'` &rarr; `[0,1,2,3,4];`
 
-- `append args...` - Appends (aka pushes) its arguments to the list of matches.
+#### append
+`append args...` - Appends (aka pushes) its arguments to the list of matches.
 
   Eg. `grasp arr --replace '[{{.elements | append 5 | join "," }}]'` &rarr; `[1,2,3,4,5];`
 
-- `before arg` - Prepends its text argument to the entire result. Equivalent to `arg{{}}`. More useful with `each`.
+#### before
+`before arg` - Prepends its text argument to the entire result. Equivalent to `arg{{}}`. More useful with `each`.
 
   Eg. `grasp arr --replace '{{ 1 | before "0." }}'` &rarr; `0.1;`
 
-- `after arg` - Appends its text argument to the entire result. Equivalent to `{{}}arg`. More useful with `each`.
+#### after
+`after arg` - Appends its text argument to the entire result. Equivalent to `{{}}arg`. More useful with `each`.
 
   Eg. `grasp arr --replace '{{ 1 | after 0 }}'` &rarr; `10;`
 
-- `wrap arg [arg]` - Wraps its text arguments around the entire result. If only one argument is supplied, it uses that for both before and after. If two arguments are supplied, the first argument is prepended, and the second is appended. Equivalent to `arg{{}}arg`. Again, this is more useful with `each`.
+#### wrap
+`wrap arg [arg]` - Wraps its text arguments around the entire result. If only one argument is supplied, it uses that for both before and after. If two arguments are supplied, the first argument is prepended, and the second is appended. Equivalent to `arg{{}}arg`. Again, this is more useful with `each`.
 
-  Eg. `grasp arr --replace '{{ 1 | wrap \" }}'` &rarr; `"1";`
+Eg. `grasp arr --replace '{{ 1 | wrap \" }}'` &rarr; `"1";`
 
-  Eg. `grasp arr --replace '{{ 1 | wrap [ ] }}'` &rarr; `[1];`
+Eg. `grasp arr --replace '{{ 1 | wrap [ ] }}'` &rarr; `[1];`
 
-- `each filter [args...]` - Takes a filter (either `before`, `after`, or `wrap`) and applies it to each matched node.
+#### each
+`each filter [args...]` - Takes a filter (either `before`, `after`, or `wrap`) and applies it to each matched node.
 
-  Eg. `grasp arr --replace '[{{.elements | each before 1 | join "," }}]'` &rarr; `[11,12,13,14];`
+Eg. `grasp arr --replace '[{{.elements | each before 1 | join "," }}]'` &rarr; `[11,12,13,14];`
 
-  Eg. `grasp arr --replace '[{{.elements | each after 0 | join "," }}]'` &rarr; `[10,20,30,40];`
+Eg. `grasp arr --replace '[{{.elements | each after 0 | join "," }}]'` &rarr; `[10,20,30,40];`
 
-  Eg. `grasp arr --replace '[{{.elements | each wrap ( ) | join "," }}]'` &rarr; `[(1),(2),(3),(4)];`
+Eg. `grasp arr --replace '[{{.elements | each wrap ( ) | join "," }}]'` &rarr; `[(1),(2),(3),(4)];`
 
-- `nth num` - Takes the nth node of the matched results. Zero based indexing.
+#### nth
+`nth num` - Takes the nth node of the matched results. Zero based indexing.
 
-  Eg. `grasp arr --replace '{{.elements | nth 0 }}'` &rarr; `1;`
+Eg. `grasp arr --replace '{{.elements | nth 0 }}'` &rarr; `1;`
 
-- `nth-last num` - Takes the nth last node of the matched results. Zero based indexing.
+#### nth-last
+`nth-last num` - Takes the nth last node of the matched results. Zero based indexing.
 
-  Eg. `grasp arr --replace '{{.elements | nth-last 0 }}'` &rarr; `4;`
+Eg. `grasp arr --replace '{{.elements | nth-last 0 }}'` &rarr; `4;`
 
-- `first` - Takes the first node of the matched results. Equivalent to `nth 0`.
+#### first
+`first` - Takes the first node of the matched results. Equivalent to `nth 0`.
 
-  Eg. `grasp arr --replace '{{.elements | first }}'` &rarr; `1;`
+Eg. `grasp arr --replace '{{.elements | first }}'` &rarr; `1;`
 
-- `tail` - Takes all but the first node of the matched results.
+#### tail
+`tail` - Takes all but the first node of the matched results.
 
-  Eg. `grasp arr --replace '[{{.elements | tail | join "," }}]'` &rarr; `[2,3,4];`
+Eg. `grasp arr --replace '[{{.elements | tail | join "," }}]'` &rarr; `[2,3,4];`
 
-- `last` - Takes the last node of the matched results. Equivalent to `nth-last 0`.
+#### last
+`last` - Takes the last node of the matched results. Equivalent to `nth-last 0`.
 
-  Eg. `grasp arr --replace '{{.elements | last | join "," }}'` &rarr; `4;`
+Eg. `grasp arr --replace '{{.elements | last | join "," }}'` &rarr; `4;`
 
-- `initial` - Takes all but the last node of the matched results.
+#### initial
+`initial` - Takes all but the last node of the matched results.
 
-  Eg. `grasp arr --replace '[{{.elements | initial | join "," }}]'` &rarr; `[1,2,3];`
+Eg. `grasp arr --replace '[{{.elements | initial | join "," }}]'` &rarr; `[1,2,3];`
 
-- `slice num [num]` - Acts like JavaScript's `slice` on the matched results.
+#### slice
+`slice num [num]` - Acts like JavaScript's `slice` on the matched results.
 
-  Eg. `grasp arr --replace '[{{.elements | slice 2 | join "," }}]'` &rarr; `[3,4];`
+Eg. `grasp arr --replace '[{{.elements | slice 2 | join "," }}]'` &rarr; `[3,4];`
 
-  Eg. `grasp arr --replace '[{{.elements | slice 2 3 | join "," }}]'` &rarr; `[3];`
+Eg. `grasp arr --replace '[{{.elements | slice 2 3 | join "," }}]'` &rarr; `[3];`
 
-- `reverse` - Reverses the list of matched results.
+#### reverse
+`reverse` - Reverses the list of matched results.
 
-  Eg. `grasp arr --replace '[{{.elements | reverse | join "," }}]'` &rarr; `[4,3,2,1];`
+Eg. `grasp arr --replace '[{{.elements | reverse | join "," }}]'` &rarr; `[4,3,2,1];`
 
 {% endraw %}
