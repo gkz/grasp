@@ -51,7 +51,9 @@ By default, the results of using `--replace` will be printed out. If you wish to
 
 {% raw %}
 
-You can append a variety of filters to your selector in the `{{selector}}` syntax. Each filter starts off with a spaced pipe ` | ` - `{{ selector | filter1 | filter2 }}`.
+You can append a variety of filters to your selector in the `{{selector}}` syntax. Each filter starts off with a spaced pipe, eg. `{{ selector | filter1 | filter2 }}`.
+
+If the `selector` is left out (eg. `{{ | filter | filter2 }}`), the filters are applied to the whole matched node.
 
 Filters may have zero of more arguments. Arguments are listed after the filter name and are separated by a comma. `{{ selector | filter arg0, arg1 }}`.
 
