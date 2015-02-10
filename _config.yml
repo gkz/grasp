@@ -10,6 +10,5 @@ exclude:
   - scripts
 safe: true
 lsi: false
-pygments: true
 title: 'Grasp - JavaScript structural search, replace, and refactor'
 version: '0.2.1'
