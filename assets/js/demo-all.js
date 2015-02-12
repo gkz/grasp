@@ -9988,7 +9988,7 @@ module.exports = function (value) {
   var parse, matchNode, VERSION, query, queryParsed;
   parse = require('./parse').parse;
   matchNode = require('./match').matchNode;
-  VERSION = '0.2.2';
+  VERSION = '0.2.3';
   query = function(selector, ast){
     return queryParsed(parse(selector), ast);
   };
@@ -10036,7 +10036,7 @@ module.exports = function (value) {
           return matchSpecial(targetNode, selectorNode);
         } else {
           for (prop in targetNode) {
-            if (prop !== 'loc' && prop !== 'start' && prop !== 'end' && prop !== '_named') {
+            if (prop !== 'loc' && prop !== 'start' && prop !== 'end' && prop !== '_named' && prop !== 'raw') {
               if (!eq(targetNode[prop], selectorNode[prop])) {
                 return false;
               }
