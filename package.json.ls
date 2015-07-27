@@ -21,10 +21,7 @@ bin:
   grasp: './bin/grasp'
 
 bugs: 'https://github.com/gkz/grasp/issues'
-licenses:
-  * type: 'MIT'
-    url: 'https://raw.github.com/gkz/grasp/master/LICENSE'
-  ...
+license: 'MIT'
 
 engines:
   node: '>= 0.8.0'
