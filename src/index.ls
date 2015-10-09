@@ -276,7 +276,8 @@ run = ({
           stat = fs.lstat-sync target-path
           if stat.is-directory! and options.recursive
             async.each-series (fs.readdir-sync target-path), (search-target base-path, target-path), ->
-              done!
+              async.setImmediate ->
+                done!
           else if stat.is-file! and test-ext target
             file-contents = fs.read-file-sync target-path, 'utf8'
             display-path = path.relative base-path, target-path
