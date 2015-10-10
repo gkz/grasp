@@ -125,7 +125,7 @@ run = ({
       return
 
   color = Obj.map (-> if options.color then it else (-> "#it")), text-format{green, cyan, magenta, red}
-  bold = text-format.bold
+  bold = if options.bold then text-format.bold else (-> "#it")
   text-format-funcs = {color, bold}
 
   results-data = []
