@@ -33,7 +33,7 @@ scripts:
   build: 'make build'
 
 dependencies:
-  acorn: '~0.6.0'
+  acorn: '~2.5.0'
   'prelude-ls': '~1.1.2'
   'cli-color': '~0.3.2'
   async: '~0.9.0'
