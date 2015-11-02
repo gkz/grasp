@@ -1,6 +1,6 @@
 debugger;
 function foobar(o) {
-  with (o) {
+  while (o) {
     return zz + zz;
   }
 }
