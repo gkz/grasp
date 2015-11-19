@@ -1,6 +1,6 @@
 name: 'grasp'
 author: 'George Zahariev'
-version: '0.3.0'
+version: '0.4.0-beta1'
 homepage: 'http://graspjs.com'
 description: 'JavaScript structural search, replace, and refactor'
 keywords:
@@ -33,18 +33,18 @@ scripts:
   build: 'make build'
 
 dependencies:
-  acorn: '~0.6.0'
-  'prelude-ls': '~1.1.1'
+  acorn: '~2.5.0'
+  'prelude-ls': '~1.1.2'
   'cli-color': '~0.3.2'
   async: '~0.9.0'
-  optionator: '~0.5.0'
-  'grasp-squery': '~0.2.2'
-  'grasp-equery': '~0.2.2'
-  'grasp-syntax-javascript': '~0.1.0'
-  levn: '~0.2.4'
+  optionator: '~0.6.0'
+  'grasp-squery': '~0.3.0'
+  'grasp-equery': '~0.3.0'
+  'grasp-syntax-javascript': '~0.2.0'
+  levn: '~0.2.5'
 
 dev-dependencies:
-  LiveScript: '~1.3.1'
+  livescript: '~1.4.0'
   mocha: '~2.1.0'
   istanbul: '~0.3.5'
 

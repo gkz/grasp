@@ -12,7 +12,7 @@ require! {
 help = require './help'
 _console = console
 
-version = '0.3.0'
+version = '0.4.0-beta1'
 
 run = ({
   args

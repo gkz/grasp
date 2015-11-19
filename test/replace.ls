@@ -6,7 +6,7 @@ suite 'replace' ->
   test 'single line same length' ->
     eq '--replace XX "#zz" test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return XX + XX;
         }
       }\n''', it
@@ -14,7 +14,7 @@ suite 'replace' ->
   test 'single line longer length' ->
     eq '--replace XXX "#zz" test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return XXX + XXX;
         }
       }\n''', it
@@ -22,23 +22,23 @@ suite 'replace' ->
   test 'single line shorter length' ->
     eq '--replace X "#zz" test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return X + X;
         }
       }\n''', it
 
   test 'multiple lines to multiple lines' ->
-    eq '--replace "{\n\n    return zz + zz; }" "with block" test/data/b.js', '''debugger;
+    eq '--replace "{\n\n    return zz + zz; }" "while block" test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
 
           return zz + zz; }
       }\n''', it
 
   test 'multiple lines to single line' ->
-    eq '--replace "{ return zz + zz; }" "with block" test/data/b.js', '''debugger;
+    eq '--replace "{ return zz + zz; }" "while block" test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) { return zz + zz; }
+        while (o) { return zz + zz; }
       }\n''', it
 
   test 'multiple lines to single line with end context' ->
@@ -48,7 +48,7 @@ suite 'replace' ->
   test 'single line to multiple lines' ->
     eq '--replace "return zz +\nzz;" return test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return zz +
       zz;
         }
@@ -60,7 +60,7 @@ suite 'replace' ->
   test 'replace from file' ->
     eq '--replace-file test/data/replacement debugger test/data/b.js', '''console.log('debug');
       function foobar(o) {
-        with (o) {
+        while (o) {
           return zz + zz;
         }
       }\n''', it
@@ -73,7 +73,7 @@ suite 'replace' ->
   test 'after selector' ->
     eq '"#zz" --replace XX test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return XX + XX;
         }
       }\n''', it
@@ -81,7 +81,7 @@ suite 'replace' ->
   test 'replacement with {}' ->
     eq '--replace "{}" "#zz" test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return {} + {};
         }
       }\n''', it
@@ -90,7 +90,7 @@ suite 'replace' ->
     test 'single line' ->
       eq '--replace "o({{}}) bi test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return o(zz + zz);
         }
       }\n''', it
@@ -98,7 +98,7 @@ suite 'replace' ->
     test 'single line multiple' ->
       eq '--replace "o({{}})" "#zz" test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return o(zz) + o(zz);
         }
       }\n''', it
@@ -106,7 +106,7 @@ suite 'replace' ->
     test 'single line multiple to multiple lines' ->
       eq '--replace "o({\n      a: {{{}}: 1}\n    })" "#zz" test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return o({
             a: {zz: 1}
           }) + o({
@@ -118,7 +118,7 @@ suite 'replace' ->
     test 'multiple lines' ->
       eq '--replace "var f = {{}}" func test/data/b.js', '''debugger;
       var f = function foobar(o) {
-        with (o) {
+        while (o) {
           return zz + zz;
         }
       }\n''', it
@@ -127,7 +127,7 @@ suite 'replace' ->
     test 'prop' ->
       eq '--replace "function moo(oooo) {{.body}}" "func" test/data/b.js', '''debugger;
       function moo(oooo) {
-        with (o) {
+        while (o) {
           return zz + zz;
         }
       }\n''', it
@@ -135,7 +135,7 @@ suite 'replace' ->
     test 'child' ->
       eq '--replace "function moo(oooo) {{block}}" "func" test/data/b.js', '''debugger;
       function moo(oooo) {
-        with (o) {
+        while (o) {
           return zz + zz;
         }
       }\n''', it
@@ -143,13 +143,13 @@ suite 'replace' ->
     test 'operator' ->
       eq "--replace 'x {{.op}} y' 'bi' test/data/b.js", '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return x + y;
         }
       }\n''', it
 
     test 'more complex' ->
-      replacement = '{\n  if ({{with.object}} == 9) {\n    return 2 {{bi.op}} 3;\n  }\n}'
+      replacement = '{\n  if ({{while.test}} == 9) {\n    return 2 {{bi.op}} 3;\n  }\n}'
       eq "--replace '#replacement' 'func.body' test/data/b.js", '''debugger;
       function foobar(o) {
         if (o == 9) {
@@ -158,7 +158,7 @@ suite 'replace' ->
       }\n''', it
 
     test 'even more complex' ->
-      replacement = '{\n  f({{with[obj=#o] return ident}} == {{bi[op=+] ident}});\n}'
+      replacement = '{\n  f({{while[test=#o] return ident}} == {{bi[op=+] ident}});\n}'
       eq "--replace '#replacement' 'func.body' test/data/b.js", '''debugger;
       function foobar(o) {
         f(zz == zz);
@@ -180,7 +180,7 @@ suite 'replace' ->
     test 'equery' ->
       eq '--equery --replace "return o({{__ + __}});" "return __;" test/data/b.js', '''debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return o(zz + zz);
         }
       }\n''', it
@@ -389,13 +389,13 @@ suite 'replace' ->
       eq '--equery --replace "f({{args | reverse | join \', \'}})" "f(_$args)"', 'f(x, y);', it, {input: 'f(y, x);'}
 
     test 'object' ->
-      eq '--equery --replace "{ {{props | reverse | join \', \'}} }" "({_:$props})"', '{ y:2, x: 1 };', it, {input: '({x: 1, y:2});'}
+      eq '--equery --replace "{ {{props | reverse | join \', \'}} }" "({_:$props})"', '({ y:2, x: 1 });', it, {input: '({x: 1, y:2});'}
 
   suite 'write to' ->
     replaced-content1 = '''
       debugger;
       function foobar(o) {
-        with (o) {
+        while (o) {
           return XX + XX;
         }
       }\n
