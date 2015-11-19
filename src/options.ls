@@ -47,7 +47,7 @@ options =
     type: '(path::String, options::Maybe Object)'
     description: 'require path for parser, using options when calling parse'
     long-description: 'Sets the parser and options for the parser. Argument value is a tuple, with the first item being the require path, and the second an optional object with options for the parser when calling its parse function.'
-    default: "(acorn, {locations: true, ecmaVersion: 6, sourceType: 'module'})"
+    default: "(acorn, {locations: true, ecmaVersion: 6, sourceType: 'module', allowHashBang: true})"
     hidden: true
     example: '--parser "(./path/to/esprima, {loc: true})"'
 
