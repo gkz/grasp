@@ -63,9 +63,9 @@ function format-result name, input-lines, input-lines-length, {color, bold}, opt
     ''
 
   separator-string =
-    "#{ if multiline then color.cyan "#{ if location-string.length then ':' else ''}(multiline)" else ''}
-     #{ if location-string.length or multiline then color.cyan ':' else '' }
-     #{ if multiline then '\n' else ''}"
+    "#{ if multiline and options.multiline-separator then color.cyan "#{ if location-string.length then ':' else ''}(multiline)" else ''}
+     #{ if location-string.length or multiline and options.multiline-separator then color.cyan ':' else '' }
+     #{ if multiline and (location-string.length or options.multiline-separator) then '\n' else ''}"
 
   name-string = if options.display-filename then "#{ format-name color, name }#{ color.cyan ':' }" else ''
 
