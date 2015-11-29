@@ -170,7 +170,7 @@ replace = (replacement, input, nodes, query-engine) ->
     end-line-num = end.line - 1 + line-offset
     number-of-lines = end-line-num - start-line-num + 1
 
-    col-offset := if last-line is start-line-num then col-offset else 0
+    col-offset := if "id" of prev-node and prev-node.loc.end.line!=start.line then col-offset else 0
 
     start-col = start.column + col-offset
     end-col = end.column + if start-line-num is end-line-num then col-offset else 0
