@@ -191,7 +191,7 @@ replace = (replacement, input, nodes, query-engine) ->
 
     line-offset += replace-lines.length - number-of-lines
     col-offset += end-len - end-col
-    last-line := end-line-num + line-offset
+    last-line := end-line-num
     prev-node := node
 
   unlines input-lines
