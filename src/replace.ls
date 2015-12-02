@@ -190,7 +190,7 @@ replace = (replacement, input, nodes, query-engine) ->
     input-lines.splice start-line-num, number-of-lines, ...replace-lines
 
     line-offset += replace-lines.length - number-of-lines
-    col-offset += end-len - end-col
+    col-offset = (if start-line-num != end-line-num and replace-lines.length == 1 then 0 else col-offset) + end-len - end-col
     last-line := end-line-num
     prev-node := node
 
