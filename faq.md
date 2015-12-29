@@ -57,7 +57,7 @@ The [GitHub issues section for Grasp](https://github.com/gkz/grasp/issues).
 No. If you are searching text other than JavaScript code, you should still use those text based tools. If the searches you are doing are very simple, or textual in nature, then you can still use those tools.
 
 ## Is ES6 supported?
-Yes, currently in beta. Install using `npm install grasp@beta`.
+Yes!
 
 ## Does Grasp do any scope analysis?
 Not yet, but it's something I'm looking into for future versions!

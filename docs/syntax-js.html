@@ -58,6 +58,20 @@ true
 "string"
 {% endhighlight %}
 
+<h3 id='regex'>regex (RegExpLiteral)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>primitive attributes:</dt>
+<dd>regex</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+/^sh+/gi
+{% endhighlight %}
+
 <h3 id='prop'>prop (Property)</h3>
 
 <dl class="grasp-syntax-info dl-horizontal">
@@ -81,6 +95,24 @@ a: 1
 <h4 class="grasp-syntax-subheading">note:</h4>
 
 <p>An object expression (obj) has a list of properties, each being a property.
+
+<h3 id='spread'>spread (SpreadElement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>argument (arg)</dd>
+
+</dl>
+
+<h3 id='template-element'>template-element (TemplateElement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>primitive attributes:</dt>
+<dd>tail,&nbsp;&nbsp;value (val)</dd>
+
+</dl>
 
 <h2 id='statements'>Statements</h2>
 
@@ -403,7 +435,7 @@ do {
 
 <h4 class='grasp-syntax-subheading'>example:</h4>
 {% highlight javascript %}
-for (var x = 0; x < 2; x++) {
+for (let x = 0; x < 2; x++) {
   f(x);
 }
 {% endhighlight %}
@@ -423,8 +455,28 @@ for (var x = 0; x < 2; x++) {
 
 <h4 class='grasp-syntax-subheading'>example:</h4>
 {% highlight javascript %}
-for (prop in object) {
+for (let prop in object) {
   f(object[prop]);
+}
+{% endhighlight %}
+
+<h3 id='for-of'>for-of (ForOfStatement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>left (l),&nbsp;&nbsp;right (r),&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>for (<em>left</em> of <em>right</em>)
+  <em>body</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+for (let val of list) {
+  f(val);
 }
 {% endhighlight %}
 
@@ -453,6 +505,9 @@ debugger;
 
 <dt>node array attributes:</dt>
 <dd>params</dd>
+
+<dt>primitive attributes:</dt>
+<dd>generator</dd>
 
 </dl>
 
@@ -525,6 +580,17 @@ var x = 2
 this
 {% endhighlight %}
 
+<h3 id='super'>super (Super)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+super(x, y)
+{% endhighlight %}
+
 <h3 id='arr'>arr (ArrayExpression)</h3>
 
 <dl class="grasp-syntax-info dl-horizontal">
@@ -576,6 +642,9 @@ this
 <dt>node array attributes:</dt>
 <dd>params</dd>
 
+<dt>primitive attributes:</dt>
+<dd>generator</dd>
+
 </dl>
 
 <h4 class='grasp-syntax-subheading'>syntax:</h4>
@@ -584,7 +653,7 @@ this
 
 <h4 class='grasp-syntax-subheading'>example:</h4>
 {% highlight javascript %}
-var f = function (x, y) {
+let f = function(x, y) {
   return x * y;
 }
 {% endhighlight %}
@@ -592,6 +661,29 @@ var f = function (x, y) {
 <h4 class="grasp-syntax-subheading">note:</h4>
 
 <p>A function expression contrasts with a function declaration (func-dec).
+
+<h3 id='arrow'>arrow (ArrowFunctionExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>id,&nbsp;&nbsp;body</dd>
+
+<dt>node array attributes:</dt>
+<dd>params</dd>
+
+<dt>primitive attributes:</dt>
+<dd>generator,&nbsp;&nbsp;expression (exp)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>([<em>param_1</em>], [<em>param_2</em>], [..., <em>param_3</em>]) => <em>body</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+(x, y) => x * y
+{% endhighlight %}
 
 <h3 id='seq'>seq (SequenceExpression)</h3>
 
@@ -608,6 +700,23 @@ var f = function (x, y) {
 <h4 class='grasp-syntax-subheading'>example:</h4>
 {% highlight javascript %}
 a, b, c
+{% endhighlight %}
+
+<h3 id='yield'>yield (YieldExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>argument (arg)</dd>
+
+</dl>
+
+<h4 class='grasp-syntax-subheading'>syntax:</h4>
+<pre>yield <em>argument</em></pre>
+
+<h4 class='grasp-syntax-subheading'>example:</h4>
+{% highlight javascript %}
+yield x
 {% endhighlight %}
 
 <h3 id='unary'>unary (UnaryExpression)</h3>
@@ -790,6 +899,24 @@ f(1,2,3)
 Math.PI
 {% endhighlight %}
 
+<h3 id='template-literal'>template-literal (TemplateLiteral)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>quasis,&nbsp;&nbsp;expressions (exps)</dd>
+
+</dl>
+
+<h3 id='tagged-template-exp'>tagged-template-exp (TaggedTemplateExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>tag,&nbsp;&nbsp;quasi</dd>
+
+</dl>
+
 <h2 id='clauses'>Clauses</h2>
 
 <h3 id='switch-case'>switch-case (SwitchCase)</h3>
@@ -837,6 +964,201 @@ catch (e) {
 }
 {% endhighlight %}
 
+<h2 id='patterns'>Patterns</h2>
+
+<h3 id='assign-prop'>assign-prop (AssignmentProperty)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>key,&nbsp;&nbsp;value (val)</dd>
+
+<dt>primitive attributes:</dt>
+<dd>kind,&nbsp;&nbsp;method</dd>
+
+</dl>
+
+<h3 id='obj-pattern'>obj-pattern (ObjectPattern)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>properties (props)</dd>
+
+</dl>
+
+<h3 id='array-pattern'>array-pattern (ArrayPattern)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>elements (els)</dd>
+
+</dl>
+
+<h3 id='rest-element'>rest-element (RestElement)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>argument (arg)</dd>
+
+</dl>
+
+<h3 id='assign-pattern'>assign-pattern (AssignmentPattern)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>left (l),&nbsp;&nbsp;right (r)</dd>
+
+</dl>
+
+<h2 id='classes'>Classes</h2>
+
+<h3 id='class-body'>class-body (ClassBody)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node array attributes:</dt>
+<dd>body</dd>
+
+</dl>
+
+<h3 id='method'>method (MethodDefinition)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>key,&nbsp;&nbsp;value (val)</dd>
+
+<dt>primitive attributes:</dt>
+<dd>kind,&nbsp;&nbsp;computed,&nbsp;&nbsp;static</dd>
+
+</dl>
+
+<h3 id='class-dec'>class-dec (ClassDeclaration)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>id,&nbsp;&nbsp;superClass,&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h3 id='class-exp'>class-exp (ClassExpression)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>id,&nbsp;&nbsp;superClass,&nbsp;&nbsp;body</dd>
+
+</dl>
+
+<h3 id='meta-property'>meta-property (MetaProperty)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>meta,&nbsp;&nbsp;property (prop)</dd>
+
+</dl>
+
+<h2 id='modules'>Modules</h2>
+
+<h3 id='module-dec'>module-dec (ModuleDeclaration)</h3>
+
+<h3 id='module-specifier'>module-specifier (ModuleSpecifier)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>local</dd>
+
+</dl>
+
+<h2 id='imports'>Imports</h2>
+
+<h3 id='import-dec'>import-dec (ImportDeclaration)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>source</dd>
+
+<dt>node array attributes:</dt>
+<dd>specifiers</dd>
+
+</dl>
+
+<h3 id='import-specifier'>import-specifier (ImportSpecifier)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>local,&nbsp;&nbsp;imported</dd>
+
+</dl>
+
+<h3 id='import-default-specifier'>import-default-specifier (ImportDefaultSpecifier)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>local</dd>
+
+</dl>
+
+<h3 id='import-namespace-specifier'>import-namespace-specifier (ImportNamespaceSpecifier)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>local</dd>
+
+</dl>
+
+<h2 id='exports'>Exports</h2>
+
+<h3 id='export-named-dec'>export-named-dec (ExportNamedDeclaration)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>declaration,&nbsp;&nbsp;source</dd>
+
+<dt>node array attributes:</dt>
+<dd>specifiers</dd>
+
+</dl>
+
+<h3 id='export-specifier'>export-specifier (ExportSpecifier)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>local,&nbsp;&nbsp;exported</dd>
+
+</dl>
+
+<h3 id='export-default-specifier'>export-default-specifier (ExportDefaultDeclaration)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>declaration</dd>
+
+</dl>
+
+<h3 id='export-namespace-specifier'>export-namespace-specifier (ExportAllDeclarationSpecifier)</h3>
+
+<dl class="grasp-syntax-info dl-horizontal">
+
+<dt>node attributes:</dt>
+<dd>source</dd>
+
+</dl>
+
 <h2 id="categories">Categories</h2>
 
 <p>Categories of node types - use <code>grasp --help categories</code> for an overview, and <code>grasp --help category-name</code> for further information about a specific category.
@@ -877,6 +1199,8 @@ catch (e) {
 
 <li>for-in</li>
 
+<li>for-of</li>
+
 <li>debugger</li>
 
 </ul>
@@ -899,13 +1223,19 @@ catch (e) {
 
 <li>this</li>
 
+<li>super</li>
+
 <li>arr</li>
 
 <li>obj</li>
 
 <li>func-exp</li>
 
+<li>arrow</li>
+
 <li>seq</li>
+
+<li>yield</li>
 
 <li>unary</li>
 
@@ -924,6 +1254,10 @@ catch (e) {
 <li>call</li>
 
 <li>member</li>
+
+<li>template-literal</li>
+
+<li>tagged-template-exp</li>
 
 </ul>
 
@@ -967,6 +1301,8 @@ catch (e) {
 
 <li>for-in</li>
 
+<li>for-of</li>
+
 </ul>
 
 <h3 id='while-loop'>while-loop (WhileLoop)</h3>
@@ -987,9 +1323,21 @@ catch (e) {
 
 <li>for-in</li>
 
+<li>for-of</li>
+
 <li>do-while</li>
 
 <li>while</li>
+
+</ul>
+
+<h3 id='class'>class (Class)</h3>
+
+<ul>
+
+<li>class-exp</li>
+
+<li>class-exp</li>
 
 </ul>
 

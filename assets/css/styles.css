@@ -331,7 +331,7 @@ ol li, .grasp-docs-main li {
     margin-bottom: 10px; }
 
 .follow-for-updates {
-  width: 330px;
+  max-width: 330px;
   margin: 0 auto;
   margin-top: 5px; }
   .follow-for-updates iframe, .follow-for-updates span {

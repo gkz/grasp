@@ -6,7 +6,7 @@ JS = $(LS_SRC:assets/_ls/%.ls=assets/js/%.js)
 SASS = $(shell find assets/_sass -name "*.sass" -type f | sort)
 CSS = $(SASS:assets/_sass/%.sass=assets/css/%.css)
 
-LS = node_modules/LiveScript
+LS = node_modules/livescript
 LSC = node_modules/.bin/lsc
 
 BROWSERIFY = node_modules/.bin/browserify
