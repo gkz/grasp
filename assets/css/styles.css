@@ -439,6 +439,9 @@ footer {
 @media (max-width: 767px) {
   footer .license {
     float: left;
-    margin-top: 5px; } }
+    margin-top: 5px; }
+
+  code {
+    white-space: normal; } }
 
 /*# sourceMappingURL=styles.css.map */
