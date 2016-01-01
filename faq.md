@@ -41,6 +41,9 @@ file.js:2-8:(multiline):
 
 There are many other possibilities - check out the [documentation](../docs).
 
+## What are some sample queries?
+Check out this repository filled with examples: [github.com/gratex/grasp-samples](https://github.com/gratex/grasp-samples).
+
 ## What does the name mean?
 "grasp" could stand for (depending on your mood) Great/Good/Goddamn/Green Replace And Search Program.
 
