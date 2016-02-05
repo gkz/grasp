@@ -34,6 +34,7 @@ scripts:
 
 dependencies:
   acorn: '^2.6.4'
+  'acorn-jsx': '^2.0.1'
   'prelude-ls': '^1.1.2'
   'cli-color': '^1.1.0'
   async: '^1.5.0'
