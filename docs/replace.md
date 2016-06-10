@@ -94,11 +94,11 @@ Eg. `grasp arr --replace '{{ 1 | wrap [ ] }}'` &rarr; `[1];`
 #### each
 `each filter, [args...]` - Takes a filter (either `before`, `after`, or `wrap`) and applies it to each matched node.
 
-Eg. `grasp arr --replace '[{{.elements | each before 1 | join "," }}]'` &rarr; `[11,12,13,14];`
+Eg. `grasp arr --replace '[{{.elements | each before, 1 | join "," }}]'` &rarr; `[11,12,13,14];`
 
-Eg. `grasp arr --replace '[{{.elements | each after 0 | join "," }}]'` &rarr; `[10,20,30,40];`
+Eg. `grasp arr --replace '[{{.elements | each after, 0 | join "," }}]'` &rarr; `[10,20,30,40];`
 
-Eg. `grasp arr --replace '[{{.elements | each wrap ( ) | join "," }}]'` &rarr; `[(1),(2),(3),(4)];`
+Eg. `grasp arr --replace '[{{.elements | each wrap, "(", ")" | join "," }}]'` &rarr; `[(1),(2),(3),(4)];`
 
 #### nth
 `nth num` - Takes the nth node of the matched results. Zero based indexing.
