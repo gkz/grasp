@@ -45,6 +45,15 @@ options =
     type: 'Boolean'
     description: 'recursively search directories'
     long-description: "Recursively search directories. If files or paths are left out, then `.` is assumed."
+  * option: 'exclude'
+    type: '[String]'
+    description: 'comma separated list of exclude patterns'
+    long-description: "When recursively searching directories, exclude files matching any of this patterns. Matching is performed using 'minimatch' module. Use --minimatch-options switch to specify custom matching options."
+  * option: 'minimatch-options'
+    type: 'Object'
+    description: 'options for minimatch module used for processing `exclude`'
+    long-description: 'Sets the options for the minimatch module. See module documentation for possible options'
+    default: '{dot: true}'
   * option: 'parser'
     alias: 'p'
     type: '(path::String, options::Maybe Object)'
