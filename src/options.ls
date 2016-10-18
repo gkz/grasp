@@ -174,6 +174,10 @@ options =
     type: 'Boolean'
     description: 'JSON output for matches'
     long-description: 'Prints out JSON for the output instead of formatted results. This will print out the node data as JSON, instead of the formatted text.'
+  * option: 'multiline-separator'
+    type: 'Boolean'
+    default: 'true'
+    description: 'display \'(multiline)\' keyword for multiline matches'
 
   * heading: 'Context control'
   * option: 'before-context'

@@ -60,3 +60,16 @@ suite 'more options' ->
       '9:    ##b: 2#,'
       '10:    ##c: 3#'
     ], it
+
+  test 'multiline-separator' ->
+    eq '--no-multiline-separator func-dec test/data/a.js', '''
+      1-3:
+      ##function square(x) {#
+      ##  return x * x;#
+      ##}#''', it
+
+  test 'multiline-separator' ->
+    eq '--no-multiline-separator --no-line-number func-dec test/data/a.js', '''
+      ##function square(x) {#
+      ##  return x * x;#
+      ##}#''', it
