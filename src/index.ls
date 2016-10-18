@@ -4,6 +4,7 @@ require! {
   'grasp-squery': squery
   'grasp-equery': equery
   async
+  minimatch
 }
 {min, sort-with, lines, chars, split, join,  map, Obj} = require 'prelude-ls'
 {format-result, format-name, format-count}:format = require './format'
@@ -261,6 +262,15 @@ run = ({
   else
     (.match //\.(?:#{ exts.join '|' })$//)
 
+  exclude = options.exclude
+  test-exclude = if !exclude or exclude.length is 0
+    -> true
+  else
+    (file, basePath, upPath) ->
+      filePath=path.relative basePath, path.join upPath, file
+      exclude.every (excludePattern) ->
+        !minimatch filePath, excludePattern, options.minimatchOptions
+
   target-paths = []
   search-target = (base-path, up-path) ->
     (target, done) !->
@@ -285,7 +295,7 @@ run = ({
             async.each-series (fs.readdir-sync target-path), (search-target base-path, target-path), ->
               async.setImmediate ->
                 done!
-          else if stat.is-file! and test-ext target
+          else if stat.is-file! and test-ext target and test-exclude target, basePath, upPath
             file-contents = fs.read-file-sync target-path, 'utf8'
             display-path = path.relative base-path, target-path
             target-paths.push display-path

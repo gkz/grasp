@@ -43,6 +43,7 @@ dependencies:
   'grasp-equery': '^0.3.1'
   'grasp-syntax-javascript': '^0.2.0'
   levn: '^0.3.0'
+  minimatch: '^3.0.3'
 
 dev-dependencies:
   livescript: '^1.4.0'
