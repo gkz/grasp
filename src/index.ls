@@ -13,7 +13,7 @@ require! {
 help = require './help'
 _console = console
 
-version = '0.4.0'
+version = require('../package.json').version
 
 run = ({
   args
