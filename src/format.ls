@@ -1,4 +1,5 @@
 {id, compact, unlines, min, max} = require 'prelude-ls'
+require! slash
 
 module.exports = {format-result, format-name, format-count}
 
@@ -75,6 +76,7 @@ function format-result name, input-lines, input-lines-length, {color, bold}, opt
    #output-string"
 
 function format-name color, name
+  name = (if process.env.MSYSTEM then slash name else name)
   color.magenta name
 
 function format-count color, count, name
