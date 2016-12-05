@@ -47,7 +47,7 @@ dependencies:
   slash: '^1.0.0'
 
 dev-dependencies:
-  livescript: '^1.4.0'
+  livescript: '^1.5.0'
   mocha: '^2.3.4'
   istanbul: '^0.4.1'
 
