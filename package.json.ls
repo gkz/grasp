@@ -44,6 +44,7 @@ dependencies:
   'grasp-syntax-javascript': '^0.2.0'
   levn: '^0.3.0'
   minimatch: '^3.0.3'
+  slash: '^1.0.0'
 
 dev-dependencies:
   livescript: '^1.4.0'
