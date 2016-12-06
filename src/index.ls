@@ -148,7 +148,7 @@ run = ({
   if debug
     console.time-end 'parse-selector'
     console.log 'parsed-selector:'
-    console.log JSON.stringify parsed-selector
+    console.log JSON.stringify parsed-selector, null, 2
 
   results-sort-func = (a, b) ->
     a-start = a.loc.start

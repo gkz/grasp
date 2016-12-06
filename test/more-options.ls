@@ -31,7 +31,7 @@ suite 'more options' ->
       * func-type: 'time', value: 'parse-selector'
       * func-type: 'time-end', value: 'parse-selector'
       * func-type: 'log', value: 'parsed-selector:'
-      * func-type: 'log', value: /"value":"BinaryExpression"/
+      * func-type: 'log', value: /"value": "BinaryExpression"/
       * func-type: 'time', value: 'search-total:test/data/a.js'
       * func-type: 'time', value: 'parse-input:test/data/a.js'
       * func-type: 'time-end', value: 'parse-input:test/data/a.js'
