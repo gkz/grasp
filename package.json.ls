@@ -33,7 +33,7 @@ scripts:
   build: 'make build'
 
 dependencies:
-  'esprima-fb': "^15001.1001.0-dev-harmony-fb",
+  'flow-parser': '^0.*'
   'prelude-ls': '^1.1.2'
   'cli-color': '^1.1.0'
   async: '^1.5.0'
