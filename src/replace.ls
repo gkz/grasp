@@ -4,8 +4,10 @@ levn = require 'levn'
 get-raw = (input, node) ->
   raw = if node.raw
     that
-  else if node.start?
-    input.slice node.start, node.end
+  else if node.range?
+    start = node.range.0
+    end = node.range.1
+    input.slice start, end
   else if node.key? and node.value? # property
     input.slice node.key.start, node.value.end
   else
@@ -159,11 +161,11 @@ replace = (replacement, input, nodes, query-engine) ->
   col-offset = 0
   line-offset = 0
   last-line = null
-  prev-node = end: 0
+  prev-node = range: [0, 0]
   replace-node = get-replacement-func replacement, input, query-engine
 
   for node in nodes
-    continue if node.start < prev-node.end
+    continue if node.range?.0 < prev-node.range?.1
     {start, end} = node.loc
 
     start-line-num = start.line - 1 + line-offset

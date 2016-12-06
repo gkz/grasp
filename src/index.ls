@@ -68,13 +68,6 @@ run = ({
   else
     squery
 
-  if options.jsx
-    options.extensions.push('jsx')
-    if options.parser.0 == 'acorn'
-      require 'acorn-jsx'
-      options.parser.1.plugins = {jsx: true}
-
-
   [parser, parser-options] = switch options.parser.0
                              | 'acorn'   => [acorn, options.parser.1]
                              | otherwise => [require options.parser.0; options.parser.1]

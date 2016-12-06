@@ -33,8 +33,7 @@ scripts:
   build: 'make build'
 
 dependencies:
-  acorn: '^2.6.4'
-  'acorn-jsx': '^2.0.1'
+  'esprima-fb': "^15001.1001.0-dev-harmony-fb",
   'prelude-ls': '^1.1.2'
   'cli-color': '^1.1.0'
   async: '^1.5.0'

@@ -1,7 +1,7 @@
 {
   "name": "grasp",
   "author": "George Zahariev",
-  "version": "0.4.0",
+  "version": "0.5.0-beta",
   "homepage": "http://graspjs.com",
   "description": "JavaScript structural search, replace, and refactor",
   "keywords": [
@@ -36,8 +36,7 @@
     "build": "make build"
   },
   "dependencies": {
-    "acorn": "^2.6.4",
-    "acorn-jsx": "^2.0.1",
+    "esprima-fb": "^15001.1001.0-dev-harmony-fb",
     "prelude-ls": "^1.1.2",
     "cli-color": "^1.1.0",
     "async": "^1.5.0",
