@@ -19,7 +19,10 @@ filter-regex = //
                ((?:\s+(?:'(?:\\'|[^'])*'|"(?:\\"|[^"])*"|[^\|\s]+))*)
                //
 
-replacer = (input, node, query-engine) ->
+replacer = (input, node, query-engine, opts = {}) ->
+  log = (...args) ->
+    console.log ...args if opts.log
+
   (, replacement-arg) ->
     if /^\s*\|\s+/.test replacement-arg
       orig-results = [node]
@@ -30,9 +33,9 @@ replacer = (input, node, query-engine) ->
         orig-results = [].concat that
       else
         try
-          orig-results = query-engine.query selector, node
+          orig-results = query-engine.query selector, node, opts
         catch
-          orig-results = query-engine.query replacement-arg, node
+          orig-results = query-engine.query replacement-arg, node, opts
           filters := []
     if orig-results.length
       results = orig-results
@@ -55,18 +58,26 @@ replacer = (input, node, query-engine) ->
         switch filter-name
         | 'join' =>
           join := if args.length then "#{args.0}" else ''
+
         | 'before' =>
           raw-prepend := "#{args.0}#raw-prepend"
+
         | 'after' =>
           raw-append += "#{args.0}"
+
         | 'wrap' =>
           [pre, post] = if args.length is 1 then [args.0, args.0] else args
           raw-prepend := "#pre#raw-prepend"
           raw-append += "#post"
+
         | 'prepend' =>
+          log "prepend: #args"
           for arg in args then results.unshift type: 'Raw', raw: "#arg"
+
         | 'append' =>
+          log "append: #args"
           for arg in args then results.push type: 'Raw', raw: "#arg"
+
         | 'each' =>
           throw new Error "No arguments supplied for 'each #{args.0}'" if args.length < 2
           switch args.0
@@ -139,7 +150,7 @@ replacer = (input, node, query-engine) ->
     else
       ''
 
-get-replacement-func = (replacement, input, query-engine) ->
+get-replacement-func = (replacement, input, query-engine, opts) ->
   if typeof! replacement is 'Function'
     (node) ->
       replacement do
@@ -152,15 +163,15 @@ get-replacement-func = (replacement, input, query-engine) ->
     (node) ->
       replacement-prime
       .replace /{{}}/g, -> get-raw input, node # func b/c don't want to call get-raw unless we need to
-      .replace /{{((?:[^}]|}[^}])+)}}/g, replacer input, node, query-engine
+      .replace /{{((?:[^}]|}[^}])+)}}/g, replacer input, node, query-engine, opts
 
-replace = (replacement, input, nodes, query-engine) ->
+replace = (replacement, input, nodes, query-engine, opts) ->
   input-lines = lines input
   col-offset = 0
   line-offset = 0
   last-line = null
   prev-node = end: 0
-  replace-node = get-replacement-func replacement, input, query-engine
+  replace-node = get-replacement-func replacement, input, query-engine, opts
 
   for node in nodes
     continue if node.start < prev-node.end
