@@ -21,7 +21,7 @@ filter-regex = //
 
 replacer = (input, node, query-engine, opts = {}) ->
   log = (...args) ->
-    console.log ...args if opts.log
+    console.log(...args) if opts.log
 
   (, replacement-arg) ->
     if /^\s*\|\s+/.test replacement-arg
