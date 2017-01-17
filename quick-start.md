@@ -14,5 +14,5 @@ This guide aims to get you up and running with Grasp in as little time as possib
 1. Run `grasp if.test <your file>.js` - now you've selected their tests!
 1. Run `grasp --help syntax` and choose another type of statement.
 1. Run `grasp <your statement type> <your file>.js` and search for that statement in your file.
-1. Read the blog post on [Refactoring your JavaScript code using Grasp]({{ page.base_url }}/blog/2014/01/07/refactoring-javascript-with-grasp/) for more examples.
+1. Read the blog post on [Refactoring your JavaScript code using Grasp]({{ page.base_url }}/blog/2014/01/07/refactoring-javascript-with-grasp) for more examples.
 1. Finally, read the [documentation]({{ page.base_url }}/docs) for more information.
