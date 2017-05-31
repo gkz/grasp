@@ -3,7 +3,7 @@ var path = require('path'),
     grasp = require(path.join(__dirname, '..', 'lib'));
 grasp({
   args: process.argv,
-  exit: process.exit,
+  exit: function(code){ process.exitCode = code },
   stdin: process.stdin,
   fs: require('fs'),
   callback: console.log,
