@@ -187,7 +187,8 @@ replace = (replacement, input, nodes, query-engine) ->
 
     end-len = replace-last.length
     replace-lines[*-1] = "#replace-last#end-context"
-    input-lines.splice start-line-num, number-of-lines, ...replace-lines
+    input-lines.splice start-line-num, number-of-lines
+    input-lines = input-lines.slice(0, start-line-num).concat(replace-lines).concat(input-lines.slice(start-line-num))
 
     line-offset += replace-lines.length - number-of-lines
     col-offset += end-len - end-col
