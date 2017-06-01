@@ -156,7 +156,7 @@ run = ({
     line-diff = a-start.line - b-start.line
     if line-diff is 0 then a-start.column - b-start.column else line-diff
 
-  search = (name, input) !->
+  search = (name, input, opts = {}) !->
     console.time "search-total:#name" if debug
 
     clean-input = input.replace /^#!.*\n/ ''
@@ -182,7 +182,7 @@ run = ({
 
     if replacement?
       try
-        replaced = replace replacement, clean-input, sliced-results, query-engine
+        replaced = replace replacement, clean-input, sliced-results, query-engine, opts
         if options.to or options.in-place
           results-format := 'pairs'
           out [name, replaced]
