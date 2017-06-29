@@ -23,6 +23,7 @@ filter-regex = //
 
 replacer = (input, node, query-engine) ->
   (, replacement-arg) ->
+    no-filters = false
     if /^\s*\|\s+/.test replacement-arg
       orig-results = [node]
       [, ...filters] = " #{ replacement-arg.trim! }".split filter-regex # prepend space so regex works
@@ -34,8 +35,10 @@ replacer = (input, node, query-engine) ->
         try
           orig-results = query-engine.query selector, node
         catch
-          orig-results = query-engine.query replacement-arg, node
-          filters := []
+          no-filters = true
+    if no-filters || not orig-results.length
+      orig-results = query-engine.query replacement-arg, node
+      filters := []
     if orig-results.length
       results = orig-results
       raw-prepend = ''
