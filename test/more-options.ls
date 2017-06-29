@@ -55,7 +55,7 @@ suite 'more options' ->
     eq "--engine ../node_modules/grasp-squery \"update[op='++']\" test/data/a.js", '6:  ##z++#;', it
 
   test 'parser with path and options' ->
-    eq '--parser "../node_modules/acorn, {locations: true}" prop test/data/a.js', [
+    eq '--parser "../node_modules/flow-parser, {locations: true}" prop test/data/a.js', [
       '8:    ##a: 1#,'
       '9:    ##b: 2#,'
       '10:    ##c: 3#'

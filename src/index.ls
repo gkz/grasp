@@ -1,11 +1,11 @@
 require! {
   path
-  acorn
   'grasp-squery': squery
   'grasp-equery': equery
   async
   minimatch
 }
+flow-parser = require 'flow-parser'
 {min, sort-with, lines, chars, split, join,  map, Obj} = require 'prelude-ls'
 {format-result, format-name, format-count}:format = require './format'
 {replace} = require './replace'
@@ -69,7 +69,7 @@ run = ({
     squery
 
   [parser, parser-options] = switch options.parser.0
-                             | 'acorn'   => [acorn, options.parser.1]
+                             | 'flow-parser'   => [flow-parser, options.parser.1]
                              | otherwise => [require options.parser.0; options.parser.1]
 
   options.context ?= options.NUM ? 0
