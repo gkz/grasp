@@ -188,6 +188,9 @@ suite 'replace' ->
     test 'equery with {} in replacement' ->
       eq '--equery --replace "f({{__ && {} }})" "__ && __"', 'var a = f(b && {});', it, {input: 'var a = b && {};'}
 
+    test 'equery with nested typed expression (GH #62)' ->
+      eq '--equery --replace "{{e}}.qux({{_str$s}})" "$e.baz(_str$s)"', 'foo(\'bar\').qux(\'zap\')', it, {input: 'foo(\'bar\').baz(\'zap\')'}
+
   suite 'filters' ->
     obj-input = '''
                 var obj = {
