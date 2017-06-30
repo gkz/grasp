@@ -175,7 +175,7 @@ replace = (replacement, input, nodes, query-engine) ->
     end-line-num = end.line - 1 + line-offset
     number-of-lines = end-line-num - start-line-num + 1
 
-    col-offset := if last-line is start-line-num then col-offset else 0
+    col-offset := if "id" of prev-node and prev-node.loc.end.line!=start.line then col-offset else 0
 
     start-col = start.column + col-offset
     end-col = end.column + if start-line-num is end-line-num then col-offset else 0
@@ -196,8 +196,8 @@ replace = (replacement, input, nodes, query-engine) ->
     input-lines = input-lines.slice(0, start-line-num).concat(replace-lines).concat(input-lines.slice(start-line-num))
 
     line-offset += replace-lines.length - number-of-lines
-    col-offset += end-len - end-col
-    last-line := end-line-num + line-offset
+    col-offset = (if start-line-num != end-line-num and replace-lines.length == 1 then 0 else col-offset) + end-len - end-col
+    last-line := end-line-num
     prev-node := node
 
   unlines input-lines
